@@ -1,0 +1,88 @@
+\ExplSyntaxOn
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package Dependencies
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Helps prevent option clash with other packages that include xcolor
+\PassOptionsToPackage {table} {xcolor}
+
+\RequirePackage {array}
+\RequirePackage {colortbl}
+\RequirePackage {enumitem}
+\RequirePackage {etoolbox}
+\RequirePackage {textcomp}				% degree symbol for italian ordinals
+\RequirePackage {hang}					% hanging paragraphs
+\RequirePackage [np] {numprint}				% localization of thousands separator
+\RequirePackage {tabularx}				% variable-width table columns
+\RequirePackage [breakable,skins,xparse]{tcolorbox}	% styled text boxes
+\RequirePackage {tikz}					% drawing ornaments and lines
+\RequirePackage {xcolor}
+\RequirePackage {xparse}				% \NewDocumentCommand and expl3
+\RequirePackage {bm}					% Bold math operators
+
+\sys_if_engine_luatex:T
+{
+	\RequirePackage {luacolor}
+}
+
+\bool_if:NT \l__ds_layout_bool
+{
+	\RequirePackage {geometry}
+	\RequirePackage [verbose=silent] {microtype}	% Improve ragged2e hyphenation and overfull boxes
+	\RequirePackage {ragged2e}
+	\RequirePackage [titles] {tocloft}		% multi-column toc
+	\RequirePackage [newparttoc] {titlesec}	% Used to adjust (sub)section, part, and table of contents formatting
+	
+	\bool_if:NT \l__ds_multitoc_bool
+		{ \RequirePackage [toc] {multitoc} }
+
+	% Set Page Geometry
+	\geometry
+	{
+		hmargin		= .75in,	% Left and right margins
+		top			= .46in,	% Top of text area to top of page
+		bottom		= .8in,		% Bottom of text area to bottom of page
+		footskip	= .32in,	% Bottom of text area to bottom of footer text
+		columnsep	= .33in,	% Space between columns
+	}
+	
+	% Set paragraph and line spacing
+	\setlength {\parindent}            {1em}
+	\setlength {\RaggedRightRightskip} {0pt plus 1em}
+	\setlength {\RaggedRightParindent} {\parindent}
+
+	% Restrict hyphenation
+	\tolerance		= 1
+	\emergencystretch	= \maxdimen
+	\hyphenpenalty		= 10000
+	\hbadness		= 10000
+	\vbadness		= 10000
+
+	% Set left justification if not justified
+	\bool_if:NF \l__ds_justified_bool
+		{ \RaggedRight }
+
+	% Customize itemize environment.
+	\setlist{leftmargin=1em}
+	\setitemize{noitemsep,topsep=0.5ex,label=\footnotesize{\textbullet}}
+}
+
+% Load other modules of this package after all dependencies to avoid load order
+% conflicts (e.g., package options).
+% Low-level modules first.
+\RequirePackage {\PATH templates/template_ds/lib/compat}		% compatibility definitions
+\RequirePackage {\PATH templates/template_ds/lib/dsutility}		% utility functions
+\RequirePackage {\PATH templates/template_ds/lib/dscolors}		% color definitions
+\RequirePackage {\PATH templates/template_ds/lib/dsfonts}		% font definitions
+\RequirePackage {\PATH templates/template_ds/lib/dsstrings}		% Load document strings
+
+% Main modules in alphabetical order
+%\RequirePackage {\PATH templates/template_ds/lib/dscomment}	% inline comment boxes
+\RequirePackage {\PATH templates/template_ds/lib/dsheader}		% fancy headers and footers
+%\RequirePackage {\PATH templates/template_ds/lib/dsmonster}	% stat blocks
+%\RequirePackage {\PATH templates/template_ds/lib/dsreadaloud}	% read-aloud text
+%\RequirePackage {\PATH templates/template_ds/lib/dssections}	% section styling and special section headers
+%\RequirePackage {\PATH templates/template_ds/lib/dssidebar}	% sidebars
+%\RequirePackage {\PATH templates/template_ds/lib/dstable}		% tables
+%\RequirePackage {\PATH templates/template_ds/lib/dstoc}		% table of contents styling

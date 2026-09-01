@@ -1,0 +1,513 @@
+% ------------------------------------------------------------------------------------------------- %
+%						action_panel_commands.sty  	Marcel Zauder 27/08/2026						%
+% Stylesheet by Marcel                                                                              %
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------------ Usepackages ------------------------------------------ %
+
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------------- Variables ------------------------------------------- %
+\newcommand{\actionpaneltoplabel}{}
+\newcommand{\actionpaneltype}{}
+\newcommand{\actionpaneldividertype}{}
+\newcommand{\actionpanelcost}{}
+% ------------------------------------------------------------------------------------------------- %
+% +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#  Colours  #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# %
+\definecolor{actionpanelmain}{HTML}{6F3A8E}       % Main/Heroic/Signature
+\definecolor{actionpanelmaneuver}{HTML}{55A9D6}   % Maneuver
+\definecolor{actionpaneltriggered}{HTML}{438A5E}  % Triggered
+\definecolor{actionpanelfreestrike}{HTML}{777777} % Free Strike
+% ------------------------------------------------------------------------------------------------- %
+% +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# Escape  Sequences #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# %
+\newcommand{\ActionPanelTextBreak}{%
+	\endgraf\vspace*{2pt}%
+}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ---------------------------------------- Implementations ---------------------------------------- %
+% +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# Option Processing #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# %
+\ExplSyntaxOn
+% --------------------------------------------------------------
+% Environment Dimensions
+% --------------------------------------------------------------
+\dim_new:N  \l__ds_actionpanel_width_dim
+\dim_new:N  \l__ds_actionpanel_height_dim
+\bool_new:N \l__ds_actionpanel_fixed_height_bool
+
+\keys_define:nn { ds / actionpanel }
+{
+	width .dim_set:N = \l__ds_actionpanel_width_dim,
+	
+	height .code:n =
+	{
+		\dim_set:Nn \l__ds_actionpanel_height_dim {#1}
+		\bool_set_true:N \l__ds_actionpanel_fixed_height_bool
+	},
+}
+% --------------------------------------------------------------
+% Processing Information from Action Type
+% --------------------------------------------------------------
+\tl_new:N \l__ds_actionpanel_action_label_tl
+\tl_new:N \l__ds_actionpanel_top_label_tl
+
+
+\cs_new_protected:Npn \__ds_actionpanel_set_type:n #1
+{
+	% Expand the input first -- important for DATATOOL values.
+	\tl_set:Nx \l_tmpa_tl {#1}
+
+	% Split at "/".
+	\seq_set_split:NnV
+		\l__ds_actionpanel_type_parts_seq
+		{/}
+		\l_tmpa_tl
+
+	% --------------------------------------------------------------
+	% Determine displayed label and actual mechanical type
+	% --------------------------------------------------------------
+
+	\int_compare:nNnTF
+		{\seq_count:N \l__ds_actionpanel_type_parts_seq}
+		=
+		{2}
+	{
+		% Form:
+		% Signature Ability/Main Action
+		% Heroic Ability/Triggered Action
+		% etc.
+
+		\tl_set:Nx \l__ds_actionpanel_label_tl
+		{
+			\seq_item:Nn
+				\l__ds_actionpanel_type_parts_seq
+				{1}
+		}
+
+		\tl_set:Nx \l__ds_actionpanel_mechanical_type_tl
+		{
+			\seq_item:Nn
+				\l__ds_actionpanel_type_parts_seq
+				{2}
+		}
+
+		\tl_trim_spaces:N \l__ds_actionpanel_label_tl
+		\tl_trim_spaces:N \l__ds_actionpanel_mechanical_type_tl
+
+		\bool_set_true:N \l__ds_actionpanel_custom_label_bool
+	}
+	{
+		% Normal form:
+		% Main Action
+		% Maneuver
+		% Triggered Action
+		% etc.
+
+		\tl_set_eq:NN
+			\l__ds_actionpanel_label_tl
+			\l_tmpa_tl
+
+		\tl_set_eq:NN
+			\l__ds_actionpanel_mechanical_type_tl
+			\l_tmpa_tl
+
+		\tl_trim_spaces:N \l__ds_actionpanel_label_tl
+		\tl_trim_spaces:N \l__ds_actionpanel_mechanical_type_tl
+
+		\bool_set_false:N \l__ds_actionpanel_custom_label_bool
+	}
+
+	% Actually store the displayed label.
+	\edef\actionpaneltoplabel
+	{
+		\tl_use:N \l__ds_actionpanel_label_tl
+	}
+
+	% --------------------------------------------------------------
+	% Configure panel using the ACTUAL action type
+	% --------------------------------------------------------------
+
+	\str_case_e:nnF
+		{\l__ds_actionpanel_mechanical_type_tl}
+	{
+		{Main~Action}
+		{
+			\colorlet{actionpanelcurrent}{actionpanelmain}
+			\renewcommand{\actionpaneltype}{Main~Action}
+			\renewcommand{\actionpaneldividertype}{Main~Action}
+		}
+		
+		{Heroic~Ability}
+		{
+			\colorlet{actionpanelcurrent}{actionpanelmain}
+			\renewcommand{\actionpaneltype}{Main~Action}
+			\renewcommand{\actionpaneldividertype}{Main~Action}
+		}
+		
+		{Signature~Ability}
+		{
+			\colorlet{actionpanelcurrent}{actionpanelmain}
+			\renewcommand{\actionpaneltype}{Main~Action}
+			\renewcommand{\actionpaneldividertype}{Main~Action}
+		}
+
+		{Maneuver}
+		{
+			\colorlet{actionpanelcurrent}{actionpanelmaneuver}
+			\renewcommand{\actionpaneltype}{Maneuver}
+			\renewcommand{\actionpaneldividertype}{Maneuver}
+		}
+
+		{Triggered~Action}
+		{
+			\colorlet{actionpanelcurrent}{actionpaneltriggered}
+			\renewcommand{\actionpaneltype}{Triggered~Action}
+			\renewcommand{\actionpaneldividertype}{Triggered~Action}
+		}
+
+		{Free~Triggered~Action}
+		{
+			\colorlet{actionpanelcurrent}{actionpaneltriggered}
+			\renewcommand{\actionpaneltype}{Free~Triggered~Action}
+			\renewcommand{\actionpaneldividertype}{Triggered~Action}
+
+			% For an ordinary Free Triggered Action retain your
+			% previous behaviour of displaying "Triggered Action".
+			%
+			% But:
+			% Heroic Ability/Free Triggered Action
+			% should continue to display "Heroic Ability".
+			\bool_if:NF \l__ds_actionpanel_custom_label_bool
+			{
+				\renewcommand{\actionpaneltoplabel}{Triggered~Action}
+			}
+		}
+
+		{Free~Strike}
+		{
+			\colorlet{actionpanelcurrent}{actionpanelfreestrike}
+			\renewcommand{\actionpaneltype}{Free~Strike}
+			\renewcommand{\actionpaneldividertype}{Free~Strike}
+		}
+	}
+	{
+		\PackageError{panel_commands}
+			{
+				Unknown~Action~Panel~type~'\tl_use:N \l__ds_actionpanel_mechanical_type_tl'
+			}
+			{
+				Valid~action~types~are~Main~Action,~Maneuver,~Triggered~Action,~Free~Triggered~Action,~and~Free~ Strike.~For~Heroic~or~Signature~abilities~use,~for~example,~'Heroic~Ability/Triggered~Action'~or~'Signature~Ability/Main~Action'.
+			}
+	}
+}
+\ExplSyntaxOff
+% ------------------------------------------------------------------------------------------------- %
+% +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# Outer Frame + Action Type #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# %
+\newcommand{\actionpanelframe}
+{
+	% --------------------------------------------------------------
+	% Action-Type Top Label
+	% --------------------------------------------------------------
+	\node[
+		text=actionpanelcurrent,
+		font=\scriptsize\bfseries\scshape,
+		inner xsep=2pt,
+		inner ysep=0pt,
+		fill=none,
+		draw=none
+    ]
+	(actionpanellabel) at (frame.north) {\MakeUppercase{\actionpaneltoplabel}};
+	
+    % --------------------------------------------------------------
+    % Border
+    % --------------------------------------------------------------
+    \draw[
+        draw=actionpanelcurrent,
+        line width=0.9pt,
+        line join=round
+    ]
+        (actionpanellabel.west)
+        --
+        ([xshift=6pt]frame.north west)
+        --
+        ([yshift=-6pt]frame.north west)
+        --
+        ([yshift=6pt]frame.south west)
+        --
+        ([xshift=6pt]frame.south west)
+        --
+        ([xshift=-6pt]frame.south east)
+        --
+        ([yshift=6pt]frame.south east)
+        --
+        ([yshift=-6pt]frame.north east)
+        --
+        ([xshift=-6pt]frame.north east)
+        --
+        (actionpanellabel.east);
+}
+% ------------------------------------------------------------------------------------------------- %
+% +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#  Cost Circle  #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# %
+\newcommand{\actionpanelcostcircle}{%
+	\ifthenelse{\equal{\actionpanelcost}{}}{}{%
+		\coordinate (coststring) at ([xshift=-17pt, yshift=-18pt]frame.north east);
+		\node[inner sep=0pt, outer sep=1pt] (costpanel) at (coststring) {\tiny\MakeUppercase{Cost}};
+		
+		\draw[black,line width=0.5pt] (costpanel.north east) ++(0.25pt,-2pt) arc[start angle=-25, end angle=205, radius=9pt];
+		
+		\node[inner sep=0pt, yshift=4.5pt] at (costpanel.north) {\normalsize\bfseries\actionpanelcost};
+	}
+}
+% ------------------------------------------------------------------------------------------------- %
+% +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#  Divider  #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# %
+\ExplSyntaxOn
+\newlength{\ornamentaldividerwidth}
+% \cs_new_protected:Npn \__ds_actionpanel_divider:
+\NewDocumentCommand{\OrnamentalDivider}{ O{\linewidth} m }
+{
+	\par\vspace*{-2pt}\setlength{\ornamentaldividerwidth}{#1}
+	\begin{tikzpicture}[inner~sep=0pt, outer~sep=0pt]
+	\draw[draw=none] (0,5pt) rectangle ++(\ornamentaldividerwidth,-11pt);
+	\str_case_e:nnF {#2}
+	{
+		{Main~Action}
+		{
+			% Big Diamond
+			\draw[fill=actionpanelcurrent, draw=none] (0.5\ornamentaldividerwidth,1pt) ++(-3pt,0) -- ++(3pt,3pt) -- ++(3pt,-3pt) -- ++(-3pt,-3pt) -- cycle;
+			% Small Diamonds
+			\draw[fill=actionpanelcurrent, draw=none] (0,0) -- ++(2pt,2pt) -- ++(2pt,-2pt) -- ++(-2pt,-2pt) -- cycle;
+			\draw[fill=actionpanelcurrent, draw=none] (\ornamentaldividerwidth,0) -- ++(-2pt,2pt) -- ++(-2pt,-2pt) -- ++(2pt,-2pt) -- cycle;
+			
+			\begin{scope}
+				% Clip Path
+				\draw[clip, draw=none] (5pt,0) -- ++(-5pt,5pt) -- ++(\ornamentaldividerwidth,0) -- ++(-5pt,-5pt) -- ++(5pt,-5pt) -- ++(0,-1.5pt) -- ++(-\ornamentaldividerwidth,0) -- ++(0,1.5pt) -- cycle;
+				% Big Line
+				\draw[actionpanelcurrent, line~width=1.2pt] (0,0) -- ++({0.5\ornamentaldividerwidth - 5pt},0) -- ++(5pt,-5pt) -- ++(5pt,5pt) -- (\ornamentaldividerwidth,0);
+				% Small Line Left
+				\draw[actionpanelcurrent, line~width=0.5pt] (0.5\ornamentaldividerwidth,-2pt) ++(-3pt,0) -- (0,-2pt) -- (0,2pt) -- ++({0.5\ornamentaldividerwidth-11pt},0) -- ++(6pt,-6pt);
+				% Small Line Left
+				\draw[actionpanelcurrent, line~width=0.5pt] (0.5\ornamentaldividerwidth,-2pt) ++(3pt,0) -- (\ornamentaldividerwidth,-2pt) -- (\ornamentaldividerwidth,2pt) -- ++({-0.5\ornamentaldividerwidth+11pt},0) -- ++(-6pt,-6pt);
+			\end{scope}
+		}
+		{Maneuver}
+		{
+			% Big Diamond
+			\draw[actionpanelcurrent, line~width=1.2pt] (0.5\ornamentaldividerwidth,5pt) -- ++(0,-11pt);
+			% Small Diamonds
+			\draw[fill=actionpanelcurrent, draw=none] (0,0) -- ++(2pt,2pt) -- ++(2pt,-2pt) -- ++(-2pt,-2pt) -- cycle;
+			\draw[fill=actionpanelcurrent, draw=none] (\ornamentaldividerwidth,0) -- ++(-2pt,2pt) -- ++(-2pt,-2pt) -- ++(2pt,-2pt) -- cycle;
+			
+			\begin{scope}
+				% Clip Path
+				\draw[clip, draw=none] (5pt,0) -- ++(-5pt,5pt) -- ++(\ornamentaldividerwidth,0) -- ++(-5pt,-5pt) -- ++(5pt,-5pt) -- ++(0,-1.5pt) -- ++(-\ornamentaldividerwidth,0) -- ++(0,1.5pt) -- cycle;
+				% Big Line Left
+				\draw[actionpanelcurrent, line~width=1.2pt] (0.5\ornamentaldividerwidth,-2pt) ++ (-8pt,0) -- (1pt,-2pt) -- (1pt,2pt) -- ++({0.5\ornamentaldividerwidth - 4pt}, 0) -- ++(0,-7pt);
+				% Small Line Left
+				\draw[actionpanelcurrent, line~width=0.5pt] (0,0) -- ++({0.5\ornamentaldividerwidth - 5.5pt},0) -- ++(0,-4.75pt);
+				% Big Line Right
+				\draw[actionpanelcurrent, line~width=1.2pt] (0.5\ornamentaldividerwidth,-2pt) ++ (8pt,0) -- ({\ornamentaldividerwidth - 1pt},-2pt) -- ({\ornamentaldividerwidth - 1pt},2pt) -- ++({-0.5\ornamentaldividerwidth + 4pt}, 0) -- ++(0,-7pt);
+				% Small Line Left
+				\draw[actionpanelcurrent, line~width=0.5pt] (\ornamentaldividerwidth,0) -- ++({-0.5\ornamentaldividerwidth + 5.5pt},0) -- ++(0,-4.75pt);
+			\end{scope}
+		}
+		{Triggered~Action}
+		{
+			% Small Diamonds
+			\draw[fill=actionpanelcurrent, draw=none] (0,0) -- ++(2pt,2pt) -- ++(2pt,-2pt) -- ++(-2pt,-2pt) -- cycle;
+			\draw[fill=actionpanelcurrent, draw=none] (0.5\ornamentaldividerwidth,2pt) -- ++(2pt,-2pt) -- ++(-2pt,-2pt) -- ++(-2pt,2pt) -- cycle;
+			\draw[fill=actionpanelcurrent, draw=none] (\ornamentaldividerwidth,0) -- ++(-2pt,2pt) -- ++(-2pt,-2pt) -- ++(2pt,-2pt) -- cycle;
+			% Diamond Outline
+			\draw[actionpanelcurrent, line~width=0.5pt] ({0.5\ornamentaldividerwidth-4pt},0) -- ++(4pt,4pt) -- ++(4pt,-4pt) -- ++(-4pt,-4pt) -- cycle;
+			
+			% Big Line Left
+			\draw[actionpanelcurrent, line~width=1.2pt] (2pt,0) -- ++({0.5\ornamentaldividerwidth - 9pt},0) -- ++(5pt,5pt) ++(-5pt,-5pt) -- ++(5pt,-5pt);
+			% Small Line Left
+			\draw[actionpanelcurrent, line~width=0.5pt] (4pt,2pt) -- ++({0.5\ornamentaldividerwidth - 12pt},0) -- ++(2pt,2pt);
+			\draw[actionpanelcurrent, line~width=0.5pt] (4pt,-2pt) -- ++({0.5\ornamentaldividerwidth - 12pt},0) -- ++(2pt,-2pt);
+			% Big Line Riught
+			\draw[actionpanelcurrent, line~width=1.2pt] ({\ornamentaldividerwidth - 2pt},0) -- ++({-0.5\ornamentaldividerwidth + 9pt},0) -- ++(-5pt,5pt) ++(5pt,-5pt) -- ++(-5pt,-5pt);
+			% Small Line Left
+			\draw[actionpanelcurrent, line~width=0.5pt] ({\ornamentaldividerwidth - 4pt},2pt) -- ++({-0.5\ornamentaldividerwidth + 12pt},0) -- ++(-2pt,2pt);
+			\draw[actionpanelcurrent, line~width=0.5pt] ({\ornamentaldividerwidth - 4pt},-2pt) -- ++({-0.5\ornamentaldividerwidth + 12pt},0) -- ++(-2pt,-2pt);
+		}
+		{Free~Strike}
+		{
+			% Middle Circle
+			\draw[fill=actionpanelcurrent, draw=none] (0.5\ornamentaldividerwidth,0) circle (2pt);
+			% Big Line
+			\draw[actionpanelcurrent, line~width=1.2pt] (0,0) -- ({0.5\ornamentaldividerwidth - 4pt},0) arc[start~angle=-180, end~angle=0, radius=4pt] -- (\ornamentaldividerwidth,0);
+			% Small Line Left
+			\draw[actionpanelcurrent, line~width=0.5pt] (0,-2pt) -- ++({0.5\ornamentaldividerwidth - 3pt},0);
+			% Small Line Right
+			\draw[actionpanelcurrent, line~width=0.5pt] (\ornamentaldividerwidth,-2pt) -- ++({-0.5\ornamentaldividerwidth + 3pt},0);
+		}
+	}
+	{
+		% Big Diamond
+		\draw[fill=gray, draw=none] (0.5\ornamentaldividerwidth,1pt) ++(-3pt,0) -- ++(3pt,3pt) -- ++(3pt,-3pt) -- ++(-3pt,-3pt) -- cycle;
+		% Big Line
+		\draw[gray, line~width=1.2pt] (0,0) -- ++({0.5\ornamentaldividerwidth - 5pt},0) -- ++(5pt,-5pt) -- ++(5pt,5pt) -- (\ornamentaldividerwidth,0);
+		% Small Line Left
+		\draw[gray, line~width=0.5pt] (0.5\ornamentaldividerwidth,-2pt) ++(-3pt,0) -- (0,-2pt);
+		% Small Line Left
+		\draw[gray, line~width=0.5pt] (0.5\ornamentaldividerwidth,-2pt) ++(3pt,0) -- (\ornamentaldividerwidth,-2pt);
+	}
+	\end{tikzpicture}
+	\par
+}
+\ExplSyntaxOff
+% ------------------------------------------------------------------------------------------------- %
+% +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-# Action Classification and Information #-#-#-#-#-#-#-#-#-#-#-#-#-#-# %
+\NewDocumentCommand{\ActionClassificationInformation}{ mmm }{%
+	\noindent
+    % ------------------------------------------------------------------
+	% Kind and Type
+    % ------------------------------------------------------------------
+	\begin{tabularx}{\linewidth}
+		{
+			@{}
+			>{\raggedright\arraybackslash}X
+			>{\raggedleft\arraybackslash}l
+			@{}
+		}
+		\textbf{#1}
+		&
+		{\color{actionpanelcurrent}\bfseries\actionpaneltype}
+	\end{tabularx}\par\vspace*{1pt}
+    % ------------------------------------------------------------------
+	% Range and Targets
+    % ------------------------------------------------------------------
+    \ifthenelse{\equal{#2}{} \AND \equal{#3}{}}{}{%
+		\begin{tabularx}{\linewidth}
+			{
+				@{}
+				>{\raggedright\arraybackslash}X
+				>{\raggedleft\arraybackslash}l
+				@{}
+			}
+			\ifthenelse{\equal{#2}{}}{}{{\dsglyphs D} #2}
+			&
+			\ifthenelse{\equal{#3}{}}{}{{\dsglyphs T} #3}
+		\end{tabularx}\par\vspace*{3pt}
+	}
+}%
+% ------------------------------------------------------------------------------------------------- %
+% +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# Action Panel Base #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# %
+\tcbset{
+	action panel base/.style={
+		enhanced,
+    	% --------------------------------------------------------------
+		% No Frame or Background (Frame is drawn in Finish)
+    	% --------------------------------------------------------------
+		frame hidden,
+		interior hidden,
+		boxrule=0pt,
+		sharp corners,
+		boxsep=0pt,
+    	% --------------------------------------------------------------
+		% Margins
+    	% --------------------------------------------------------------
+		left=7pt,
+		right=7pt,
+		top=7pt,
+		bottom=7pt,
+		before skip=5pt,
+		after skip=5pt,
+    	% --------------------------------------------------------------
+		% Font-Size
+    	% --------------------------------------------------------------
+		fontupper=\scriptsize,
+    	% --------------------------------------------------------------
+		% Finish (Draw Frame and potential Cost Circle)
+    	% --------------------------------------------------------------
+		finish={
+			\actionpanelframe
+			\actionpanelcostcircle
+		},
+	}
+}
+% ------------------------------------------------------------------------------------------------- %
+% +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# Action  Panel #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# %
+\ExplSyntaxOn
+\NewDocumentEnvironment{ActionPanel}{O{} m m O{} O{} m m m +b}{
+	% --------------------------------------------------------------
+	% Possible Cost
+	% --------------------------------------------------------------
+	\renewcommand{\actionpanelcost}{#4}
+	\group_begin:
+	% --------------------------------------------------------------
+	% Defaults
+	% --------------------------------------------------------------
+	\dim_set:Nn
+		\l__ds_actionpanel_width_dim
+		{\linewidth}
+	
+	\bool_set_false:N
+		\l__ds_actionpanel_fixed_height_bool
+	
+	% --------------------------------------------------------------
+	% Optional width / height
+	% --------------------------------------------------------------
+	\keys_set:nn{ ds / actionpanel }{#1}
+	
+	% --------------------------------------------------------------
+	% Determine colour and action semantics
+	% --------------------------------------------------------------
+	\__ds_actionpanel_set_type:n {#2}	
+	% --------------------------------------------------------------
+	% Begin box
+	% --------------------------------------------------------------
+	\bool_if:NTF
+		\l__ds_actionpanel_fixed_height_bool
+	{
+		\begin{tcolorbox}[
+			action~panel~base,
+			width=\dim_use:N \l__ds_actionpanel_width_dim,
+			height=\dim_use:N \l__ds_actionpanel_height_dim
+		]
+	}
+	{
+		\begin{tcolorbox}[
+			action~panel~base,
+			width=\dim_use:N \l__ds_actionpanel_width_dim
+		]
+	}
+		% ----------------------------------------------------------
+		% Name
+		% ----------------------------------------------------------
+		\noindent\parbox{\linewidth}{%
+			\centering\large\bfseries\scshape{\strut #3}%
+		}%
+		% ----------------------------------------------------------
+		% Major Divider
+		% ----------------------------------------------------------
+		\OrnamentalDivider{\actionpaneldividertype}
+		% ----------------------------------------------------------
+		% Description (optional)
+		% ----------------------------------------------------------
+		\ifthenelse{\equal{#5}{}}{}
+		{
+			{\itshape #5\par}
+			{\color{black}\rule{\linewidth}{0.45pt}}\par\vspace{2pt}
+		}
+		% ----------------------------------------------------------
+		% Action Classification and Information
+		% ----------------------------------------------------------
+		\ActionClassificationInformation{#6}{#7}{#8}
+		% ----------------------------------------------------------
+		% Action Body
+		% ----------------------------------------------------------
+		#9
+    \end{tcolorbox}
+    \group_end:
+}
+\ExplSyntaxOff

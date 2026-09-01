@@ -1,0 +1,346 @@
+% ------------------------------------------------------------------------------------------------- %
+%						display_commands.sty  	Marcel Zauder 28/08/2026						%
+% Stylesheet by Marcel                                                                              %
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------------ Usepackages ------------------------------------------ %
+\usepackage{bm}
+\RequirePackage{amsmath}
+\RequirePackage{xstring}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------------- Variables ------------------------------------------- %
+% Current large grid slot: 0--8
+\newcounter{ActionPanelSlot}
+
+% 0 = next small panel goes into upper half
+% 1 = next small panel goes into lower half
+\newcounter{ActionPanelSmallHalf}
+
+\newlength{\currentxshift}
+\newlength{\currentyshift}
+\newlength{\currentpanelheight}
+
+\newif\ifActionPanelKitBonusStarted
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% --------------------------------------- Display  Commands --------------------------------------- %
+% +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#  Action Page  #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# %
+\NewDocumentCommand{\DisplayActionPage}{}{%
+	% Reset independent layout counter.
+	\resetActionPanelLayout
+
+	% Start first page.
+	\begin{tikzpicture}[remember picture, overlay]%
+
+	\DTLforeach*{actionDB}{%
+		\thisPanelSize=PanelSize,
+		\thisType=Type,
+		\thisName=Name,
+		\thisCost=Cost,
+		\thisDescription=Description,
+		\thisCategory=Category,
+		\thisRange=Range,
+		\thisTargets=Targets,
+		\thisTextbox=Textbox
+	}{%
+		% Determine position and size.
+		\prepareActionPanelPlacement{\thisPanelSize}%
+
+		\node[
+			inner sep=0pt,
+			xshift=\currentxshift,
+			yshift=\currentyshift
+		] at (current page.center) {%
+			\begin{ActionPanel}[
+				width=0.32\paperwidth,
+				height=\currentpanelheight
+			]
+				{\thisType}
+				{\thisName}
+				[\thisCost]
+				[\thisDescription]
+				{\thisCategory}
+				{\thisRange}
+				{\thisTargets}
+
+				\thisTextbox
+			\end{ActionPanel}
+		};
+
+		% Advance slot/half-slot state.
+		\finishActionPanelPlacement{\thisPanelSize}%
+	}%
+
+	\end{tikzpicture}%
+}
+% --------------------------------------------------------------
+% Reset Layout
+% --------------------------------------------------------------
+\newcommand{\resetActionPanelLayout}{%
+	\setcounter{ActionPanelSlot}{0}%
+	\setcounter{ActionPanelSmallHalf}{0}%
+}
+% --------------------------------------------------------------
+% Start a new page once all 9 full-size slots are occupied
+% --------------------------------------------------------------
+\newcommand{\checkActionPanelPageBreak}{%
+	\ifnum\value{ActionPanelSlot}=9\relax
+		\end{tikzpicture}%
+		\clearpage
+		\setcounter{ActionPanelSlot}{0}%
+		\begin{tikzpicture}[remember picture, overlay]%
+	\fi
+}
+% --------------------------------------------------------------
+% Shift Dimensions
+% --------------------------------------------------------------
+\newcommand{\getShiftDimensions}[1]{%
+	\ifcase#1
+		% Slot 0
+		\setlength{\currentxshift}{-0.33\paperwidth}%
+		\setlength{\currentyshift}{ 0.33\paperheight}%
+	\or
+		% Slot 1
+		\setlength{\currentxshift}{0pt}%
+		\setlength{\currentyshift}{0.33\paperheight}%
+	\or
+		% Slot 2
+		\setlength{\currentxshift}{0.33\paperwidth}%
+		\setlength{\currentyshift}{0.33\paperheight}%
+	\or
+		% Slot 3
+		\setlength{\currentxshift}{-0.33\paperwidth}%
+		\setlength{\currentyshift}{0pt}%
+	\or
+		% Slot 4
+		\setlength{\currentxshift}{0pt}%
+		\setlength{\currentyshift}{0pt}%
+	\or
+		% Slot 5
+		\setlength{\currentxshift}{0.33\paperwidth}%
+		\setlength{\currentyshift}{0pt}%
+	\or
+		% Slot 6
+		\setlength{\currentxshift}{-0.33\paperwidth}%
+		\setlength{\currentyshift}{-0.33\paperheight}%
+	\or
+		% Slot 7
+		\setlength{\currentxshift}{0pt}%
+		\setlength{\currentyshift}{-0.33\paperheight}%
+	\or
+		% Slot 8
+		\setlength{\currentxshift}{0.33\paperwidth}%
+		\setlength{\currentyshift}{-0.33\paperheight}%
+	\fi
+}
+% --------------------------------------------------------------
+% Prepare Panel Dimensions
+% --------------------------------------------------------------
+\newcommand{\prepareActionPanelPlacement}[1]{%
+	% If the previous page is full, start the next one.
+	\checkActionPanelPageBreak
+
+	% Get centre of current full-size grid slot.
+	\getShiftDimensions{\value{ActionPanelSlot}}%
+
+	\ifthenelse{\equal{#1}{small}}{%
+		% ------------------------------------------------------
+		% Small panel
+		% ------------------------------------------------------
+
+		\setlength{\currentpanelheight}{0.155\paperheight}%
+
+		\ifnum\value{ActionPanelSmallHalf}=0\relax
+			% First panel of pair -> upper half
+			\addtolength{\currentyshift}{0.0825\paperheight}%
+		\else
+			% Second panel of pair -> lower half
+			\addtolength{\currentyshift}{-0.0825\paperheight}%
+		\fi
+	}{%
+		% ------------------------------------------------------
+		% Normal panel
+		% ------------------------------------------------------
+
+		\ifnum\value{ActionPanelSmallHalf}=1\relax
+			\PackageError
+				{action_panel_commands}
+				{Unpaired small Action Panel}
+				{Small Action Panels must always occur in pairs.}%
+		\fi
+
+		\setlength{\currentpanelheight}{0.32\paperheight}%
+	}%
+}
+% --------------------------------------------------------------
+% Advance layout after drawing a panel
+% --------------------------------------------------------------
+\newcommand{\finishActionPanelPlacement}[1]{%
+	\ifthenelse{\equal{#1}{small}}{%
+		\ifnum\value{ActionPanelSmallHalf}=0\relax
+			% First small panel only occupies upper half.
+			\setcounter{ActionPanelSmallHalf}{1}%
+		\else
+			% Second small panel completes this grid slot.
+			\setcounter{ActionPanelSmallHalf}{0}%
+			\stepcounter{ActionPanelSlot}%
+		\fi
+	}{%
+		% Normal panel consumes one complete slot.
+		\stepcounter{ActionPanelSlot}%
+	}%
+}
+% ------------------------------------------------------------------------------------------------- %
+% +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#  Power Roll Range Bricks  #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# %
+\NewDocumentCommand{\PowerRollRangeBrick}{ O{black} m m }{%
+	\tikz[
+		baseline=(txt.base),
+		x=1pt,
+		y=1pt
+	]{
+		\def\BrickColor{#1}
+
+		% Dimensions
+		\def\W{20}	% width
+		\def\H{8}	% height
+		\def\N{1.5}	% notch depth
+		\def\C{1.5}	% chamfer
+
+		% Define polygon based on variant
+		\ifstrequal{#2}{low}{%
+			\draw[\BrickColor, line width=0.6pt]
+				(\C+\N,0) -- (\W-\C,0) -- (\W,\C)  -- (\W,\H-\C) -- (\W-\C,\H) -- (\C+\N,\H) -- (\N,\H-\C) -- (\N,\H / 2 + \N) -- (0,\H / 2) -- (\N,\H / 2 - \N) -- (\N,\C) -- cycle;
+		}{%
+		\ifstrequal{#2}{mid}{%
+			\draw[\BrickColor, line width=0.6pt]
+				(\C,0) -- (\W-\C,0) -- (\W,\C) -- (\W,\H-\C) -- (\W-\C,\H) -- (\C,\H) -- (0,\H-\C) -- (0,\C) -- cycle;
+		}{%
+		\ifstrequal{#2}{high}{%
+			\draw[\BrickColor, line width=0.6pt]
+				(\C,0) -- (\W-\C-\N,0) -- (\W-\N,\C) -- (\W-\N,\H / 2 - \N) -- (\W,\H / 2) -- (\W-\N,\H / 2 + \N) -- (\W-\N,\H-\C) -- (\W-\N-\C,\H) -- (\C,\H) -- (0,\H-\C) -- (0,\C) -- cycle;
+		}{%
+			% fallback: simple rectangle
+			\draw[\BrickColor, line width=0.6pt]
+				(\C,0) -- (\W-\C,0) -- (\W,\C) -- (\W,\H-\C) --
+				(\W-\C,\H) -- (\C,\H) -- (0,\H-\C) -- (0,\C) -- cycle;
+		}}}
+
+		\node[
+			inner sep=0pt,
+			text=\BrickColor,
+			font=\bfseries\tiny
+		] (txt) at (\W / 2,\H / 2) {#3};
+	}%
+}
+% ------------------------------------------------------------------------------------------------- %
+% +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#  Power  Roll  #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# %
+\NewDocumentCommand{\DisplayPowerRoll}{ O{} mmmm }{
+	\textbf{Power Roll #2}\par\vspace*{2pt}
+	\begin{tabularx}{\linewidth}
+		{
+			@{}
+			l
+			@{\hspace{4pt}}
+			X
+			@{}
+		}
+		\PowerRollRangeBrick{low}{$\scalebox{0.75}{$\pmb{\leq}$}$11} & #3\\[2pt]
+		\PowerRollRangeBrick{mid}{12 - 16} & #4\\[2pt]
+		\PowerRollRangeBrick{high}{17+} & #5
+	\end{tabularx}%
+	\ifthenelse{\equal{#1}{}}{}{%
+		\DisplayRelevantKitDamageBonuses
+	}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# Parsing Damage Categories #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# %
+\newcommand{\DisplayRelevantKitDamageBonuses}{%
+	\IfSubStr{\thisCategory}{Melee}{%
+		\IfSubStr{\thisCategory}{Ranged}{%
+			% Both Melee and Ranged
+			\DisplayKitDamageBonuses{both}%
+		}{%
+			% Melee only
+			\DisplayKitDamageBonuses{melee}%
+		}%
+	}{%
+		\IfSubStr{\thisCategory}{Ranged}{%
+			% Ranged only
+			\DisplayKitDamageBonuses{ranged}%
+		}{%
+			% Neither -> display nothing
+		}%
+	}%
+}
+% ------------------------------------------------------------------------------------------------- %
+% +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#  Display Damage Bonuses  #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# %
+\newcommand{\DisplayKitDamageBonuses}[1]{%
+	\ActionPanelKitBonusStartedfalse%
+	\DTLforeach*{kitDB}{%
+		\thisKitName=Name,%
+		\thisMeleeDamageBonus=MeleeDamageBonus,%
+		\thisRangedDamageBonus=RangedDamageBonus%
+	}{%
+		% ------------------------------------------------------
+		% Melee
+		% ------------------------------------------------------
+		\ifthenelse{%
+			\equal{#1}{melee}%
+			\OR%
+			\equal{#1}{both}%
+		}{%
+			\ifthenelse{\equal{\thisMeleeDamageBonus}{}}{}{%
+				\ifActionPanelKitBonusStarted%
+				% Do nothing
+			\else%
+				\ActionPanelTextBreak%
+				\ActionPanelKitBonusStartedtrue%
+			\fi%
+				\DisplaySingleKitDamageBonus%
+					{\thisKitName}%
+					{\thisMeleeDamageBonus}%
+					{melee}%
+			}%
+		}{}%
+		% ------------------------------------------------------
+		% Ranged
+		% ------------------------------------------------------
+		\ifthenelse{%
+			\equal{#1}{ranged}%
+			\OR%
+			\equal{#1}{both}%
+		}{%
+			\ifthenelse{\equal{\thisRangedDamageBonus}{}}{}{%
+				\ifActionPanelKitBonusStarted%
+					% Do nothing
+				\else%
+					\ActionPanelTextBreak%
+					\ActionPanelKitBonusStartedtrue%
+				\fi%
+				\DisplaySingleKitDamageBonus%
+					{\thisKitName}%
+					{\thisRangedDamageBonus}%
+					{ranged}%
+			}%
+		}{}%
+	}%
+}
+% --------------------------------------------------------------
+% Split a,b,c and display one kit bonus line
+%
+% #1 = Kit name
+% #2 = Damage bonus, e.g. 0,0,+4
+% #3 = melee / ranged
+% --------------------------------------------------------------
+\newcommand{\DisplaySingleKitDamageBonus}[3]{%
+	\expandafter\DisplaySingleKitDamageBonusAux#2,\relax{#1}{#3}%
+}%
+\def\DisplaySingleKitDamageBonusAux#1,#2,#3,#4\relax#5#6{%
+	\hspace*{1em}\textbf{#5:} #1 $\mid$ #2 $\mid$ #3 #6 damage\endgraf%
+}%

@@ -1,0 +1,309 @@
+\ExplSyntaxOn % Use tilde (~) for spaces.
+
+% \addto\captions<language> cannot handle macros with parameters
+% We need to make our own parameters
+% |1| represents parameter 1
+
+\cs_new_protected:Npn \__ds_caption:nn #1#2
+{
+	\group_begin:
+		\str_set:Nx \l_tmpa_str { #1 }
+		\str_set:Nx \l_tmpb_str { #2 }
+		\exp_args:NNnx \str_replace_all:Nnn \l_tmpa_str { |1| } { #2 }
+		\str_use:N \l_tmpa_str
+	\group_end:
+}
+
+% Document-level version for backwards compatibility
+\NewDocumentCommand{\DSCaption}{ m m }
+	{ \__ds_caption:nn {#1} {#2} }
+
+% Define all strings as new macros instead of hardcoding them in the
+% TeX files. This then allows us to add captions for multilanguage support.
+
+% If you add or update a caption here, add it to languages/_template.sty
+% as well.
+
+% Characteristics
+\newcommand{\charactername}{Character~Name}
+\newcommand{\ancestryname}{Ancestry}
+\newcommand{\classname}{Class}
+\newcommand{\careername}{Career}
+\newcommand{\subclassname}{Subclass~(Tactical~Doctrine)}
+
+\newcommand{\victoriesname}{Victories}
+\newcommand{\levelname}{Level}
+\newcommand{\wealthname}{Wealth}
+\newcommand{\renownname}{Renown}
+\newcommand{\experiencename}{XP}
+
+% Statistics
+%% Abilities
+\newcommand{\mightstatname}{Might}
+\newcommand{\agilitystatname}{Agility}
+\newcommand{\reasonstatname}{Reason}
+\newcommand{\intuitionstatname}{Intuition}
+\newcommand{\presencestatname}{Presence}
+
+\newcommand{\sizestatname}{Size}
+\newcommand{\speedstatname}{Speed}
+\newcommand{\disengagestatname}{Disengage}
+\newcommand{\stabilitystatname}{Stability}
+%% Stamina / Recoveries
+\newcommand{\staminaname}{Stamina}
+\newcommand{\recoveriesname}{Recoveries}
+
+\newcommand{\currentstaminaname}{Current}
+\newcommand{\windedname}{Winded}
+\newcommand{\dyingname}{Dying}
+\newcommand{\temporarystaminaname}{Temporary}
+\newcommand{\maxname}{Max}
+%% Heroic Resource
+\newcommand{\heroicresourcename}{Heroic~Resource}
+\newcommand{\stringname}{Name}
+%% Surges
+\newcommand{\surgesname}{Surges}
+\newcommand{\surgename}{Surge}
+\newcommand{\damagename}{Damage}
+
+% Equipment and Modifiers
+\newcommand{\equipmentmodifiersname}{Equipment~and~Modifiers}
+\newcommand{\kitsname}{Kits}
+\newcommand{\weaponimplementname}{Weapon~/~Implement}
+\newcommand{\armorwardname}{Armor~/~Ward}
+\newcommand{\meleedistancename}{Melee~Dist.}
+\newcommand{\rangeddistancename}{Ranged~Dist.}
+\newcommand{\meleename}{Melee}
+\newcommand{\rangedname}{Ranged}
+\newcommand{\bonusname}{Bonus}
+\newcommand{\effectsname}{Effects}
+
+% Conditions
+\newcommand{\conditionsname}{Conditions}
+\newcommand{\conditionname}{Condition}
+\newcommand{\turnendname}{End~of~Turn}
+\newcommand{\saveendsname}{Save~Ends}
+\newcommand{\bleedingname}{Bleeding}
+\newcommand{\dazedname}{Dazed}
+\newcommand{\frightenedname}{Frightened}
+\newcommand{\grappedname}{Grapped}
+\newcommand{\pronename}{Prone}
+\newcommand{\restrainedname}{Restrained}
+\newcommand{\slowedname}{Slowed}
+\newcommand{\tauntedname}{Taunted}
+\newcommand{\weakenedname}{Weakened}
+
+\newcommand{\saveendsexplanation}{Save~Ends~=~__~or~higher~on~1d10~at~the~end~of~your~turn~removes~the~effect.}
+
+\newcommand{\immunitiesname}{Immunities}
+\newcommand{\weaknessesname}{Weaknesses}
+
+% Potency
+\newcommand{\potencyname}{Potency}
+\newcommand{\weakname}{Weak}
+\newcommand{\averagename}{Average}
+\newcommand{\strongname}{Strong}
+
+% Gaining Heroic Resource
+\newcommand{\gainingname}{Gaining}
+\newcommand{\gainname}{Gain}
+\newcommand{\whenname}{When}
+
+% Spending Hero Tokens
+\newcommand{\spendingherotokensname}{Spending~Hero~Tokens}
+
+% Your Turn
+\newcommand{\yourturnname}{Your~Turn}
+\newcommand{\yourturnexplanation}{Each~creature~can~take~a~Move~Action,~a~Maneuver,~and~a~Main~Action~on~their~turn~-~in~any~order}
+%% Move Actions
+\newcommand{\moveactionsname}{Move~Actions}
+\newcommand{\advancename}{Advance}
+%% Main Actions
+\newcommand{\mainactionsname}{Main~Actions}
+\newcommand{\chargename}{Charge}
+\newcommand{\defendname}{Defend}
+%% Maneuvers
+\newcommand{\aidattackname}{Aid~Attack}
+\newcommand{\catchbreathname}{Catch~Breath}
+\newcommand{\clawdirtname}{Claw~Dirt}
+\newcommand{\escapegrabname}{Escape~Grab}
+\newcommand{\grabname}{Grab}
+\newcommand{\knockbackname}{Knockback}
+\newcommand{\makeorassisttestname}{Make~or~Assist~Test}
+\newcommand{\searchforhiddencreaturename}{Search~for~Hidden~Creature}
+\newcommand{\standupname}{Stand~Up}
+\newcommand{\useconsumablename}{Use~Consumable}
+
+% Class Features
+\newcommand{\classfeaturesname}{Class~Features}
+
+% Culture
+\newcommand{\culturename}{Culture}
+\newcommand{\cultureexplanation}{You~gain~an~edge~on~tests~made~to~recall~lore~about~your~culture, ~and~on~tests~made~to~influence~and~interact~with~people~of~your~culture.}
+\newcommand{\languagesingularname}{Language}
+\newcommand{\languagesname}{Languages}
+\newcommand{\environmentname}{Environment}
+\newcommand{\organizationname}{Organization}
+\newcommand{\upbringingname}{Upbringing}
+
+% Career
+\newcommand{\benefitname}{Benefit}
+\newcommand{\incitindincidentname}{Inciting~Incident}
+
+% Complication
+\newcommand{\complicationname}{Complication}
+\newcommand{\drawbackname}{Drawback}
+
+% Ancestry Traits and Perks
+\newcommand{\ancestrytraitsandperksname}{Ancestry,~Traits,~and~Perks}
+
+% Skills
+\newcommand{\skillsname}{Skills}
+\newcommand{\skillsexplanation}{Have~1+~skills~that~apply~to~a~test?~+2~bonus}
+%% Crafting
+\newcommand{\craftingname}{Crafting}
+\newcommand{\alchemyname}{Alchemy}
+\newcommand{\architecturename}{Architecture}
+\newcommand{\blacksmithingname}{Blacksmithing}
+\newcommand{\carpentryname}{Carpentry}
+\newcommand{\cookingname}{Cooking}
+\newcommand{\fletchingname}{Fletching}
+\newcommand{\forgeryname}{Forgery}
+\newcommand{\jewelryname}{Jewelry}
+\newcommand{\mechanicsname}{Mechanics}
+\newcommand{\tailoringname}{Tailoring}
+%% Exploration
+\newcommand{\explorationname}{Exploration}
+\newcommand{\climbname}{Climb}
+\newcommand{\drivename}{Drive}
+\newcommand{\stringendurancename}{Endurance} % Can't be endurancename because no macro can start with "end"
+\newcommand{\gymnasticsname}{Gymnastics}
+\newcommand{\healname}{Heal}
+\newcommand{\jumpname}{Jump}
+\newcommand{\liftname}{Lift}
+\newcommand{\navigatename}{Navigate}
+\newcommand{\ridename}{Ride}
+\newcommand{\swimname}{Swim}
+%% Interpersonal
+\newcommand{\interpersonalname}{Interpersonal}
+\newcommand{\bragname}{Brag}
+\newcommand{\empathizename}{Empathize}
+\newcommand{\flirtname}{Flirt}
+\newcommand{\gamblename}{Gamble}
+\newcommand{\handleanimalsname}{Handle~Animals}
+\newcommand{\interrogatename}{Interrogate}
+\newcommand{\intimidatename}{Intimidate}
+\newcommand{\leadname}{Lead}
+\newcommand{\liename}{Lie}
+\newcommand{\musicname}{Music}
+\newcommand{\performname}{Perform}
+\newcommand{\persuadename}{Persuade}
+\newcommand{\readpersonname}{Read~Person}
+%% Intrigue
+\newcommand{\intriguename}{Intrigue}
+\newcommand{\alertnessname}{Alertness}
+\newcommand{\concealobjectname}{Conceal~Object}
+\newcommand{\disguisename}{Disguise}
+\newcommand{\eavesdropname}{Eavesdrop}
+\newcommand{\escapeartistname}{Escape~Artist}
+\newcommand{\hidename}{Hide}
+\newcommand{\picklockname}{Pick~Lock}
+\newcommand{\pickpocketname}{Pick~Pocket}
+\newcommand{\sabotagename}{Sabotage}
+\newcommand{\searchname}{Search}
+\newcommand{\sneakname}{Sneak}
+\newcommand{\trackname}{Track}
+%% Lore
+\newcommand{\criminalundergroundname}{Criminal Und.}
+\newcommand{\historyname}{History}
+\newcommand{\magicname}{Magic}
+\newcommand{\monstersname}{Monsters}
+\newcommand{\naturename}{Nature}
+\newcommand{\psyionicsname}{Psionics}
+\newcommand{\religionname}{Religion}
+\newcommand{\rumorsname}{Rumors}
+\newcommand{\societyname}{Society}
+\newcommand{\strategyname}{Strategy}
+\newcommand{\timescapename}{Timescape}
+
+% Actions, Abilities, and Maneuver
+\newcommand{\mainactionname}{Main~Action}
+\newcommand{\signaturabilityname}{Signature~Ability}
+\newcommand{\heroicabilityname}{Heroic~Ability}
+\newcommand{\maneuvername}{Maneuver}
+\newcommand{\triggeredactionname}{Triggered~Action}
+\newcommand{\freestrikename}{Free~Strike}
+\newcommand{\freetriggeredactionname}{Free~Triggered~Action}
+
+\newcommand{\powerrollname}{Power~Roll}
+\newcommand{\costname}{Cost}
+
+% Additional Information
+\newcommand{\titlesname}{Titles}
+\newcommand{\trinketsname}{Trinkets}
+\newcommand{\leveledtreasures}{Leveled~Treasures}
+\newcommand{\carrythreesafelyname}{Caryy~Three~Safely}
+\newcommand{\consumablesname}{Consumables}
+%% Projects
+\newcommand{\projectsname}{Projects}
+\newcommand{\projectname}{Project}
+\newcommand{\assignedherofollowername}{Assigned~Hero~/~Follower}
+\newcommand{\rollcharacteristicsname}{Roll~Characteristic}
+\newcommand{\goalpointsname}{Goal~Points}
+
+\newcommand{\notesname}{Notes}
+\newcommand{\climbingswimmingname}{Climbing~/~Swimming}
+\newcommand{\sneakingname}{Sneaking}
+\newcommand{\rollmodifiersname}{Roll~Modifiers}
+\newcommand{\highgroundname}{High~Ground}
+\newcommand{\maneuversname}{Maneuvers}
+\newcommand{\flankingname}{Flanking}
+\newcommand{\concealmentname}{Concealment}
+
+% Quests
+\newcommand\locationname{Location}
+\newcommand\questgivername{Quest~Giver}
+\newcommand\objectivename{Objective}
+
+% Miscellaneous
+\newcommand\pageabbreviationname{pg.}
+\newcommand\dname{d}
+\newcommand\tocchapterabbreviationname{Chapter}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Adding languages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% To add captions for other languages:
+% 1. Copy and paste languages/_template.sty to languages/<language>.sty
+% 2. Substitute the <language> token in the file with the language name
+%    (i.e. \addto\captionsfrench).
+% 3. Replace the English strings with the translations and comment any captions
+%    that you do not translate. Please keep the captions in the same order.
+% 4. Add \RequirePackage{lib/languages/<language>} to the following function.
+\cs_new_protected_nopar:Npn \__ds_input_languages:
+  {
+%    \RequirePackage{\PATH templates/template_dnd/lib/languages/italian}
+%    \RequirePackage{\PATH templates/template_dnd/lib/languages/japanese} % Requires LuaTeX or XeTeX
+%    \RequirePackage{\PATH templates/template_dnd/lib/languages/ngerman}
+%    \RequirePackage{\PATH templates/template_dnd/lib/languages/russian}
+%    \RequirePackage{\PATH templates/template_dnd/lib/languages/spanish}
+%    \RequirePackage{\PATH templates/template_dnd/lib/languages/french}
+}
+
+% Delay loading captions until after the user has imported a language package.
+% Enables using babel/polyglossia with the dndbook document class as well as the
+% dnd package.
+%
+% Both language packages use \AtBeginDocument. Use \AtEndPreamble (etoolbox)
+% instead to side-step load order issues.
+\AtEndPreamble{
+  % Check if either babel or polyglossia have been loaded,
+  % in which case load the string captions
+  \@ifpackageloaded{babel}{
+    \__ds_input_languages:
+  }{}
+  \@ifpackageloaded{polyglossia}{
+    \__ds_input_languages:
+  }{}
+}

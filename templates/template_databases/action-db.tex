@@ -1,0 +1,24 @@
+% ------------------------------------------------------------------------------------------------- %
+%								action-db.tex  	Marcel Zauder 02/04/2023							%
+% Stylesheet by Marcel                                                                              %
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ------------------------------------------- Variables ------------------------------------------- %
+\DTLnewdb{actionDB}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% -------------------------------------- Add  Database Entry -------------------------------------- %
+\NewDocumentCommand{\AddActionDBEntry}{ O{} mmmmmmmm }{%
+	\DTLnewrow{actionDB}%
+	
+	\DTLnewdbentry{actionDB}{PanelSize}{#1}%
+	
+	\DTLnewdbentry{actionDB}{Type}{#2}%
+	\DTLnewdbentry{actionDB}{Name}{#3}%
+	\DTLnewdbentry{actionDB}{Cost}{#4}%
+	\DTLnewdbentry{actionDB}{Description}{#5}%
+	\DTLnewdbentry{actionDB}{Category}{#6}%
+	\DTLnewdbentry{actionDB}{Range}{#7}%
+	\DTLnewdbentry{actionDB}{Targets}{#8}%
+	\DTLnewdbentry{actionDB}{Textbox}{#9}%
+}%
