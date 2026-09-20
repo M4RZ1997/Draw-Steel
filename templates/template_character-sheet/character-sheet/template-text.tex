@@ -38,14 +38,14 @@
 %% OUTSIDE
 \node[inner sep=0pt] at (1177.5, 865) {\scriptsize\scshape\textsc{\textcolor{gray}{\temporarystaminaname}}};
 \node[inner sep=0pt] at (1372.5, 865) {\scriptsize\scshape\textsc{\textcolor{gray}{\maxname}}};
-%% RECOVERIES
+% RECOVERIES
 \node[inner sep=0pt] at (1727.5, 570) {\small\scshape\textbf{\textsc{\recoveriesname}}};
 \node[inner sep=0pt] at (1662.5, 865) {\scriptsize\scshape\textsc{\textcolor{gray}{\staminaname}}};
 \node[inner sep=0pt] at (1802.5, 865) {\scriptsize\scshape\textsc{\textcolor{gray}{\maxname}}};
-%% HEROIC RESOURCE
+% HEROIC RESOURCE
 \node[inner sep=0pt] at (2047.5, 570) {\parbox{0.126\paperwidth}{\centering\small\setlength{\baselineskip}{0.1em}\scshape\textbf{\textsc{\heroicresourcename}}}};
 \node[inner sep=0pt] at (2047.5, 865) {\scriptsize\scshape\textsc{\textcolor{gray}{\stringname}}};
-%% SURGES
+% SURGES
 \node[inner sep=0pt] at (2372.5, 570) {\small\scshape\textbf{\textsc{\surgesname}}};
 \node[inner sep=0pt] at (2355, 830) {\tiny\scshape\textsc{\textcolor{gray}{1~\surgename~=~\damagename}}};
 \node[inner sep=0pt] at (2372.5, 865) {\tiny\scshape\textsc{\textcolor{gray}{2~\surgesname~=~\potencyname~+~1}}};
@@ -72,3 +72,118 @@
 \node[inner sep=0pt] at (844.75,1650) {\PowerRollRangeBrick{high}{17+}};
 %% EFFECTS
 \node[inner sep=0pt] at (497.5,1725) {\small\scshape\textbf{\textsc{\effectsname}}};
+
+% CONDITIONS
+\node[inner sep=0pt] at (1492.5, 977.5) {\normalsize\scshape\textbf{\textsc{\conditionsname}}};
+%% Table
+\node[inner sep=0pt, anchor=north] at (1492.5, 1037.5) {\parbox{0.357\paperwidth}{
+	\begin{DSConditionsTable}[%
+		cells={font=\footnotesize},%
+		row{1}={font=\footnotesize\bfseries,%
+		fg=DSTableText},%
+		rowsep = 2.5pt%
+	]{ X[1.35,l]X[c]X[c] }%
+		\conditionname								& \turnendname		& \saveendsname*	\\
+		\BleedingStrikeThrough{\bleedingname}		& \ConditionDiamond[bleedingendofturn]			& \ConditionDiamond[bleedingsaveends]			\\
+		\DazedStrikeThrough{\dazedname}				& \ConditionDiamond[dazedendofturn]				& \ConditionDiamond[dazedsaveends]			\\
+		\FrightenedStrikeThrough{\frightenedname}	& \ConditionDiamond[frightenedendofturn]		& \ConditionDiamond[frightenedsaveends]		\\
+		\GrabbedStrikeThrough{\grabbedname}			& \ConditionDiamond[grabbedendofturn]			& \ConditionDiamond[grabbedsaveends]			\\
+		\ProneStrikeThrough{\pronename}				& \ConditionDiamond[proneendofturn]				& \ConditionDiamond[pronesaveends]			\\
+		\RestrainedStrikeThrough{\restrainedname}	& \ConditionDiamond[restrainedendofturn]		& \ConditionDiamond[restrainedsaveends]		\\
+		\SlowedStrikeThrough{\slowedname}			& \ConditionDiamond[slowedendofturn]			& \ConditionDiamond[slowedsaveends]			\\
+		\TauntedStrikeThrough{\tauntedname}			& \ConditionDiamond[tauntedendofturn]			& \ConditionDiamond[tauntedsaveends]			\\
+		\WeakenedStrikeThrough{\weakenedname}		& \ConditionDiamond[weakenedendofturn]			& \ConditionDiamond[weakenedsaveends]			\\
+		\entryfont\ConditionExtraAValue				& \ConditionDiamond[conditionextraAendofturn]	& \ConditionDiamond[conditionextraAsaveends]	\\
+		\entryfont\ConditionExtraBValue				& \ConditionDiamond[conditionextraBendofturn]	& \ConditionDiamond[conditionextraBsaveends]	\\
+	\end{DSConditionsTable}
+}};
+%% Information Text
+\node[inner sep=0pt, anchor=north] at (1492.5,1922.5) {\parbox{0.357\paperwidth}{\scriptsize * \saveendsexplanation}};
+%% Weaknesses and Immunities
+\node[inner sep=0pt] at (1250, 2037.5) {\scriptsize\scshape\textbf{\textsc{\immunitiesname}}};
+\node[inner sep=0pt] at (1735, 2037.5) {\scriptsize\scshape\textbf{\textsc{\weaknessesname}}};
+
+% POTENCY
+\node[inner sep=0pt] at (2270, 967.5) {\normalsize\scshape\textbf{\textsc{\potencyname}}};
+%% Weak, Average, Strong
+\node[inner sep=0pt] at (2096.25, 1022.5) {\scriptsize\scshape\textbf{\textsc{\weakname}}};
+\node[inner sep=0pt] at (2270, 1022.5) {\scriptsize\scshape\textbf{\textsc{\averagename}}};
+\node[inner sep=0pt] at (2443.75, 1022.5) {\scriptsize\scshape\textbf{\textsc{\strongname}}};
+
+% GAINING FOCUS
+\node[inner sep=0pt] at (2270, 1167.5) {\small\scshape\textbf{\gainingname~\HeroicResourceNameValue}};%
+
+% SPENDING HERO TOKENS
+\node[inner sep=0pt] at (2270, 1712.5) {\small\scshape\textbf{\spendingherotokensname}};%
+\node[inner sep=0pt, anchor=south] at (2270, 2120) {\parbox{0.20\paperwidth}{\scriptsize\spendingtokensruling}};%
+
+% SKILLS
+\node[inner sep=0pt] at (1275, 2200) {\normalsize\scshape\textbf{\skillsname}};
+\node[inner sep=0pt] at (1275, 2297.5) {\scriptsize\skillsexplanation};
+%% Crafting
+\node[inner sep=0pt] at (477.5, 2357.5) {\small\scshape\textbf{\craftingname}};
+\node[inner sep=0pt, anchor=west] at (175, 2462.5) {\small\alchemyname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (175, 2522.5) {\small\architecturename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (175, 2582.5) {\small\blacksmithingname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (175, 2642.5) {\small\carpentryname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (175, 2702.5) {\small\cookingname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (605, 2462.5) {\small\fletchingname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (605, 2522.5) {\small\forgeryname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (605, 2582.5) {\small\jewelleryname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (605, 2642.5) {\small\mechanicsname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (605, 2702.5) {\small\tailoringname\phantom{ty}};
+%% Interpersonal
+\node[inner sep=0pt] at (1275, 2357.5) {\small\scshape\textbf{\interpersonalname}};
+\node[inner sep=0pt, anchor=west] at (1175, 2462.5) {\small\bragname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1175, 2522.5) {\small\empathizename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1175, 2582.5) {\small\flirtname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1175, 2642.5) {\small\gamblename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1175, 2702.5) {\small\handleanimalsname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1175, 2762.5) {\small\interrogatename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1175, 2822.5) {\small\intimidatename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1175, 2882.5) {\small\leadname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1175, 2942.5) {\small\liename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1175, 3002.5) {\small\musicname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1175, 3062.5) {\small\performname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1175, 3122.5) {\small\persuadename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1175, 3182.5) {\small\readpersonname\phantom{ty}};
+%% Exploration
+\node[inner sep=0pt] at (2072.5, 2357.5) {\small\scshape\textbf{\explorationname}};
+\node[inner sep=0pt, anchor=west] at (1770, 2462.5) {\small\climbname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1770, 2522.5) {\small\drivename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1770, 2582.5) {\small\stringendurancename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1770, 2642.5) {\small\gymnasticsname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1770, 2702.5) {\small\healname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (2200, 2462.5) {\small\jumpname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (2200, 2522.5) {\small\liftname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (2200, 2582.5) {\small\navigatename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (2200, 2642.5) {\small\ridename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (2200, 2702.5) {\small\swimname\phantom{ty}};
+%% Intrigue
+\node[inner sep=0pt] at (477.5, 2817.5) {\small\scshape\textbf{\intriguename}};
+\node[inner sep=0pt, anchor=west] at (175, 2902.5) {\small\alertnessname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (175, 2962.5) {\small\concealobjectname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (175, 3022.5) {\small\disguisename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (175, 3082.5) {\small\eavesdropname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (175, 3142.5) {\small\escapeartistname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (175, 3202.5) {\small\hidename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (605, 2902.5) {\small\picklockname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (605, 2962.5) {\small\pickpocketname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (605, 3022.5) {\small\sabotagename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (605, 3082.5) {\small\searchname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (605, 3142.5) {\small\sneakname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (605, 3202.5) {\small\trackname\phantom{ty}};
+%% Lore
+\node[inner sep=0pt] at (2072.5, 2817.5) {\small\scshape\textbf{\lorename}};
+\node[inner sep=0pt, anchor=west] at (1770, 2902.5) {\small\criminalundergroundname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1770, 2962.5) {\small\culturename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1770, 3022.5) {\small\historyname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1770, 3082.5) {\small\magicname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1770, 3142.5) {\small\monstersname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (1770, 3202.5) {\small\naturename\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (2200, 2902.5) {\small\psionicsname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (2200, 2962.5) {\small\religionname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (2200, 3022.5) {\small\rumorsname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (2200, 3082.5) {\small\societyname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (2200, 3142.5) {\small\strategyname\phantom{ty}};
+\node[inner sep=0pt, anchor=west] at (2200, 3202.5) {\small\timescapename\phantom{ty}};

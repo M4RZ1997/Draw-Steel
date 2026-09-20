@@ -1,0 +1,146 @@
+\ExplSyntaxOn
+
+\DeclareTColorBox {DsMinionBg} { O{} }
+{
+	enhanced,
+	frame~hidden,
+	before~skip      = 12pt plus 3pt minus 3pt,
+	boxrule          = 0pt,
+	breakable,
+	parbox           = false,
+	boxsep           = 2pt,
+	top              = 8pt,
+	left             = 4pt,
+	right            = 4pt,
+	bottom           = 7pt,
+	sharp~corners,
+	oversize         = 0pt,
+	borderline~north = {3pt} {0pt}   {red},
+	borderline~north = {2pt} {0.5pt} {black},
+	borderline~south = {3pt} {0pt}   {red},
+	borderline~south = {2pt} {0.5pt} {black},
+	colback          = gray!10,
+	colbacktitle     = gray!10,
+	fontupper    	 = \small\entryfont,
+	fontlower        = \DndFontStatBlockBody,
+}
+
+\let\DsMinion\DsMinionBg
+\let\endDsMinion\endDsMinionBg
+
+%% Minion Information
+\keys_define:nn { ds / minion / information }
+{
+	name .tl_set:N					= \l__minion_name_tl,
+	name .value_required:n			= true,
+	type .tl_set:N					= \l__minion_type_tl,
+    type .value_required:n			= true,
+	specification .tl_set:N			= \l__minion_specification_tl,
+	specification .value_required:n	= true,
+	cost .tl_set:N					= \l__minion_cost_tl,
+	cost .value_required:n			= true,
+}
+
+\cs_new_protected_nopar:Npn \__ds_minion_information:
+{
+	{\normalsize\bfseries\l__minion_name_tl} \hfill {\small\bfseries\l__minion_specification_tl}\\
+	{\footnotesize\l__minion_type_tl} \hfill {\footnotesize\l__minion_cost_tl}
+}
+
+\NewDocumentCommand {\DsMinionInformation} {o}
+{
+	\group_begin:
+		\keys_set:nn { ds / minion / information } {#1}
+		\__ds_minion_information:
+		{\centering\OrnamentalDivider[\dimexpr \linewidth - 5pt\relax]{}}
+	\group_end:
+}
+
+%% Minion Basics
+\keys_define:nn { ds / minion / basics }
+{
+	size .tl_set:N					= \l__minion_size_tl,
+	size .value_required:n			= true,
+	speed .tl_set:N					= \l__minion_speed_tl,
+	speed .value_required:n			= true,
+	stamina .tl_set:N				= \l__minion_stamina_tl,
+	stamina .value_required:n		= true,
+	stability .tl_set:N				= \l__minion_stability_tl,
+	stability .value_required:n		= true,
+	free-strike .tl_set:N			= \l__minion_free_strike_tl,
+	free-strike .value_required:n	= true,
+	immunity .tl_set:N				= \l__minion_immunity_tl,
+    immunity .initial:n        		= {-},
+	weakness .tl_set:N				= \l__minion_weakness_tl,
+    weakness .initial:n        		= {-},
+	movement .tl_set:N				= \l__minion_movement_tl,
+    movement .initial:n        		= {-},
+	damage-type .tl_set:N			= \l__free_strike_damage_type_tl,
+}
+
+\cs_new_protected_nopar:Npn \__ds_minion_basics:
+{
+	\par \vspace{3pt} \noindent
+	{\centering\scriptsize\begin{tabularx} {\linewidth} {YYYYY}
+		{\entryfont\normalsize\l__minion_size_tl}		&
+		{\entryfont\normalsize\l__minion_speed_tl}		&
+		{\entryfont\normalsize\l__minion_stamina_tl}		&
+		{\entryfont\normalsize\l__minion_stability_tl}	&
+		{\entryfont\normalsize\l__minion_free_strike_tl}	\\
+		\textbf{Size} & \textbf{Speed} & \textbf{Stamina} & \textbf{Stability} & \textbf{Free~Strike}
+	\end{tabularx}}
+	\par \vspace{5pt}%
+	\noindent{\footnotesize\textbf{Immunity:}~\entryfont\l__minion_immunity_tl} \hfill {\footnotesize\textbf{Weakness:}~\entryfont\l__minion_weakness_tl}\\
+	{\footnotesize\textbf{Movement:}~\entryfont\l__minion_movement_tl} \ifthenelse{\equal{\l__free_strike_damage_type_tl}{}}{}{\hfill {\footnotesize\textbf{Free~Strike~Damage~Type:}~\entryfont\l__free_strike_damage_type_tl}}\\
+}
+
+\NewDocumentCommand {\DsMinionBasics} {o}
+{
+	\group_begin:
+		\keys_set:nn { ds / minion / basics } {#1}
+		\__ds_minion_basics:
+		{\centering\begin{tikzpicture}
+			\draw [ black ] ( 0, 0 ) -- ( \linewidth, 0 );
+		\end{tikzpicture}}
+	\group_end:
+}
+
+%% Minion Stats
+\keys_define:nn { ds / minion / stats }
+{
+	might .tl_set:N						= \l__minion_might_tl,
+	might .value_required:n				= true,
+	agility .tl_set:N					= \l__minion_agility_tl,
+	agility .value_required:n			= true,
+	reason .tl_set:N					= \l__minion_reason_tl,
+	reason .value_required:n			= true,
+	intuition .tl_set:N					= \l__minion_intuition_tl,
+	intuition .value_required:n			= true,
+	presence .tl_set:N					= \l__minion_presence_tl,
+	presence .value_required:n			= true,
+}
+
+\cs_new_protected_nopar:Npn \__ds_minion_stats:
+{
+	\par \vspace{4pt} \noindent
+	{\centering\footnotesize\begin{tabularx} {\linewidth} {YYYYY}
+		\textbf{\mightstatname} & \textbf{\agilitystatname} & \textbf{\reasonstatname} & \textbf{\intuitionstatname} & \textbf{\presencestatname}\\
+		{\entryfont\l__minion_might_tl}			&
+		{\entryfont\l__minion_agility_tl}		&
+		{\entryfont\l__minion_reason_tl}		&
+		{\entryfont\l__minion_intuition_tl}		&
+		{\entryfont\l__minion_presence_tl}
+	\end{tabularx}}
+	\par \vspace{1pt}%
+}
+
+\NewDocumentCommand {\DsMinionStats} {o}
+{
+	\group_begin:
+		\keys_set:nn { ds / minion / stats } {#1}
+		\__ds_minion_stats:
+		{\centering\begin{tikzpicture}
+			\draw [ black ] ( 0, 0 ) -- ( \linewidth, 0 );
+		\end{tikzpicture}}
+	\group_end:
+}

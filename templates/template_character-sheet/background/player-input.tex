@@ -1,0 +1,76 @@
+% CULTURE
+\node[inner sep=0pt] at (340.5,220) {\entryfont\LARGE\textbf{\CultureNameValue}};
+\node[inner sep=0pt] at (963.5,220) {\entryfont\large\textbf{\CultureLanguageValue}};
+\node[inner sep=0pt] at (340.5,385) {\entryfont\normalsize\textbf{\EnvironmentNameValue}};
+\node[inner sep=0pt, anchor=north] at (340.5,430) {%
+	\parbox{0.2\paperwidth}{\entryfont\small\EnvironmentBenefitValue}%
+};%
+\node[inner sep=0pt] at (963.5,385) {\entryfont\normalsize\textbf{\OrganizationNameValue}};
+\node[inner sep=0pt, anchor=north] at (963.5,430) {%
+	\parbox{0.2\paperwidth}{\entryfont\small\OrganizationBenefitValue}%
+};%
+\node[inner sep=0pt] at (1586.5,385) {\entryfont\normalsize\textbf{\UpbringingNameValue}};
+\node[inner sep=0pt, anchor=north] at (1586.5,430) {%
+	\parbox{0.2\paperwidth}{\entryfont\small\UpbringingBenefitValue}%
+};%
+\node[inner sep=0pt, anchor=north] at (2209.5,160) {%
+	\parbox{0.225\paperwidth}{\entryfont\small\begin{itemize}\Languages\end{itemize}}%
+};%
+
+% CLASS FEATURES
+\node[
+	inner sep=0pt,
+	anchor=north
+] at (852.5,695) {%
+	\begin{minipage}[t]{0.625\paperwidth}
+		\entryfont\footnotesize
+		\begin{multicols}{2}
+			\ClassFeatures
+		\end{multicols}
+	\end{minipage}%
+};
+
+% ANCESTRY TRAITS AND PERKS
+\node[
+	inner sep=0pt,
+	anchor=north
+] at (852.5,2052.5) {%
+	\begin{minipage}[t]{0.625\paperwidth}
+		\entryfont\footnotesize
+		\begin{multicols}{2}
+			\AncestryTraitsAndPerks
+		\end{multicols}
+	\end{minipage}%
+};
+
+% TITLES
+\node[
+	inner sep=0pt,
+	anchor=north
+] at (2127.5, 685) {%
+	\begin{minipage}[t]{0.29\paperwidth}
+		\entryfont\scriptsize
+		\begin{multicols}{2}
+			\Titles
+		\end{multicols}
+	\end{minipage}%
+};
+
+% CAREER
+\node[inner sep=0pt] at (2127.5, 1417.5) {\entryfont\large\CareerNameValue};
+\node[inner sep=0pt, anchor=north west] at (1760,1510) {%
+	\parbox{0.285\paperwidth}{\entryfont\small\begin{itemize}\CareerBenefits\end{itemize}}%
+};%
+\node[inner sep=0pt] at (2127.5, 1925) {\entryfont\normalsize\textbf{\IncitingIncidentNameValue}};
+\node[inner sep=0pt, anchor=north] at (2127.5, 1970) {%
+	\parbox{0.275\paperwidth}{\entryfont\IncitingIncidentDescriptionValue}%
+};%
+
+% COMPLICATION
+\node[inner sep=0pt] at (2127.5, 2442.5) {\entryfont\large\ComplicationNameValue};
+\node[inner sep=0pt, anchor=north] at (2127.5,2535) {%
+	\parbox{0.275\paperwidth}{\entryfont\small\begin{itemize}\ComplicationBenefits\end{itemize}}%
+};%
+\node[inner sep=0pt, anchor=north] at (2127.5, 2930) {%
+	\parbox{0.275\paperwidth}{\entryfont\small\ComplicationDrawbackValue}%
+};%

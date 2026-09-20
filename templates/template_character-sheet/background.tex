@@ -1,0 +1,21 @@
+\clearpage
+\thispagestyle{empty}%
+
+\begin{tikzpicture}[
+		remember picture,
+		overlay,
+		x=\fpeval{\paperwidth/2550}pt,
+		y=-\fpeval{\paperheight/3300}pt,
+		shift={(current page.north west)}
+	]
+	\input{\PATH templates/template_character-sheet/background/culture.tex}
+	\input{\PATH templates/template_character-sheet/background/class-features.tex}
+	\input{\PATH templates/template_character-sheet/background/ancestry-traits-and-perks.tex}
+	\input{\PATH templates/template_character-sheet/background/titles.tex}
+	\input{\PATH templates/template_character-sheet/background/career.tex}
+	\input{\PATH templates/template_character-sheet/background/complication.tex}
+	
+	\input{\PATH templates/template_character-sheet/background/template-text.tex}
+	\input{\PATH templates/template_character-sheet/background/player-input.tex}
+	
+\end{tikzpicture}

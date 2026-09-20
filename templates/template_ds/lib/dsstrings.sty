@@ -24,6 +24,9 @@
 % If you add or update a caption here, add it to languages/_template.sty
 % as well.
 
+% Header
+\newcommand{\drawsteel}{Draw~Steel}
+
 % Characteristics
 \newcommand{\charactername}{Character~Name}
 \newcommand{\ancestryname}{Ancestry}
@@ -86,7 +89,7 @@
 \newcommand{\bleedingname}{Bleeding}
 \newcommand{\dazedname}{Dazed}
 \newcommand{\frightenedname}{Frightened}
-\newcommand{\grappedname}{Grapped}
+\newcommand{\grabbedname}{Grabbed}
 \newcommand{\pronename}{Prone}
 \newcommand{\restrainedname}{Restrained}
 \newcommand{\slowedname}{Slowed}
@@ -111,6 +114,13 @@
 
 % Spending Hero Tokens
 \newcommand{\spendingherotokensname}{Spending~Hero~Tokens}
+\newcommand{\spendingtokensruling}{%
+	\textbf{1~Token:}~Gain~2~Surges.\\\vskip -5pt%
+	\textbf{1~Token:}~Succeed~on~a~Saving~Throw~instead~of~failing.\\\vskip -5pt%
+	\textbf{1~Token:}~Reroll~a~Test~and~use~the~new~result.\\\vskip -5pt%
+	\textbf{2~Tokens:}~On~your~turn~or~whenever~you~would~take~damage,~%
+		regain~Stamina~equal~to~your~recovery~value~without~spending~a~Recovery.%
+}
 
 % Your Turn
 \newcommand{\yourturnname}{Your~Turn}
@@ -134,32 +144,9 @@
 \newcommand{\standupname}{Stand~Up}
 \newcommand{\useconsumablename}{Use~Consumable}
 
-% Class Features
-\newcommand{\classfeaturesname}{Class~Features}
-
-% Culture
-\newcommand{\culturename}{Culture}
-\newcommand{\cultureexplanation}{You~gain~an~edge~on~tests~made~to~recall~lore~about~your~culture, ~and~on~tests~made~to~influence~and~interact~with~people~of~your~culture.}
-\newcommand{\languagesingularname}{Language}
-\newcommand{\languagesname}{Languages}
-\newcommand{\environmentname}{Environment}
-\newcommand{\organizationname}{Organization}
-\newcommand{\upbringingname}{Upbringing}
-
-% Career
-\newcommand{\benefitname}{Benefit}
-\newcommand{\incitindincidentname}{Inciting~Incident}
-
-% Complication
-\newcommand{\complicationname}{Complication}
-\newcommand{\drawbackname}{Drawback}
-
-% Ancestry Traits and Perks
-\newcommand{\ancestrytraitsandperksname}{Ancestry,~Traits,~and~Perks}
-
 % Skills
 \newcommand{\skillsname}{Skills}
-\newcommand{\skillsexplanation}{Have~1+~skills~that~apply~to~a~test?~+2~bonus}
+\newcommand{\skillsexplanation}{Have~1~or~more~skills~that~apply~to~a~test?~+2~bonus~to~the~roll}
 %% Crafting
 \newcommand{\craftingname}{Crafting}
 \newcommand{\alchemyname}{Alchemy}
@@ -169,7 +156,7 @@
 \newcommand{\cookingname}{Cooking}
 \newcommand{\fletchingname}{Fletching}
 \newcommand{\forgeryname}{Forgery}
-\newcommand{\jewelryname}{Jewelry}
+\newcommand{\jewelleryname}{Jewellery}
 \newcommand{\mechanicsname}{Mechanics}
 \newcommand{\tailoringname}{Tailoring}
 %% Exploration
@@ -214,17 +201,44 @@
 \newcommand{\sneakname}{Sneak}
 \newcommand{\trackname}{Track}
 %% Lore
-\newcommand{\criminalundergroundname}{Criminal Und.}
+\newcommand{\lorename}{Lore}
+\newcommand{\criminalundergroundname}{Criminal~Und.}
 \newcommand{\historyname}{History}
 \newcommand{\magicname}{Magic}
 \newcommand{\monstersname}{Monsters}
 \newcommand{\naturename}{Nature}
-\newcommand{\psyionicsname}{Psionics}
+\newcommand{\psionicsname}{Psionics}
 \newcommand{\religionname}{Religion}
 \newcommand{\rumorsname}{Rumors}
 \newcommand{\societyname}{Society}
 \newcommand{\strategyname}{Strategy}
 \newcommand{\timescapename}{Timescape}
+
+% Culture
+\newcommand{\culturename}{Culture}
+\newcommand{\cultureexplanation}{You~gain~an~edge~on~tests~made~to~recall~lore~about~your~culture, ~and~on~tests~made~to~influence~and~interact~with~people~of~your~culture.}
+\newcommand{\languagesingularname}{Language}
+\newcommand{\languagesname}{Languages}
+\newcommand{\environmentname}{Environment}
+\newcommand{\organizationname}{Organization}
+\newcommand{\upbringingname}{Upbringing}
+
+% Class Features
+\newcommand{\classfeaturesname}{Class~Features}
+
+% Ancestry Traits and Perks
+\newcommand{\ancestrytraitsandperksname}{Ancestry~Traits~and~Perks}
+
+% Titles
+\newcommand{\titlesname}{Titles}
+
+% Career
+\newcommand{\benefitname}{Benefit}
+\newcommand{\incitingincidentname}{Inciting~Incident}
+
+% Complication
+\newcommand{\complicationname}{Complication}
+\newcommand{\drawbackname}{Drawback}
 
 % Actions, Abilities, and Maneuver
 \newcommand{\mainactionname}{Main~Action}
@@ -239,13 +253,14 @@
 \newcommand{\costname}{Cost}
 
 % Additional Information
-\newcommand{\titlesname}{Titles}
+\newcommand{\backstoryname}{Back~Story}
 \newcommand{\trinketsname}{Trinkets}
-\newcommand{\leveledtreasures}{Leveled~Treasures}
-\newcommand{\carrythreesafelyname}{Caryy~Three~Safely}
+\newcommand{\levelledtreasuresname}{Levelled~Treasures}
+\newcommand{\carrythreesafelyname}{Carry~Three~Safely}
 \newcommand{\consumablesname}{Consumables}
 %% Projects
 \newcommand{\projectsname}{Projects}
+\newcommand{\projectpointsname}{Project~Points}
 \newcommand{\projectname}{Project}
 \newcommand{\assignedherofollowername}{Assigned~Hero~/~Follower}
 \newcommand{\rollcharacteristicsname}{Roll~Characteristic}

@@ -1,0 +1,17 @@
+% OUTLINE
+\draw[black] (1717.5,1262.5) rectangle ++(820,1000);
+
+% DIVIDER
+\node[inner sep=0] at (2127.5, 1337.5) {\OrnamentalDivider[0.3\paperwidth]{}};
+
+% CAREER NAME
+\draw[black, line width=1.5] (1812.5,1382.5) -- ++(630,0) -- ++(15,15) -- ++(0,40) -- ++(-15,15) -- ++(-630,0) -- ++(-15,-15) -- ++(0,-40) -- cycle;
+
+% BENEFIT
+\node(inner xsep=2pt, inner ysep=0pt) (CareerBenefit) at (2127.5,1497.5) {\scriptsize\scshape\benefitname};
+\draw[gray, line width=1.5] (CareerBenefit.east) -- (2487.5,1497.5) -- ++(15,15) -- ++(0,320) -- ++(-15,15) -- ++(-720,0) -- ++(-15,-15) -- ++(0,-320) -- ++(15,-15) -- (CareerBenefit.west);
+
+% INCITING INCIDENT
+\node(inner xsep=2pt, inner ysep=0pt) (IncitingIncident) at (2127.5,1882.5) {\scriptsize\scshape\incitingincidentname};
+\draw[gray, line width=1.5] (IncitingIncident.east) -- (2487.5,1882.5) -- ++(15,15) -- ++(0,320) -- ++(-15,15) -- ++(-720,0) -- ++(-15,-15) -- ++(0,-320) -- ++(15,-15) -- (IncitingIncident.west);
+\draw[black, line width=0.5] (1807.5,1952.5) -- ++(610,0);

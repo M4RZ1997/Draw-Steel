@@ -1,0 +1,65 @@
+% BACK STORY
+\node[inner sep=0pt, anchor=north] at (1275, 100) {%
+	\begin{minipage}[t]{0.95\paperwidth}%
+		\entryfont\small%
+		\begin{multicols}{3}%
+			\BackStoryValue%
+		\end{multicols}%
+	\end{minipage}%
+};
+
+% TRINKETS
+\node[inner sep=0pt, anchor=north] at (1275, 925) {%
+	\begin{minipage}[t]{0.95\paperwidth}%
+		\entryfont\small%
+		\begin{multicols}{3}%
+			\Trinkets%
+		\end{multicols}%
+	\end{minipage}%
+};%
+
+% LEVELLED TREASURES
+\ifthenelse{\value{carriedsafely}>0}{%
+	\foreach \x in {1,...,\value{carriedsafely}}{
+		\node[inner sep=0pt] at ({2332.5 + (\x * 45)}, 1705) {\footnotesize\textbf{X}};
+	}
+}{}%
+\node[inner sep=0pt, anchor=north] at (1275, 1750) {%
+	\begin{minipage}[t]{0.95\paperwidth}%
+		\entryfont\small%
+		\begin{multicols}{3}%
+			\LevelledTreasures%
+		\end{multicols}%
+	\end{minipage}%
+};%
+
+% CONSUMABLES
+\newcommand{\EmptyMacro}{}
+\ifx\Consumables\EmptyMacro\else
+	\node[inner sep=0pt, anchor=north] at (427.5, 2562.5) {%
+		\parbox{0.3\paperwidth}{%
+			\begin{itemize}\Consumables\end{itemize}
+		}%
+	};%
+\fi%
+
+% PROJECTS
+\node[inner sep=0pt] at (2422.5, 2530) {\entryfont\footnotesize\ProjectPointsValue};
+\node[inner sep=0pt, anchor=north] at (1700, 2577.5) {\parbox{0.64\paperwidth}{
+	\begin{DSConditionsTable}[%
+		cells={font=\small},%
+		row{1}={font=\scriptsize\bfseries,%
+		fg=DSTableText},%
+		rowsep = 3pt%
+	]{ X[1.3,l]X[c]X[c]c }%
+		\projectname~\stringname	& \assignedherofollowername	& \rollcharacteristicsname	& \goalpointsname	\\
+		\ProjectNameAValue	& \AssignedHeroFollowerAValue	& \RollCharacteristicAValue	& \CurrentPointsAValue~/ \GoalPointsAValue	\\
+		\ProjectNameBValue	& \AssignedHeroFollowerBValue	& \RollCharacteristicBValue	& \CurrentPointsBValue~/ \GoalPointsBValue	\\
+		\ProjectNameCValue	& \AssignedHeroFollowerCValue	& \RollCharacteristicCValue	& \CurrentPointsCValue~/ \GoalPointsCValue	\\
+		\ProjectNameDValue	& \AssignedHeroFollowerDValue	& \RollCharacteristicDValue	& \CurrentPointsDValue~/ \GoalPointsDValue	\\
+		\ProjectNameEValue	& \AssignedHeroFollowerEValue	& \RollCharacteristicEValue	& \CurrentPointsEValue~/ \GoalPointsEValue	\\
+		\ProjectNameFValue	& \AssignedHeroFollowerFValue	& \RollCharacteristicFValue	& \CurrentPointsFValue~/ \GoalPointsFValue	\\
+		\ProjectNameGValue	& \AssignedHeroFollowerGValue	& \RollCharacteristicGValue	& \CurrentPointsGValue~/ \GoalPointsGValue	\\
+		\ProjectNameHValue	& \AssignedHeroFollowerHValue	& \RollCharacteristicHValue	& \CurrentPointsHValue~/ \GoalPointsHValue	\\
+	\end{DSConditionsTable}
+}};

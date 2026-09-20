@@ -1,6 +1,36 @@
+% OUTLINE
+\draw[black] (12.5,12.5) rectangle ++(2525,470);
+
+% HEADER
+\node[inner sep=0pt] at (1275,75) {\Huge\digitaltextsc{\drawsteel}};
+%% Ornament
+%%% Small Diamonds
+\draw[fill=black, draw=none] (35,75) -- ++(15,-15) -- ++(15,15) -- ++(-15,15) -- cycle;
+\draw[fill=black, draw=none] (2515,75) -- ++(-15,-15) -- ++(-15,15) -- ++(15,15) -- cycle;
+%%% Shields
+\draw[black, line width=1.5] (900,50) -- ++(12.5,0) arc[start angle=180, end angle=90, radius=10] .. controls ++(0,25) and ++(0,0) .. ++(-22.5,40) .. controls ++(-22.5,-15) and ++(0,0) .. ++(-22.5,-40) arc[start angle=90, end angle=0, radius=10] -- cycle;
+\filldraw[fill=black, draw=none] (900,50) -- ++(0,50) .. controls ++(-22.5,-15) and ++(0,0) .. ++(-22.5,-40) arc[start angle=90, end angle=0, radius=10] -- cycle;
+\draw[black, line width=1.5] (1650,50) -- ++(12.5,0) arc[start angle=180, end angle=90, radius=10] .. controls ++(0,25) and ++(0,0) .. ++(-22.5,40) .. controls ++(-22.5,-15) and ++(0,0) .. ++(-22.5,-40) arc[start angle=90, end angle=0, radius=10] -- cycle;
+\filldraw[fill=black, draw=none] (1650,50) -- ++(0,50) .. controls ++(-22.5,-15) and ++(0,0) .. ++(-22.5,-40) arc[start angle=90, end angle=0, radius=10] -- cycle;
+%%% Lines
+%%%% Left
+\begin{scope}
+	\path[clip] (80,75) -- ++(-30,-30) -- ++(812.5,0) .. controls ++(0,40) and ++(0,0) .. ++(25,60) -- ++(-837.5,0) -- cycle;
+	\draw[black, line width=0.5] (50,75) -- ++(850,0);
+	\draw[black, line width=1.5] (50,60) -- ++(850,0);
+	\draw[black, line width=1.5] (50,90) -- ++(850,0);
+\end{scope}
+%%%% Right
+\begin{scope}
+	\path[clip] (2470,75) -- ++(30,-30) -- ++(-812.5,0) .. controls ++(0,40) and ++(0,0) .. ++(-25,60) -- ++(837.5,0) -- cycle;
+	\draw[black, line width=0.5] (2500,75) -- ++(-850,0);
+	\draw[black, line width=1.5] (2500,60) -- ++(-850,0);
+	\draw[black, line width=1.5] (2500,90) -- ++(-850,0);
+\end{scope}
+
 % CHARACTER INFORMATION
 %% Outline
-\draw[gray, line width=2] (62.5,137.5) -- ++(1185,0) -- ++(20,20) -- ++(0,290) -- ++(-20,20) -- ++(-1185,0) -- ++(-20,-20) -- ++(0,-290) -- cycle;
+\draw[gray, line width=1.5] (62.5,137.5) -- ++(1185,0) -- ++(20,20) -- ++(0,290) -- ++(-20,20) -- ++(-1185,0) -- ++(-20,-20) -- ++(0,-290) -- cycle;
 % Entry Line
 \draw[black, line width=0.5] (62.5, 232.5) -- ++(1185,0);
 \draw[black, line width=0.5] (62.5, 327.5) -- ++(575,0);
@@ -10,7 +40,7 @@
 
 % PROGRESSION
 %% Outline
-\draw[gray, line width=2] (1302.5,137.5) -- ++(1185,0) -- ++(20,20) -- ++(0,290) -- ++(-20,20) -- ++(-1185,0) -- ++(-20,-20) -- ++(0,-290) -- cycle;
+\draw[gray, line width=1.5] (1302.5,137.5) -- ++(1185,0) -- ++(20,20) -- ++(0,290) -- ++(-20,20) -- ++(-1185,0) -- ++(-20,-20) -- ++(0,-290) -- cycle;
 %% Victories
 \draw[black, line width=1] (1344.5,237.5) -- ++(891,0) -- ++(12,12) -- ++(0,36) -- ++(-12,12) -- ++(-891,0) -- ++(-12,-12) -- ++(0,-36) -- cycle;
 %%% Small Divider

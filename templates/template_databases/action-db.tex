@@ -5,6 +5,10 @@
 % ################################################################################################# %
 % ------------------------------------------- Variables ------------------------------------------- %
 \DTLnewdb{actionDB}
+
+\newcommand{\CategorySymbolValue}{}
+\newcommand{\CategorySymbol}[1]{\renewcommand{\CategorySymbolValue}{#1}}
+\newbool{FoundEntry}
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % -------------------------------------- Add  Database Entry -------------------------------------- %
@@ -22,3 +26,45 @@
 	\DTLnewdbentry{actionDB}{Targets}{#8}%
 	\DTLnewdbentry{actionDB}{Textbox}{#9}%
 }%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% ----------------------------------- Action  Short Information ----------------------------------- %
+\NewDocumentCommand{\GetActionShortInfo}{ m }{%
+	\boolfalse{FoundEntry}
+	\DTLforeach*{actionDB}{%
+		\thisType			= Type,%
+		\thisName			= Name,%
+		\thisDescription	= Description,%
+		\thisCategory		= Category%
+	}{%
+		\ifthenelse{\equal{#1}{\thisName}}{%
+			\booltrue{FoundEntry}%
+			\SetCategorySymbol{\thisType}{\thisCategory}%
+			\textbf{\CategorySymbolValue~\thisName}\hfill\GetActionType{\thisType}%
+			\ifthenelse{\equal{\thisDescription}{}}{}{\\\textit{\thisDescription}}%
+		}{}%
+	}%
+	\ifbool{FoundEntry}{}{#1}%
+}%
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% -------------------------------------- Set Category Symbol -------------------------------------- %
+\NewDocumentCommand{\SetCategorySymbol}{ m m }{%
+	\IfSubStr{#1}{Triggered}{%
+		\CategorySymbol{{\dsglyphs !}}%
+	}{%
+		\IfSubStr{#2}{Magic}{%
+			\CategorySymbol{{\dsglyphs *}}%
+		}{%
+			\IfSubStr{#2}{Melee}{%
+				\IfSubStr{#2}{Ranged}{%
+					\CategorySymbol{{\dsglyphs =}}%
+				}{%
+					\CategorySymbol{{\dsglyphs <}}
+				}%
+			}{%
+				\IfSubStr{#2}{Ranged}{\CategorySymbol{{\dsglyphs >}}}{}%
+			}%
+		}%
+	}%
+}

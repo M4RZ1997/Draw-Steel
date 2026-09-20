@@ -1,0 +1,1005 @@
+\usepackage[normalem]{ulem}
+
+% INDICATION DIAMOND
+\newcommand{\ConditionDiamond}[1][white]{%
+	\tikz[
+		baseline={([yshift=-0.5ex]current bounding box.center)}
+	]{%
+		\filldraw[
+			fill=#1,
+			draw=black,
+			line width=1pt
+		]
+			(0,0) -- ++(-15,-15) -- ++(-15,15) -- ++(15,15) -- cycle;
+	}%
+}
+
+% CHARACTER INFORMATION
+\newcommand{\CharacterNameValue}{}
+\newcommand{\AncestryValue}{}
+\newcommand{\ClassValue}{}
+\newcommand{\CareerValue}{}
+\newcommand{\SubclassValue}{}
+
+\newcommand{\CharacterName}[1]{\renewcommand{\CharacterNameValue}{#1}}
+\newcommand{\Ancestry}[1]{\renewcommand{\AncestryValue}{#1}}
+\newcommand{\Class}[1]{\renewcommand{\ClassValue}{#1}}
+\newcommand{\Career}[1]{\renewcommand{\CareerValue}{#1}}
+\newcommand{\Subclass}[1]{\renewcommand{\SubclassValue}{#1}}
+
+% CHARACTER PROGRESSION
+\newcommand{\VictoriesValue}{}
+\newcommand{\LevelValue}{}
+\newcommand{\WealthValue}{}
+\newcommand{\BaseWealthValue}{}
+\newcommand{\WealthBonusValue}{0}
+\newcommand{\RenownValue}{}
+\newcommand{\BaseRenownValue}{}
+\newcommand{\RenownBonusValue}{0}
+\newcommand{\XPValue}{}
+
+\newcommand{\Victories}[1]{\renewcommand{\VictoriesValue}{#1}}
+\newcommand{\Level}[1]{\renewcommand{\LevelValue}{#1}}
+\newcommand{\Wealth}[1]{\renewcommand{\WealthValue}{#1}}
+\newcommand{\BaseWealth}[1]{\renewcommand{\BaseWealthValue}{#1}}
+\newcommand{\WealthBonus}[1]{\renewcommand{\WealthBonusValue}{#1}}
+\newcommand{\Renown}[1]{\renewcommand{\RenownValue}{#1}}
+\newcommand{\BaseRenown}[1]{\renewcommand{\BaseRenownValue}{#1}}
+\newcommand{\RenownBonus}[1]{\renewcommand{\RenownBonusValue}{#1}}
+\newcommand{\XP}[1]{\renewcommand{\XPValue}{#1}}
+
+% STATS
+%% Characteristics
+\newcommand{\MightStatValue}{}
+\newcommand{\BaseMightStatValue}{}
+\newcommand{\AgilityStatValue}{}
+\newcommand{\BaseAgilityStatValue}{}
+\newcommand{\ReasonStatValue}{}
+\newcommand{\BaseReasonStatValue}{}
+\newcommand{\IntuitionStatValue}{}
+\newcommand{\BaseIntuitionStatValue}{}
+\newcommand{\PresenceStatValue}{}
+\newcommand{\BasePresenceStatValue}{}
+
+\newcommand{\MightStat}[1]{\renewcommand{\MightStatValue}{#1}}
+\newcommand{\BaseMightStat}[1]{\renewcommand{\BaseMightStatValue}{#1}}
+\newcommand{\AgilityStat}[1]{\renewcommand{\AgilityStatValue}{#1}}
+\newcommand{\BaseAgilityStat}[1]{\renewcommand{\BaseAgilityStatValue}{#1}}
+\newcommand{\ReasonStat}[1]{\renewcommand{\ReasonStatValue}{#1}}
+\newcommand{\BaseReasonStat}[1]{\renewcommand{\BaseReasonStatValue}{#1}}
+\newcommand{\IntuitionStat}[1]{\renewcommand{\IntuitionStatValue}{#1}}
+\newcommand{\BaseIntuitionStat}[1]{\renewcommand{\BaseIntuitionStatValue}{#1}}
+\newcommand{\PresenceStat}[1]{\renewcommand{\PresenceStatValue}{#1}}
+\newcommand{\BasePresenceStat}[1]{\renewcommand{\BasePresenceStatValue}{#1}}
+
+
+\newcommand{\SizeValue}{}
+\newcommand{\SpeedValue}{}
+\newcommand{\BaseSpeedValue}{}
+\newcommand{\DisengageValue}{}
+\newcommand{\BaseDisengageValue}{}
+\newcommand{\StabilityValue}{}
+\newcommand{\BaseStabilityValue}{}
+
+\newcommand{\Size}[1]{\renewcommand{\SizeValue}{#1}}
+\newcommand{\Speed}[1]{\renewcommand{\SpeedValue}{#1}}
+\newcommand{\BaseSpeed}[1]{\renewcommand{\BaseSpeedValue}{#1}}
+\newcommand{\Disengage}[1]{\renewcommand{\DisengageValue}{#1}}
+\newcommand{\BaseDisengage}[1]{\renewcommand{\BaseDisengageValue}{#1}}
+\newcommand{\Stability}[1]{\renewcommand{\StabilityValue}{#1}}
+\newcommand{\BaseStability}[1]{\renewcommand{\BaseStabilityValue}{#1}}
+
+
+\newcommand{\MeleeDistanceValue}{}
+\newcommand{\BaseMeleeDistanceValue}{}
+\newcommand{\RangedDistanceValue}{}
+\newcommand{\BaseRangedDistanceValue}{}
+
+\newcommand{\MeleeDistance}[1]{\renewcommand{\MeleeDistanceValue}{#1}}
+\newcommand{\BaseMeleeDistance}[1]{\renewcommand{\BaseMeleeDistanceValue}{#1}}
+\newcommand{\RangedDistance}[1]{\renewcommand{\RangedDistanceValue}{#1}}
+\newcommand{\BaseRangedDistance}[1]{\renewcommand{\BaseRangedDistanceValue}{#1}}
+
+%% Stamina
+\newcommand{\MaxStaminaValue}{}
+\newcommand{\BaseStaminaValue}{}
+\newcommand{\CurrentStaminaValue}{}
+\newcommand{\TemporaryStaminaValue}{}
+
+\newcommand{\MaxStamina}[1]{\renewcommand{\MaxStaminaValue}{#1}}
+\newcommand{\BaseStamina}[1]{\renewcommand{\BaseStaminaValue}{#1}}
+\newcommand{\CurrentStamina}[1]{\renewcommand{\CurrentStaminaValue}{#1}}
+\newcommand{\TemporaryStamina}[1]{\renewcommand{\TemporaryStaminaValue}{#1}}
+
+%% Recoveries
+\newcommand{\MaxRecoveriesValue}{}
+\newcommand{\BaseRecoveriesValue}{0}
+\newcommand{\UsedRecoveriesValue}{}
+\newcommand{\StaminaRecoveryValue}{}
+\newcommand{\BaseStaminaRecoveryValue}{}
+
+\newcommand{\MaxRecoveries}[1]{\renewcommand{\MaxRecoveriesValue}{#1}}
+\newcommand{\BaseRecoveries}[1]{\renewcommand{\BaseRecoveriesValue}{#1}}
+\newcommand{\UsedRecoveries}[1]{\renewcommand{\UsedRecoveriesValue}{#1}}
+\newcommand{\StaminaRecovery}[1]{\renewcommand{\StaminaRecoveryValue}{#1}}
+\newcommand{\BaseStaminaRecovery}[1]{\renewcommand{\BaseStaminaRecoveryValue}{#1}}
+
+%% Heroic Resource
+\newcommand{\HeroicResourceValue}{}
+\newcommand{\HeroicResourceNameValue}{}
+\newcommand\HeroicResourceGain{}
+
+\newcommand{\HeroicResource}[1]{\renewcommand{\HeroicResourceValue}{#1}}
+\newcommand{\HeroicResourceName}[1]{\renewcommand{\HeroicResourceNameValue}{#1}}
+\makeatletter
+\newcommand\AddHeroicResourceGain[2]{%
+  \g@addto@macro\HeroicResourceGain{\\ \entryfont #1 & \entryfont #2}
+}
+\makeatother
+
+%% Surges
+\newcommand{\SurgesValue}{}
+\newcommand{\SurgeDamageBonusValue}{}
+
+\newcommand{\Surges}[1]{\renewcommand{\SurgesValue}{#1}}
+\newcommand{\SurgeDamageBonus}[1]{\renewcommand{\SurgeDamageBonusValue}{#1}}
+
+% CLASS FEATURES
+\newcommand{\StaminaClassBonusValue}{}
+\newcommand{\RecoveriesClassBonusValue}{}
+
+\newcommand{\StaminaClassBonus}[1]{\renewcommand{\StaminaClassBonusValue}{#1}}
+\newcommand{\RecoveriesClassBonus}[1]{\renewcommand{\RecoveriesClassBonusValue}{#1}}
+
+% KITS
+\newcommand{\KitsNameValue}{}
+\newcommand{\WeaponImplementValue}{}
+\newcommand{\ArmorWardValue}{}
+\newcommand{\SpeedKitBonusValue}{0}
+\newcommand{\DisengageKitBonusValue}{0}
+\newcommand{\StaminaKitBonusValue}{0}
+\newcommand{\StabilityKitBonusValue}{0}
+\newcommand{\MeleeDistanceKitBonusValue}{0}
+\newcommand{\RangedDistanceKitBonusValue}{0}
+\newcommand{\MeleeDamageKitBonusLowValue}{}
+\newcommand{\MeleeDamageKitBonusAverageValue}{}
+\newcommand{\MeleeDamageKitBonusHighValue}{}
+\newcommand{\RangedDamageKitBonusLowValue}{}
+\newcommand{\RangedDamageKitBonusAverageValue}{}
+\newcommand{\RangedDamageKitBonusHighValue}{}
+\newcommand{\KitEffectsValue}{}
+
+\newcommand{\KitsName}[1]{\xdef\KitsNameValue{#1}}
+\newcommand{\WeaponImplement}[1]{\xdef\WeaponImplementValue{#1}}
+\newcommand{\ArmorWard}[1]{\xdef\ArmorWardValue{#1}}
+\newcommand{\SpeedKitBonus}[1]{\xdef\SpeedKitBonusValue{#1}}
+\newcommand{\DisengageKitBonus}[1]{\xdef\DisengageKitBonusValue{#1}}
+\newcommand{\StaminaKitBonus}[1]{\xdef\StaminaKitBonusValue{#1}}
+\newcommand{\StabilityKitBonus}[1]{\xdef\StabilityKitBonusValue{#1}}
+\newcommand{\MeleeDistanceKitBonus}[1]{\xdef\MeleeDistanceKitBonusValue{#1}}
+\newcommand{\RangedDistanceKitBonus}[1]{\xdef\RangedDistanceKitBonusValue{#1}}
+\newcommand{\MeleeDamageKitBonusLow}[1]{\xdef\MeleeDamageKitBonusLowValue{#1}}
+\newcommand{\MeleeDamageKitBonusAverage}[1]{\xdef\MeleeDamageKitBonusAverageValue{#1}}
+\newcommand{\MeleeDamageKitBonusHigh}[1]{\xdef\MeleeDamageKitBonusHighValue{#1}}
+\newcommand{\RangedDamageKitBonusLow}[1]{\xdef\RangedDamageKitBonusLowValue{#1}}
+\newcommand{\RangedDamageKitBonusAverage}[1]{\xdef\RangedDamageKitBonusAverageValue{#1}}
+\newcommand{\RangedDamageKitBonusHigh}[1]{\xdef\RangedDamageKitBonusHighValue{#1}}
+
+\makeatletter
+\newcommand{\KitEffects}[1]{\protected@xdef\KitEffectsValue{#1}}
+
+\newcommand{\CalculateKitInformation}{%
+	\DTLforeach*{kitDB}{%
+		\thisKitName			= Name,%
+		\thisWeaponImplement	= WeaponImplement,%
+		\thisArmorWard			= ArmorWard,%
+		\thisSpeed				= Speed,%
+		\thisDisengage			= Disengage,%
+		\thisStamina			= Stamina,%
+		\thisStability			= Stability,%
+		\thisMeleeDistance		= MeleeDistance,%
+		\thisRangedDistance		= RangedDistance,%
+		\thisMeleeDamageBonus	= MeleeDamageBonus,%
+		\thisRangedDamageBonus	= RangedDamageBonus,%
+		\thisEffects			= Effects%
+	}{%
+		\ifthenelse{\equal{\KitsNameValue}{}}{%
+			\KitsName{\thisKitName}%
+		}{%
+			\ifthenelse{\equal{\thisKitName}{}}{}{%
+				\g@addto@macro\KitsNameValue{~\&~\thisKitName}%
+			}%
+		}%
+		
+		\ifthenelse{\equal{\WeaponImplementValue}{}}{%
+			\WeaponImplement{\thisWeaponImplement}%
+		}{%
+			\ifthenelse{\equal{\thisWeaponImplement}{}}{}{%
+				\g@addto@macro\WeaponImplementValue{,~\thisWeaponImplement}%
+			}%
+		}%
+		
+		\ifthenelse{\equal{\ArmorWardValue}{}}{%
+			\ArmorWard{\thisArmorWard}%
+		}{%
+			\ifthenelse{\equal{\thisArmorWard}{}}{}{%
+				\g@addto@macro\ArmorWardValue{,~\thisArmorWard}%
+			}%
+		}%
+		
+		\ifthenelse{\equal{\thisSpeed}{}}{}{%
+			\ifthenelse{\thisSpeed>\SpeedKitBonusValue}{%
+				\SpeedKitBonus{\thisSpeed}
+			}{}%
+		}
+		\ifthenelse{\equal{\thisDisengage}{}}{}{%
+			\ifthenelse{\thisDisengage>\DisengageKitBonusValue}{%
+				\DisengageKitBonus{\thisDisengage}
+			}{}%
+		}
+		\ifthenelse{\equal{\thisStamina}{}}{}{%
+			\ifthenelse{\thisStamina>\StaminaKitBonusValue}{%
+				\StaminaKitBonus{\thisStamina}
+			}{}%
+		}
+		\ifthenelse{\equal{\thisStability}{}}{}{%
+			\ifthenelse{\thisStability>\StabilityKitBonusValue}{%
+				\StabilityKitBonus{\thisStability}
+			}{}%
+		}
+		\ifthenelse{\equal{\thisMeleeDistance}{}}{}{%
+			\ifthenelse{\thisMeleeDistance>\MeleeDistanceKitBonusValue}{%
+				\MeleeDistanceKitBonus{\thisMeleeDistance}
+			}{}%
+		}
+		\ifthenelse{\equal{\thisRangedDistance}{}}{}{%
+			\ifthenelse{\thisRangedDistance>\RangedDistanceKitBonusValue}{%
+				\RangedDistanceKitBonus{\thisRangedDistance}
+			}{}%
+		}
+		
+		\ifthenelse{\equal{\thisMeleeDamageBonus}{}}{}{%
+			\SetMeleeDamageBonus{\thisMeleeDamageBonus}%
+		}%
+		\ifthenelse{\equal{\thisRangedDamageBonus}{}}{}{%
+			\SetRangedDamageBonus{\thisRangedDamageBonus}%
+		}%
+		
+		\foreach \action in \thisEffects {%
+			\g@addto@macro\KitEffectsValue{\GetActionShortInfo{\action}\\\vskip -5pt}
+			\KitEffects{\KitEffectsValue}
+		}%
+	}%
+}%
+
+\ExplSyntaxOn
+\seq_new:N \l__kit_melee_damage_bonus_seq
+\seq_new:N \l__kit_ranged_damage_bonus_seq
+
+\newcommand{\SetMeleeDamageBonus}[1]{%
+	\seq_set_split:NnV
+		\l__kit_melee_damage_bonus_seq
+		{ , }
+		#1
+	
+	\ifthenelse{\equal{\MeleeDamageKitBonusLowValue}{}}{%
+		\exp_args:Ne \MeleeDamageKitBonusLow
+			{ \seq_item:Nn \l__kit_melee_damage_bonus_seq { 1 } }
+	}{%
+		\g@addto@macro\MeleeDamageKitBonusLowValue{\\\vskip -9pt \seq_item:Nn \l__kit_melee_damage_bonus_seq { 1 }}%
+	}%
+	\ifthenelse{\equal{\MeleeDamageKitBonusAverageValue}{}}{%
+		\exp_args:Ne \MeleeDamageKitBonusAverage
+			{ \seq_item:Nn \l__kit_melee_damage_bonus_seq { 2 } }
+	}{%
+		\g@addto@macro\MeleeDamageKitBonusAverageValue{\\\vskip -9pt \seq_item:Nn \l__kit_melee_damage_bonus_seq { 2 }}%
+	}%
+	\ifthenelse{\equal{\MeleeDamageKitBonusHighValue}{}}{%
+		\exp_args:Ne \MeleeDamageKitBonusHigh
+			{ \seq_item:Nn \l__kit_melee_damage_bonus_seq { 3 } }
+	}{%
+		\g@addto@macro\MeleeDamageKitBonusHighValue{\\\vskip -9pt \seq_item:Nn \l__kit_melee_damage_bonus_seq { 3 }}%
+	}%
+}
+\newcommand{\SetRangedDamageBonus}[1]{%
+	\seq_set_split:NnV
+		\l__kit_ranged_damage_bonus_seq
+		{ , }
+		#1
+	
+	\ifthenelse{\equal{\RangedDamageKitBonusLowValue}{}}{%
+		\exp_args:Ne \RangedDamageKitBonusLow
+			{ \seq_item:Nn \l__kit_ranged_damage_bonus_seq { 1 } }
+	}{%
+		\g@addto@macro\RangedDamageKitBonusLowValue{\\\vskip -9pt \seq_item:Nn \l__kit_ranged_damage_bonus_seq { 1 }}%
+	}%
+	\ifthenelse{\equal{\RangedDamageKitBonusAverageValue}{}}{%
+		\exp_args:Ne \RangedDamageKitBonusAverage
+			{ \seq_item:Nn \l__kit_ranged_damage_bonus_seq { 2 } }
+	}{%
+		\g@addto@macro\RangedDamageKitBonusAverageValue{\\\vskip -9pt \seq_item:Nn \l__kit_ranged_damage_bonus_seq { 2 }}%
+	}%
+	\ifthenelse{\equal{\RangedDamageKitBonusHighValue}{}}{%
+		\exp_args:Ne \RangedDamageKitBonusHigh
+			{ \seq_item:Nn \l__kit_ranged_damage_bonus_seq { 3 } }
+	}{%
+		\g@addto@macro\RangedDamageKitBonusHighValue{\\\vskip -9pt \seq_item:Nn \l__kit_ranged_damage_bonus_seq { 3 }}%
+	}%
+}
+
+\newcommand{\GetActionType}[1]{%
+	\str_case_e:nnF {#1}
+	{
+		{Main~Action}
+		{
+			\textcolor{actionpanelmain}{Main~Action}
+		}
+		
+		{Heroic~Ability}
+		{
+			\textcolor{actionpanelmain}{Main~Action}
+		}
+		
+		{Signature~Ability}
+		{
+			\textcolor{actionpanelmain}{Main~Action}
+		}
+
+		{Maneuver}
+		{
+			\textcolor{actionpanelmaneuver}{Maneuver}
+		}
+
+		{Triggered~Action}
+		{
+			\textcolor{actionpaneltriggered}{Triggered~Action}
+		}
+
+		{Free~Triggered~Action}
+		{
+			\textcolor{actionpaneltriggered}{Free~Triggered~Action}
+		}
+
+		{Free~Strike}
+		{
+			\textcolor{actionpanelfreestrike}{Free~Strike}
+		}
+	}
+	{
+		\IfSubStr{#1}{Free~Triggered~Action}{
+			\textcolor{actionpaneltriggered}{Free~Triggered~Action}%
+		}{%
+			\PackageError{character-sheet-commands}
+				{
+					Unknown~Action~Panel~type~'#1'
+				}
+				{
+					Valid~action~types~are~Main~Action,~Maneuver,~Triggered~Action,~Free~Triggered~Action,~and~Free~ Strike.~For~Heroic~or~Signature~abilities~use,~for~example,~'Heroic~Ability/Triggered~Action'~or~'Signature~Ability/Main~Action'.
+				}
+			}%
+	}
+}%
+
+\ExplSyntaxOff
+\makeatother
+
+\newcommand{\CalculateStats}{%
+	% Progression Stats
+	\Wealth{\intcalcAdd{\BaseWealthValue}{\WealthBonusValue}}
+	\Renown{\intcalcAdd{\BaseRenownValue}{\RenownBonusValue}}
+	
+	% Characteristics
+	\MightStat{\intcalcAdd{\BaseMightStatValue}{0}}
+	\AgilityStat{\intcalcAdd{\BaseAgilityStatValue}{0}}
+	\ReasonStat{\intcalcAdd{\BaseReasonStatValue}{0}}
+	\IntuitionStat{\intcalcAdd{\BaseIntuitionStatValue}{0}}
+	\PresenceStat{\intcalcAdd{\BasePresenceStatValue}{0}}
+	%% Mobility
+	\Speed{\intcalcAdd{\BaseSpeedValue}{\SpeedKitBonusValue}}
+	\Disengage{\intcalcAdd{\BaseDisengageValue}{\DisengageKitBonusValue}}
+	\Stability{\intcalcAdd{\BaseStabilityValue}{\StabilityKitBonusValue}}
+	%% Attack Distances
+	\MeleeDistance{\intcalcAdd{\BaseMeleeDistanceValue}{\MeleeDistanceKitBonusValue}}
+	\RangedDistance{\intcalcAdd{\BaseRangedDistanceValue}{\RangedDistanceKitBonusValue}}
+	
+	% Stamina
+	\MaxStamina{\intcalcAdd{\BaseStaminaValue}{\intcalcAdd{\StaminaClassBonusValue}{\StaminaKitBonusValue}}}
+	
+	% Recoveries
+	\MaxRecoveries{\intcalcAdd{\BaseRecoveriesValue}{\RecoveriesClassBonusValue}}
+}%
+
+% CONDITIONS
+\newcommand{\BleedingStrikeThrough}[1]{#1}
+\newcommand{\DazedStrikeThrough}[1]{#1}
+\newcommand{\FrightenedStrikeThrough}[1]{#1}
+\newcommand{\GrabbedStrikeThrough}[1]{#1}
+\newcommand{\ProneStrikeThrough}[1]{#1}
+\newcommand{\RestrainedStrikeThrough}[1]{#1}
+\newcommand{\SlowedStrikeThrough}[1]{#1}
+\newcommand{\TauntedStrikeThrough}[1]{#1}
+\newcommand{\WeakenedStrikeThrough}[1]{#1}
+
+\definecolor{bleedingendofturn}{rgb}{1 1 1}
+\definecolor{bleedingsaveends}{rgb}{1 1 1}
+\definecolor{dazedendofturn}{rgb}{1 1 1}
+\definecolor{dazedsaveends}{rgb}{1 1 1}
+\definecolor{frightenedendofturn}{rgb}{1 1 1}
+\definecolor{frightenedsaveends}{rgb}{1 1 1}
+\definecolor{grabbedendofturn}{rgb}{1 1 1}
+\definecolor{grabbedsaveends}{rgb}{1 1 1}
+\definecolor{proneendofturn}{rgb}{1 1 1}
+\definecolor{pronesaveends}{rgb}{1 1 1}
+\definecolor{restrainedendofturn}{rgb}{1 1 1}
+\definecolor{restrainedsaveends}{rgb}{1 1 1}
+\definecolor{slowedendofturn}{rgb}{1 1 1}
+\definecolor{slowedsaveends}{rgb}{1 1 1}
+\definecolor{tauntedendofturn}{rgb}{1 1 1}
+\definecolor{tauntedsaveends}{rgb}{1 1 1}
+\definecolor{weakenedendofturn}{rgb}{1 1 1}
+\definecolor{weakenedsaveends}{rgb}{1 1 1}
+\definecolor{conditionextraAendofturn}{rgb}{1 1 1}
+\definecolor{conditionextraAsaveends}{rgb}{1 1 1}
+\definecolor{conditionextraBendofturn}{rgb}{1 1 1}
+\definecolor{conditionextraBsaveends}{rgb}{1 1 1}
+
+\newcommand{\ConditionExtraAValue}{}
+\newcommand{\ConditionExtraBValue}{}
+
+\newcounter{conditionSlotCounter}
+\setcounter{conditionSlotCounter}{1}
+
+\newcommand{\BleedingCondition}[3]{%
+	\ifthenelse{\equal{#1}{T}}{%
+		\renewcommand{\BleedingStrikeThrough}[1]{\sout{##1}}
+	}{%
+		\ifthenelse{\equal{#2}{T}}{\definecolor{bleedingendofturn}{rgb}{0.850 0.764 0.466}}{}
+		\ifthenelse{\equal{#3}{T}}{\definecolor{bleedingsaveends}{rgb}{0.850 0.764 0.466}}{}
+	}
+}%
+\newcommand{\DazedCondition}[3]{%
+	\ifthenelse{\equal{#1}{T}}{%
+		\renewcommand{\DazedStrikeThrough}[1]{\sout{##1}}
+	}{%
+		\ifthenelse{\equal{#2}{T}}{\definecolor{dazedendofturn}{rgb}{0.850 0.764 0.466}}{}
+		\ifthenelse{\equal{#3}{T}}{\definecolor{dazedsaveends}{rgb}{0.850 0.764 0.466}}{}
+	}
+}%
+\newcommand{\FrightenedCondition}[3]{%
+	\ifthenelse{\equal{#1}{T}}{%
+		\renewcommand{\FrightenedStrikeThrough}[1]{\sout{##1}}
+	}{%
+		\ifthenelse{\equal{#2}{T}}{\definecolor{frightenedendofturn}{rgb}{0.850 0.764 0.466}}{}
+		\ifthenelse{\equal{#3}{T}}{\definecolor{frightenedsaveends}{rgb}{0.850 0.764 0.466}}{}
+	}
+}%
+\newcommand{\GrabbedCondition}[3]{%
+	\ifthenelse{\equal{#1}{T}}{%
+		\renewcommand{\GrabbedStrikeThrough}[1]{\sout{##1}}
+	}{%
+		\ifthenelse{\equal{#2}{T}}{\definecolor{grabbedendofturn}{rgb}{0.850 0.764 0.466}}{}
+		\ifthenelse{\equal{#3}{T}}{\definecolor{grabbedsaveends}{rgb}{0.850 0.764 0.466}}{}
+	}
+}%
+\newcommand{\ProneCondition}[3]{%
+	\ifthenelse{\equal{#1}{T}}{%
+		\renewcommand{\ProneStrikeThrough}[1]{\sout{##1}}
+	}{%
+		\ifthenelse{\equal{#2}{T}}{\definecolor{proneendofturn}{rgb}{0.850 0.764 0.466}}{}
+		\ifthenelse{\equal{#3}{T}}{\definecolor{pronesaveends}{rgb}{0.850 0.764 0.466}}{}
+	}
+}%
+\newcommand{\RestrainedCondition}[3]{%
+	\ifthenelse{\equal{#1}{T}}{%
+		\renewcommand{\RestrainedStrikeThrough}[1]{\sout{##1}}
+	}{%
+		\ifthenelse{\equal{#2}{T}}{\definecolor{restrainedendofturn}{rgb}{0.850 0.764 0.466}}{}
+		\ifthenelse{\equal{#3}{T}}{\definecolor{restrainedsaveends}{rgb}{0.850 0.764 0.466}}{}
+	}
+}%
+\newcommand{\SlowedCondition}[3]{%
+	\ifthenelse{\equal{#1}{T}}{%
+		\renewcommand{\SlowedStrikeThrough}[1]{\sout{##1}}
+	}{%
+		\ifthenelse{\equal{#2}{T}}{\definecolor{slowedendofturn}{rgb}{0.850 0.764 0.466}}{}
+		\ifthenelse{\equal{#3}{T}}{\definecolor{slowedsaveends}{rgb}{0.850 0.764 0.466}}{}
+	}
+}%
+\newcommand{\TauntedCondition}[3]{%
+	\ifthenelse{\equal{#1}{T}}{%
+		\renewcommand{\TauntedStrikeThrough}[1]{\sout{##1}}
+	}{%
+		\ifthenelse{\equal{#2}{T}}{\definecolor{tauntedendofturn}{rgb}{0.850 0.764 0.466}}{}
+		\ifthenelse{\equal{#3}{T}}{\definecolor{tauntedsaveends}{rgb}{0.850 0.764 0.466}}{}
+	}
+}%
+\newcommand{\WeakenedCondition}[3]{%
+	\ifthenelse{\equal{#1}{T}}{%
+		\renewcommand{\WeakenedStrikeThrough}[1]{\sout{##1}}
+	}{%
+		\ifthenelse{\equal{#2}{T}}{\definecolor{weakenedendofturn}{rgb}{0.850 0.764 0.466}}{}
+		\ifthenelse{\equal{#3}{T}}{\definecolor{weakenedsaveends}{rgb}{0.850 0.764 0.466}}{}
+	}
+}%
+
+\newcommand{\AddExtraCondition}[3]{%
+	\ifnum\value{conditionSlotCounter}>2%
+		\PackageWarning{Character Sheet Commands}{All condition slots are filled! Cannot add "#1".}%
+	\else%
+		\ifthenelse{\equal{#1}{}}{}{
+			\expandafter\renewcommand\csname ConditionExtra\Alph{conditionSlotCounter}Value\endcsname{#1}%
+			\ifthenelse{\equal{#2}{T}}{%
+				\definecolor{conditionextra\Alph{conditionSlotCounter}endofturn}{rgb}{0.850 0.764 0.466}
+			}{}%
+			\ifthenelse{\equal{#3}{T}}{%
+				\definecolor{conditionextra\Alph{conditionSlotCounter}saveends}{rgb}{0.850 0.764 0.466}
+			}{}%
+			\stepcounter{conditionSlotCounter}%
+		}
+	\fi
+}%
+
+\newcommand{\ConditionSaveValue}{}
+\newcommand{\ConditionSaveBonusValue}{}
+
+\newcommand{\ConditionSave}{\renewcommand{\ConditionSaveValue}{\intcalcAdd{6}{\ConditionSaveBonusValue}}}
+\newcommand{\ConditionSaveBonus}[1]{\renewcommand{\ConditionSaveBonusValue}{#1}\ConditionSave}
+
+\newcommand{\WeaknessesValue}{}
+\newcommand{\ImmunitiesValue}{}
+
+\newcommand{\Weaknesses}[1]{\renewcommand{\WeaknessesValue}{#1}}
+\newcommand{\Immunities}[1]{\renewcommand{\ImmunitiesValue}{#1}}
+
+% POTENCY
+\makeatletter
+\newcommand{\numtoalph}[1]{\@alph{#1}}
+\makeatother
+
+\newcommand{\PotencyWeakValue}{0}
+\newcommand{\PotencyAverageValue}{0}
+\newcommand{\PotencyStrongValue}{0}
+
+\newcommand{\PotencyWeak}[2]{\renewcommand{\PotencyWeakValue}{\intcalcAdd{\csname #1StatValue\endcsname}{#2}}}
+\newcommand{\PotencyAverage}[2]{\renewcommand{\PotencyAverageValue}{\intcalcAdd{\csname #1StatValue\endcsname}{#2}}}
+\newcommand{\PotencyStrong}[2]{\renewcommand{\PotencyStrongValue}{\intcalcAdd{\csname #1StatValue\endcsname}{#2}}}
+
+% SKILLS
+%% Crafting
+\definecolor{alchemyproficiency}{rgb}{1 1 1}
+\definecolor{architectureproficiency}{rgb}{1 1 1}
+\definecolor{blacksmithingproficiency}{rgb}{1 1 1}
+\definecolor{carpentryproficiency}{rgb}{1 1 1}
+\definecolor{cookingproficiency}{rgb}{1 1 1}
+\definecolor{fletchingproficiency}{rgb}{1 1 1}
+\definecolor{forgeryproficiency}{rgb}{1 1 1}
+\definecolor{jewelleryproficiency}{rgb}{1 1 1}
+\definecolor{mechanicsproficiency}{rgb}{1 1 1}
+\definecolor{tailoringproficiency}{rgb}{1 1 1}
+%% Interpersonal
+\definecolor{bragproficiency}{rgb}{1 1 1}
+\definecolor{empathizeproficiency}{rgb}{1 1 1}
+\definecolor{flirtproficiency}{rgb}{1 1 1}
+\definecolor{gambleproficiency}{rgb}{1 1 1}
+\definecolor{handleanimalsproficiency}{rgb}{1 1 1}
+\definecolor{interrogateproficiency}{rgb}{1 1 1}
+\definecolor{intimidateproficiency}{rgb}{1 1 1}
+\definecolor{leadproficiency}{rgb}{1 1 1}
+\definecolor{lieproficiency}{rgb}{1 1 1}
+\definecolor{musicproficiency}{rgb}{1 1 1}
+\definecolor{performproficiency}{rgb}{1 1 1}
+\definecolor{persuadeproficiency}{rgb}{1 1 1}
+\definecolor{readpersonproficiency}{rgb}{1 1 1}
+%% Exploration
+\definecolor{climbproficiency}{rgb}{1 1 1}
+\definecolor{driveproficiency}{rgb}{1 1 1}
+\definecolor{enduranceproficiency}{rgb}{1 1 1}
+\definecolor{gymnasticsproficiency}{rgb}{1 1 1}
+\definecolor{healproficiency}{rgb}{1 1 1}
+\definecolor{jumpproficiency}{rgb}{1 1 1}
+\definecolor{liftproficiency}{rgb}{1 1 1}
+\definecolor{navigateproficiency}{rgb}{1 1 1}
+\definecolor{rideproficiency}{rgb}{1 1 1}
+\definecolor{swimproficiency}{rgb}{1 1 1}
+%% Intrigue
+\definecolor{alertnessproficiency}{rgb}{1 1 1}
+\definecolor{concealobjectproficiency}{rgb}{1 1 1}
+\definecolor{disguiseproficiency}{rgb}{1 1 1}
+\definecolor{eavesdropproficiency}{rgb}{1 1 1}
+\definecolor{escapeartistproficiency}{rgb}{1 1 1}
+\definecolor{hideproficiency}{rgb}{1 1 1}
+\definecolor{picklockproficiency}{rgb}{1 1 1}
+\definecolor{pickpocketproficiency}{rgb}{1 1 1}
+\definecolor{sabotageproficiency}{rgb}{1 1 1}
+\definecolor{searchproficiency}{rgb}{1 1 1}
+\definecolor{sneakproficiency}{rgb}{1 1 1}
+\definecolor{trackproficiency}{rgb}{1 1 1}
+%% Lore
+\definecolor{criminalundergroundproficiency}{rgb}{1 1 1}
+\definecolor{cultureproficiency}{rgb}{1 1 1}
+\definecolor{historyproficiency}{rgb}{1 1 1}
+\definecolor{magicproficiency}{rgb}{1 1 1}
+\definecolor{monstersproficiency}{rgb}{1 1 1}
+\definecolor{natureproficiency}{rgb}{1 1 1}
+\definecolor{psionicsproficiency}{rgb}{1 1 1}
+\definecolor{religionproficiency}{rgb}{1 1 1}
+\definecolor{rumorsproficiency}{rgb}{1 1 1}
+\definecolor{societyproficiency}{rgb}{1 1 1}
+\definecolor{strategyproficiency}{rgb}{1 1 1}
+\definecolor{timescapeproficiency}{rgb}{1 1 1}
+
+% SETTING PROFICIENCIES
+%% Crafting
+\newcommand{\AlchemyProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{alchemyproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\ArchitectureProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{architectureproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\BlacksmithingProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{blacksmithingproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\CarpentryProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{carpentryproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\CookingProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{cookingproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\FletchingProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{fletchingproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\ForgeryProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{forgeryproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\JewelleryProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{jewelleryproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\MechanicsProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{mechanicsproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\TailoringProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{tailoringproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+%% Interpersonal
+\newcommand{\BragProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{bragproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\EmpathizeProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{empathizeproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\FlirtProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{flirtproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\GambleProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{gambleproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\HandleAnimalsProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{handleanimalsproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\InterrogateProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{interrogateproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\IntimidateProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{intimidateproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\LeadProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{leadproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\LieProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{lieproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\MusicProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{musicproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\PerformProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{performproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\PersuadeProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{persuadeproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\ReadPersonProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{readpersonproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+%% Exploration
+\newcommand{\ClimbProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{climbproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\DriveProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{driveproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\EnduranceProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{enduranceproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\GymnasticsProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{gymnasticsproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\HealProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{healproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\JumpProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{jumpproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\LiftProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{liftproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\NavigateProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{navigateproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\RideProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{rideproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\SwimProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{swimproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+%% Intrigue
+\newcommand{\AlertnessProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{alertnessproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\ConcealObjectProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{concealobjectproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\DisguiseProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{disguiseproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\EavesdropProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{eavesdropproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\EscapeArtistProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{escapeartistproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\HideProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{hideproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\PickLockProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{picklockproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\PickPocketProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{pickpocketproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\SabotageProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{sabotageproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\SearchProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{searchproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\SneakProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{sneakproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\TrackProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{trackproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+%% Lore
+\newcommand{\CriminalUndergroundProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{criminalundergroundproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\CultureProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{cultureproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\HistoryProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{historyproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\MagicProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{magicproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\MonstersProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{monstersproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\NatureProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{natureproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\PsionicsProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{psionicsproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\ReligionProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{religionproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\RumorsProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{rumorsproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\SocietyProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{societyproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\StrategyProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{strategyproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+\newcommand{\TimescapeProficiency}[1]{%
+	\ifthenelse{\equal{#1}{P}}{\definecolor{timescapeproficiency}{rgb}{0.850 0.764 0.466}}{}%
+}%
+
+
+
+% CULTURE
+\newcommand{\CultureNameValue}{}
+\newcommand{\CultureLanguageValue}{}
+\newcommand{\EnvironmentNameValue}{}
+\newcommand{\EnvironmentBenefitValue}{}
+\newcommand{\OrganizationNameValue}{}
+\newcommand{\OrganizationBenefitValue}{}
+\newcommand{\UpbringingNameValue}{}
+\newcommand{\UpbringingBenefitValue}{}
+\newcommand\Languages{}
+
+\newcommand{\CultureName}[1]{\renewcommand{\CultureNameValue}{#1}}
+\newcommand{\CultureLanguage}[1]{\renewcommand{\CultureLanguageValue}{#1}\AddLanguage{#1}}
+\newcommand{\Environment}[2]{\renewcommand{\EnvironmentNameValue}{#1}\renewcommand{\EnvironmentBenefitValue}{#2}}
+\newcommand{\Organization}[2]{\renewcommand{\OrganizationNameValue}{#1}\renewcommand{\OrganizationBenefitValue}{#2}}
+\newcommand{\Upbringing}[2]{\renewcommand{\UpbringingNameValue}{#1}\renewcommand{\UpbringingBenefitValue}{#2}}
+\makeatletter
+\newcommand\AddLanguage[1]{%
+	\g@addto@macro\Languages{\item \entryfont #1}
+}
+\makeatother
+
+% CLASS FEATURES
+\newcommand{\ClassFeatures}{}%
+\makeatletter%
+\newcommand\AddClassFeature[1]{%
+	\g@addto@macro\ClassFeatures{\entryfont #1\hfill\\\vskip -5pt}%
+}%
+\newcommand\AddClassFeatureBreak{%
+	\g@addto@macro\ClassFeatures{\columnbreak}%
+}%
+\makeatother%
+
+% ANCESTRY TRAITS AND PERKS
+\newcommand{\AncestryTraitsAndPerks}{}%
+\makeatletter%
+\newcommand\AddAncestryTraitsAndPerks[1]{%
+	\g@addto@macro\AncestryTraitsAndPerks{\entryfont #1\hfill\\\vskip -5pt}%
+}%
+\newcommand\AddAncestryTraitsAndPerksBreak{%
+	\g@addto@macro\AncestryTraitsAndPerks{\columnbreak}%
+}%
+\makeatother%
+
+% TITLES
+\newcommand{\Titles}{}%
+\makeatletter%
+\newcommand\AddTitle[1]{%
+	\g@addto@macro\Titles{\entryfont #1\hfill\\\vskip -5pt}%
+}%
+\newcommand\AddTitleBreak{%
+	\g@addto@macro\Titles{\columnbreak}%
+}%
+\makeatother%
+
+% CAREER
+\newcommand{\CareerNameValue}{}
+\newcommand\CareerBenefits{}
+\newcommand{\ProjectPointsValue}{}
+\newcommand{\IncitingIncidentNameValue}{}
+\newcommand{\IncitingIncidentDescriptionValue}{}
+
+\newcommand{\CareerName}[1]{\renewcommand{\CareerNameValue}{#1}}
+\makeatletter
+\newcommand\AddCareerBenefit[2][\textbullet]{%
+	\g@addto@macro\CareerBenefits{\item[#1]\ifthenelse{\equal{#1}{}}{\hspace*{-\leftmargin}}{}\entryfont #2}
+}
+\makeatother
+\newcommand{\ProjectPoints}[1]{\xdef\ProjectPointsValue{#1}Project~Points:~+#1~Project~Points}
+\newcommand{\IncitingIncident}[3][\small]{
+	\renewcommand{\IncitingIncidentNameValue}{#2}
+	\renewcommand{\IncitingIncidentDescriptionValue}{#1#3}
+}
+
+% COMPLICATION
+\newcommand{\ComplicationNameValue}{}
+\newcommand\ComplicationBenefits{}
+\newcommand{\ComplicationDrawbackValue}{}
+
+\newcommand{\ComplicationName}[1]{\renewcommand{\ComplicationNameValue}{#1}}
+\newcommand{\ComplicationDrawback}[1]{\renewcommand{\ComplicationDrawbackValue}{#1}}
+\makeatletter
+\newcommand\AddComplicationBenefit[2][\textbullet]{%
+	\g@addto@macro\ComplicationBenefits{\item[#1]\ifthenelse{\equal{#1}{}}{\hspace*{-\leftmargin}}{}\entryfont #2}
+}
+\makeatother
+
+% BACK STORY
+\newcommand{\BackStoryValue}{}
+\newcommand{\BackStory}[1]{\renewcommand{\BackStoryValue}{#1}}
+
+% TRINKETS
+\newcommand\Trinkets{}%
+\makeatletter%
+\newcommand\AddTrinket[1]{%
+	\g@addto@macro\Trinkets{\entryfont #1\hfill\\\vskip -5pt}%
+}%
+\newcommand{\AddTrinketsColumnBreak}{\g@addto@macro\Trinkets{\par\columnbreak}}%
+\makeatother%
+
+% LEVELLED TREASURES
+\newcommand\LevelledTreasures{}%
+\newcounter{carriedsafely}
+\setcounter{carriedsafely}{0}
+\makeatletter%
+\newcommand\AddLevelledTreasure[2][]{%
+	\ifthenelse{\equal{#1}{safe}}{%
+		\ifnum\value{conditionSlotCounter}>3%
+			\PackageWarning{Character Sheet Commands}{You~cannot~carry~more~than~3~treasures~safely! Cannot add "#2".}%
+		\else%
+			\g@addto@macro\LevelledTreasures{\entryfont #2\hfill\\\vskip -5pt}%
+			\stepcounter{carriedsafely}
+		\fi
+	}{%
+		\g@addto@macro\LevelledTreasures{\entryfont #2\hfill\\\vskip -5pt}%
+	}%
+}%
+\newcommand{\AddTreasuresColumnBreak}{\g@addto@macro\LevelledTreasures{\par\columnbreak}}%
+\makeatother%
+
+% CONSUMABLES
+\newcommand\Consumables{}%
+\ifdefempty{\Consumables}
+{%
+	% \Consumables is empty
+}
+{%
+	% \Consumables is not empty
+	\begin{itemize}
+		\Consumables
+	\end{itemize}
+}
+\makeatletter%
+\newcommand\AddConsumable[1]{%
+	\g@addto@macro\Consumables{\item \entryfont #1}%
+}%
+\makeatother%
+
+% PROJECTS
+\newcommand{\ProjectNameAValue}{}
+\newcommand{\AssignedHeroFollowerAValue}{}
+\newcommand{\RollCharacteristicAValue}{}
+\newcommand{\CurrentPointsAValue}{}
+\newcommand{\GoalPointsAValue}{}
+\newcommand{\ProjectNameBValue}{}
+\newcommand{\AssignedHeroFollowerBValue}{}
+\newcommand{\RollCharacteristicBValue}{}
+\newcommand{\CurrentPointsBValue}{}
+\newcommand{\GoalPointsBValue}{}
+\newcommand{\ProjectNameCValue}{}
+\newcommand{\AssignedHeroFollowerCValue}{}
+\newcommand{\RollCharacteristicCValue}{}
+\newcommand{\CurrentPointsCValue}{}
+\newcommand{\GoalPointsCValue}{}
+\newcommand{\ProjectNameDValue}{}
+\newcommand{\AssignedHeroFollowerDValue}{}
+\newcommand{\RollCharacteristicDValue}{}
+\newcommand{\CurrentPointsDValue}{}
+\newcommand{\GoalPointsDValue}{}
+\newcommand{\ProjectNameEValue}{}
+\newcommand{\AssignedHeroFollowerEValue}{}
+\newcommand{\RollCharacteristicEValue}{}
+\newcommand{\CurrentPointsEValue}{}
+\newcommand{\GoalPointsEValue}{}
+\newcommand{\ProjectNameFValue}{}
+\newcommand{\AssignedHeroFollowerFValue}{}
+\newcommand{\RollCharacteristicFValue}{}
+\newcommand{\CurrentPointsFValue}{}
+\newcommand{\GoalPointsFValue}{}
+\newcommand{\ProjectNameGValue}{}
+\newcommand{\AssignedHeroFollowerGValue}{}
+\newcommand{\RollCharacteristicGValue}{}
+\newcommand{\CurrentPointsGValue}{}
+\newcommand{\GoalPointsGValue}{}
+\newcommand{\ProjectNameHValue}{}
+\newcommand{\AssignedHeroFollowerHValue}{}
+\newcommand{\RollCharacteristicHValue}{}
+\newcommand{\CurrentPointsHValue}{}
+\newcommand{\GoalPointsHValue}{}
+
+\newcounter{projectSlotCounter}
+\setcounter{projectSlotCounter}{1}
+
+\newcommand{\AddProject}[5]{%
+	\ifnum\value{projectSlotCounter}>8%
+		\PackageWarning{Character Sheet Commands}{All project slots are filled! Cannot add "#1".}%
+	\else%
+		\expandafter\renewcommand\csname ProjectName\Alph{projectSlotCounter}Value\endcsname{\entryfont #1}%
+		\expandafter\renewcommand\csname AssignedHeroFollower\Alph{projectSlotCounter}Value\endcsname{\entryfont #2}%
+		\expandafter\renewcommand\csname RollCharacteristic\Alph{projectSlotCounter}Value\endcsname{\entryfont #3}%
+		\expandafter\renewcommand\csname CurrentPoints\Alph{projectSlotCounter}Value\endcsname{\entryfont #4}%
+		\expandafter\renewcommand\csname GoalPoints\Alph{projectSlotCounter}Value\endcsname{\entryfont #5}%
+		\stepcounter{projectSlotCounter}%
+	\fi
+}%

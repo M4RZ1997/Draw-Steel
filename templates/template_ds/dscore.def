@@ -81,8 +81,9 @@
 %\RequirePackage {\PATH templates/template_ds/lib/dscomment}	% inline comment boxes
 \RequirePackage {\PATH templates/template_ds/lib/dsheader}		% fancy headers and footers
 %\RequirePackage {\PATH templates/template_ds/lib/dsmonster}	% stat blocks
+\RequirePackage {\PATH templates/template_ds/lib/dsminion}		% stat blocks
 %\RequirePackage {\PATH templates/template_ds/lib/dsreadaloud}	% read-aloud text
 %\RequirePackage {\PATH templates/template_ds/lib/dssections}	% section styling and special section headers
 %\RequirePackage {\PATH templates/template_ds/lib/dssidebar}	% sidebars
-%\RequirePackage {\PATH templates/template_ds/lib/dstable}		% tables
+\RequirePackage {\PATH templates/template_ds/lib/dstable}		% tables
 %\RequirePackage {\PATH templates/template_ds/lib/dstoc}		% table of contents styling

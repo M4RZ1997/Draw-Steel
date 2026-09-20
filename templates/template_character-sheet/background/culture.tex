@@ -1,0 +1,32 @@
+% OUTLINE
+\draw[black] (12.5,12.5) rectangle ++(2525,560);
+
+% DIVIDER
+\node[inner sep=0] at (1275, 87.5) {\OrnamentalDivider[0.975\paperwidth]{}};
+
+% CULTURE NAME
+\node(inner xsep=2pt, inner ysep=0pt) (CultureName) at (340.5,147.5) {\scriptsize\scshape\culturename~\stringname};
+\draw[gray, line width=1.5] (CultureName.east) -- (620.5,147.5) -- ++(15,15) -- ++(0,115) -- ++(-15,15) -- ++(-560,0) -- ++(-15,-15) -- ++(0,-115) -- ++(15,-15) -- (CultureName.west);
+
+% ENVIRONMENT
+\node(inner xsep=2pt, inner ysep=0pt) (Environment) at (340.5,332.5) {\scriptsize\scshape\environmentname};
+\draw[gray, line width=1.5] (Environment.east) -- (620.5,332.5) -- ++(15,15) -- ++(0,175) -- ++(-15,15) -- ++(-560,0) -- ++(-15,-15) -- ++(0,-175) -- ++(15,-15) -- (Environment.west);
+\draw[black, line width=1] (65.5,412.5) -- ++(550,0);
+
+% CULTURE LANGUAGE
+\node(inner xsep=2pt, inner ysep=0pt) (CultureLanguage) at (963.5,147.5) {\scriptsize\scshape\culturename~\languagesingularname};
+\draw[gray, line width=1.5] (CultureLanguage.east) -- (1243.5,147.5) -- ++(15,15) -- ++(0,115) -- ++(-15,15) -- ++(-560,0) -- ++(-15,-15) -- ++(0,-115) -- ++(15,-15) -- (CultureLanguage.west);
+
+% ORGANIZATION
+\node(inner xsep=2pt, inner ysep=0pt) (Organization) at (963.5,332.5) {\scriptsize\scshape\organizationname};
+\draw[gray, line width=1.5] (Organization.east) -- (1243.5,332.5) -- ++(15,15) -- ++(0,175) -- ++(-15,15) -- ++(-560,0) -- ++(-15,-15) -- ++(0,-175) -- ++(15,-15) -- (Organization.west);
+\draw[black, line width=1] (690.5,412.5) -- ++(550,0);
+
+% UPBRINGING
+\node(inner xsep=2pt, inner ysep=0pt) (Upbringing) at (1586.5,332.5) {\scriptsize\scshape\upbringingname};
+\draw[gray, line width=1.5] (Upbringing.east) -- (1866.5,332.5) -- ++(15,15) -- ++(0,175) -- ++(-15,15) -- ++(-560,0) -- ++(-15,-15) -- ++(0,-175) -- ++(15,-15) -- (Upbringing.west);
+\draw[black, line width=1] (1315.5,412.5) -- ++(550,0);
+
+% LANGUAGE
+\node(inner xsep=2pt, inner ysep=0pt) (Languages) at (2209.5,147.5) {\scriptsize\scshape\languagesname};
+\draw[gray, line width=1.5] (Languages.east) -- (2489.5,147.5) -- ++(15,15) -- ++(0,360) -- ++(-15,15) -- ++(-560,0) -- ++(-15,-15) -- ++(0,-360) -- ++(15,-15) -- (Languages.west);
