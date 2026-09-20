@@ -1,0 +1,396 @@
+\documentclass[letterpaper,openany,twoside,twocolumn]{book}
+
+\newcommand{\PATH}{../../}
+
+\usepackage[justified]{\PATH templates/template_ds/ds}
+
+\usepackage{\PATH templates/utilities/m4rz-colors}
+\usepackage{\PATH templates/utilities/m4rz-fonts}
+\usepackage{\PATH templates/utilities/shadowfy}
+
+\usepackage{\PATH templates/template_databases/database_connector}
+
+\usepackage{\PATH templates/template_display/display_commands}
+\usepackage{\PATH templates/template_elements/action_panel_commands}
+
+\input{\PATH templates/template_character-sheet/character-sheet-commands.tex}
+
+\usepackage{intcalc}
+
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CHARACTER INFORMATION  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\CharacterName{Pugnus}
+\Ancestry{Hakaan}
+\Class{Fury}
+\Career{Laborer}
+\Subclass{Berserker}
+\AddLanguage{Caelian}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CHARACTER PROGRESSION  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\Victories{3}
+\Level{1}
+\BaseWealth{1}
+\BaseRenown{0}
+\XP{0}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  STATS  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% CHARACTERISTICS
+\BaseMightStat{2}
+\BaseAgilityStat{2}
+\BaseReasonStat{0}
+\BaseIntuitionStat{1}
+\BasePresenceStat{0}
+%% Mobility Stats
+\Size{1L}
+\BaseSpeed{5}
+\BaseDisengage{1}
+\BaseStability{0}
+%% Attack Distance
+\BaseMeleeDistance{1}
+\BaseRangedDistance{5}
+% STAMINA
+\BaseStamina{0}
+\CurrentStamina{}
+\TemporaryStamina{0}
+% RECOVERIES
+\BaseRecoveries{0}
+\UsedRecoveries{0}
+\StaminaRecovery{9}
+% HEROIC RESOURCE
+\HeroicResource{0}
+\HeroicResourceName{Ferocity}
+\AddHeroicResourceGain{1d3}{Start of your turn}
+\AddHeroicResourceGain{1}{You take damage (once per round)}
+\AddHeroicResourceGain{1d3}{You become winded or are dying (once per round)}
+% SURGES
+\Surges{0}
+\SurgeDamageBonus{+2}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CLASS  FEATURES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\StaminaClassBonus{21}
+\RecoveriesClassBonus{10}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# ACTIONS #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\AddActionDBEntry{Signature Ability}
+	{Let's Dance}
+	{}
+	{Keeping your enemies stumbling around the battlefield is second nature to you.}
+	{Melee, Strike, Weapon}
+	{Melee \MeleeDistanceValue}
+	{One creature}
+	{%
+		\DisplayPowerRoll[ability]{+\intcalcMax{\MightStatValue}{\AgilityStatValue}}
+			{\intcalcAdd{3}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+			{\intcalcAdd{6}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage; \textbf{slide} 1}
+			{\intcalcAdd{13}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage; \textbf{slide} 2}
+		\ActionPanelTextBreak
+		\textbf{Effect:} You can shift into any square the target leaves after you slide them
+	}
+\AddActionDBEntry{Signature Ability}
+	{To the Death!}
+	{}
+	{Your reckless assault leaves you tactically vulnerable.}
+	{Melee, Strike, Weapon}
+	{Melee \MeleeDistanceValue}
+	{One creature or object}
+	{%
+		\DisplayPowerRoll[ability]{+\MightStatValue}
+			{\intcalcAdd{3}{\MightStatValue} damage}
+			{\intcalcAdd{6}{\MightStatValue} damage}
+			{\intcalcAdd{9}{\MightStatValue} damage}
+		\textbf{Special:} You gain 2 surges, and the target can make an opportunity attack against you as a free triggered action.
+	}
+\AddActionDBEntry{Heroic Ability}
+	{Out of the Way!}
+	{3}
+	{Your enemies will clear your path—whether they want to or not.}
+	{Melee, Strike, Weapon}
+	{Melee \MeleeDistanceValue}
+	{One creature}
+	{%
+		\DisplayPowerRoll[ability]{+\MightStatValue}
+			{\intcalcAdd{3}{\MightStatValue} damage; \textbf{slide} 2}
+			{\intcalcAdd{5}{\MightStatValue} damage; \textbf{slide} 3}
+			{\intcalcAdd{8}{\MightStatValue} damage; \textbf{slide} 5}
+		\textbf{Effect:} When you slide the target, you can move into any square they leave. If you take damage from an opportunity attack by moving this way, the target takes the same damage.
+	}
+\AddActionDBEntry{Heroic Ability/Free Maneuver}
+	{Make Peace With Your God!}
+	{5}
+	{Anger is your energy.}
+	{}
+	{Self}
+	{Self}
+	{%
+		\textbf{Effect:} You gain 1 surge, and the next ability roll you make this turn automatically obtains a tier 3 outcome.
+	}
+\AddActionDBEntry{Maneuver}
+	{Friend Catapult}
+	{}
+	{You hurl your ally through the air}
+	{}
+	{Self}
+	{Self}
+	{%
+		\textbf{Effect:} You grab a willing adjacent ally or object of your size or smaller, then vertical push that target up to a number of squares equal to 4. If a creature you push falls as a result of this movement, the effective distance of the fall is reduced by a number of squares equal to 4. When you use this perk, you can't use it again until you earn 1 or more Victories.
+	}
+\AddActionDBEntry{Triggered Action}
+	{Lines of Force}
+	{}
+	{You redirect the energy of motion.}
+	{Magic, Melee}
+	{Melee \MeleeDistanceValue}
+	{Self or one creature}
+	{%
+		\textbf{Trigger:} The target would be force moved.
+		\ActionPanelTextBreak
+		\textbf{Effect:} You can select a new target of the same size or smaller within distance to be force moved instead. You become the source of the forced movement, determine the new target's destination, and can push the target instead of using the original forced movement type. Additionally, the forced movement distance gains a bonus equal to your Might score.
+		\ActionPanelTextBreak
+		\textbf{Spend 1 Ferocity:} The forced movement distance gains a bonus equal to twice your Might score instead.
+	}
+\AddActionDBEntry[small]{Free Strike}
+	{Melee Free Strike}
+	{}
+	{}
+	{Charge, Melee, Strike, Weapon}
+	{Melee \MeleeDistanceValue}
+	{One creature or object}
+	{%
+		\DisplayPowerRoll[ability]{+\intcalcMax{\MightStatValue}{\AgilityStatValue}}
+			{\intcalcAdd{2}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+			{\intcalcAdd{5}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+			{\intcalcAdd{7}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+	}
+\AddActionDBEntry[small]{Free Strike}
+	{Ranged Free Strike}
+	{}
+	{}
+	{Ranged, Strike, Weapon}
+	{Ranged \RangedDistanceValue}
+	{One creature or object}
+	{%
+		\DisplayPowerRoll[ability]{+\intcalcMax{\MightStatValue}{\AgilityStatValue}}
+			{\intcalcAdd{2}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+			{\intcalcAdd{4}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+			{\intcalcAdd{6}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+	}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# EQUIPMENT  AND KITS #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\AddKitDBEntry{Pugilist}
+	{Unarmed Strike}
+	{}
+	{%
+		{+2}{}{+6}{+1}{}{}
+	}%
+	{
+		{+1,+1,+1}{}
+	}
+	{Let's Dance}%
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  STAT CALCULATIONS  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\CalculateKitInformation
+\CalculateStats
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CONDITION  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\BleedingCondition{}{}{}
+\DazedCondition{}{}{}
+\FrightenedCondition{}{}{}
+\GrabbedCondition{}{}{}
+\ProneCondition{}{}{}
+\RestrainedCondition{}{}{}
+\SlowedCondition{}{}{}
+\TauntedCondition{}{}{}
+\WeakenedCondition{T}{}{}
+
+\AddExtraCondition{}{}{}
+\AddExtraCondition{}{}{}
+
+\ConditionSaveBonus{0}
+
+\Immunities{Corruption 1, Holy 1, Psychic 1}
+\Weaknesses{None}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# POTENCY #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\PotencyWeak{Might}{-2}
+\PotencyAverage{Might}{-1}
+\PotencyStrong{Might}{0}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# SKILL PROFICIENCIES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% CRAFTING {Proficient = P}
+\AlchemyProficiency{}
+\ArchitectureProficiency{}
+\BlacksmithingProficiency{}
+\CarpentryProficiency{P}
+\CookingProficiency{}
+\FletchingProficiency{}
+\ForgeryProficiency{}
+\JewelleryProficiency{}
+\MechanicsProficiency{}
+\TailoringProficiency{}
+
+% INTERPERSONAL
+\BragProficiency{P}
+\EmpathizeProficiency{}
+\FlirtProficiency{}
+\GambleProficiency{}
+\HandleAnimalsProficiency{}
+\InterrogateProficiency{}
+\IntimidateProficiency{}
+\LeadProficiency{}
+\LieProficiency{}
+\MusicProficiency{}
+\PerformProficiency{}
+\PersuadeProficiency{}
+\ReadPersonProficiency{}
+
+% EXPLORATION
+\ClimbProficiency{P}
+\DriveProficiency{}
+\EnduranceProficiency{P}
+\GymnasticsProficiency{}
+\HealProficiency{}
+\JumpProficiency{P}
+\LiftProficiency{P}
+\NavigateProficiency{P}
+\RideProficiency{}
+\SwimProficiency{P}
+
+% INTRIGUE
+\AlertnessProficiency{}
+\ConcealObjectProficiency{}
+\DisguiseProficiency{}
+\EavesdropProficiency{}
+\EscapeArtistProficiency{P}
+\HideProficiency{}
+\PickLockProficiency{}
+\PickPocketProficiency{}
+\SabotageProficiency{}
+\SearchProficiency{}
+\SneakProficiency{}
+\TrackProficiency{}
+
+% LORE
+\CriminalUndergroundProficiency{}
+\CultureProficiency{}
+\HistoryProficiency{}
+\MagicProficiency{}
+\MonstersProficiency{}
+\NatureProficiency{P}
+\PsionicsProficiency{}
+\ReligionProficiency{}
+\RumorsProficiency{}
+\SocietyProficiency{}
+\StrategyProficiency{}
+\TimescapeProficiency{}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CULTURE #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\CultureName{Hakaan}
+\CultureLanguage{Vhoric}
+\Environment{Secluded}{1 Interpersonal or Lore Skill (Brag)}
+\Organization{Communal}{1 Crafting or Exploration Skill (Swim)}
+\Upbringing{Academic}{1 Exploration Skill (Jump)}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CLASS  FEATURES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\AddClassFeature{\textbf{Mighty Leaps}\\You can't obtain lower than a tier 2 outcome on any Might test made to jump}
+\AddClassFeature{\textbf{Primordial Strength}\\ Whenever you damage an object with a weapon strike, the strike deals extra damage equal to 2. Additionally, whenever you push another creature into an object, the creature takes extra damage equal to 2.}
+\AddClassFeature{\GetActionShortInfo{Lines of Force}}
+\AddClassFeatureBreak
+\AddClassFeature{\begin{itemize}[label=\textbf{\textbullet}]
+	\item \textbf{Heroic Resource: Ferocity}
+	\item \textbf{Kit:} You can use a Kit
+	\item \textbf{Signature Class Ability:} To the Death!
+	\item \textbf{3 Cost Class Ability:} Out of the Way!
+	\item \textbf{5 Cost Class Ability:} Make Peace with your God!
+	\item \textbf{Stamina: +\StaminaClassBonusValue~Stamina}
+	\item \textbf{Recoveries: +\RecoveriesClassBonusValue~Recoveries}
+	\item \textbf{Ferocity 2+: Growing Ferocity (Ferocity 2)}\\Whenever you use the Knockback maneuver, the forced movement distance gains a bonus equal to your Might score.
+	\item \textbf{Ferocity 4+: Growing Ferocity (Ferocity 4)}\\The first time you push a creature on a turn, you gain 1 surge
+	\item \textbf{Ferocity 6+: Growing Ferocity (Ferocity 6)}\\Edge on Might tests, Edge on the Knockback maneuver
+	\item \textbf{1 Skill:} Nature
+	\item \textbf{2 Exploration or Intrigue Skills:} Escape Artist, Climb
+	\item \textbf{1 Skill:} Lift
+\end{itemize}}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  ANCESTRY TRAITS AND PERKS  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\AddAncestryTraitsAndPerks{\GetActionShortInfo{Friend Catapult}}
+\AddAncestryTraitsAndPerks{\textbf{Great Fortitude:} Immune to Weakened}
+\AddAncestryTraitsAndPerks{\textbf{Forceful:}\begin{itemize}
+	\item Forced Movement: Push +1
+	\item Forced Movement: Pull +1
+	\item Forced Movement: Slide +1
+\end{itemize}}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  TITLE  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+%\AddTitle{\textbf{Title}}
+%\AddTitleBreak
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CAREER / INCITING  INCIDENT #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\CareerName{Laborer}
+\AddCareerBenefit{Project Points: +120 Project Points}
+\AddCareerBenefit{1 Language (Vaslorian)}\AddLanguage{Vaslorian}
+\AddCareerBenefit{1 Exploration Perk (Friend Catapult)}
+\AddCareerBenefit{1 Skill (Endurance)}
+\AddCareerBenefit{2 Crafting or Exploration Skill (Carpenty, Navigate)}
+\IncitingIncident{Embarrassment}{\footnotesize A noble you worked for admonished you publicly for work done poorly - and more than once. Finally, you'd had enough. You vowed to take up anew path and show this noble you're far more than what they make you out to be.}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  COMPLICATIONS  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\ComplicationName{Mundane}
+\AddComplicationBenefit[]{\textbf{Damage Modifier}\begin{itemize}
+	\item Immunity: Corruption \LevelValue, Holy \LevelValue, Psychic \LevelValue
+\end{itemize}}
+\ComplicationDrawback{Whenever you carry more than three magic treasures, you take a bane on power rolls.}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# BACK  STORY #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\BackStory{}%
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# TRINKET #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+%\AddTrinket{Gold Bar}
+%\AddTrinketsColumnBreak
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# LEVELLED  TREASURES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+%\AddLevelledTreasure{Magic Book}
+%\AddTreasuresColumnBreak
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CONSUMABLES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+%\AddConsumable{Healing Potion}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# PROJECT #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+%\AddProject{Angle}{Steve}{Character}{0}{150}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# BEGIN  DOCUMENT #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\begin{document}
+	\newgeometry{left=-0.6cm,right=0cm,top=0cm,bottom=0cm}
+	\input{\PATH templates/template_character-sheet/character-sheet.tex}
+	\input{\PATH templates/template_character-sheet/background.tex}
+	\clearpage\DisplayActionPage
+	\input{\PATH templates/template_character-sheet/treasures.tex}
+	\newgeometry{%
+		hmargin		= .75in,	% Left and right margins
+		top			= .46in,	% Top of text area to top of page
+		bottom		= .8in,		% Bottom of text area to bottom of page
+		footskip	= .32in,	% Bottom of text area to bottom of footer text
+		columnsep	= .33in,	% Space between columns
+	}
+\end{document}

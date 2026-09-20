@@ -1,0 +1,533 @@
+\documentclass[letterpaper,openany,twoside,twocolumn]{book}
+
+\newcommand{\PATH}{../../}
+
+\usepackage[justified]{\PATH templates/template_ds/ds}
+
+\usepackage{\PATH templates/utilities/m4rz-colors}
+\usepackage{\PATH templates/utilities/m4rz-fonts}
+\usepackage{\PATH templates/utilities/shadowfy}
+
+\usepackage{\PATH templates/template_databases/database_connector}
+
+\usepackage{\PATH templates/template_display/display_commands}
+\usepackage{\PATH templates/template_elements/action_panel_commands}
+
+\input{\PATH templates/template_character-sheet/character-sheet-commands.tex}
+
+\usepackage{intcalc}
+
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CHARACTER INFORMATION  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\CharacterName{Johan Lugner}
+\Ancestry{Revenant}
+\Class{Summoner}
+\Career{Politician}
+\Subclass{Circle of Blight}
+\AddLanguage{Caelian}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CHARACTER PROGRESSION  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\Victories{3}
+\Level{1}
+\BaseWealth{1}
+\WealthBonus{0} % +1 Politician, -1 Story
+\BaseRenown{0}
+\RenownBonus{1} % +1 Politician
+\XP{0}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  STATS  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% CHARACTERISTICS
+\BaseMightStat{-1}
+\BaseAgilityStat{-1}
+\BaseReasonStat{2}
+\BaseIntuitionStat{2}
+\BasePresenceStat{2}
+%% Mobility Stats
+\Size{1M}
+\BaseSpeed{5}
+\BaseDisengage{1}
+\BaseStability{0}
+%% Attack Distance
+\BaseMeleeDistance{1}
+\BaseRangedDistance{5}
+% STAMINA
+\BaseStamina{0}
+\CurrentStamina{}
+\TemporaryStamina{0}
+% RECOVERIES
+\BaseRecoveries{0}
+\UsedRecoveries{0}
+\StaminaRecovery{5}
+% HEROIC RESOURCE
+\HeroicResource{0}
+\HeroicResourceName{Essence}
+\AddHeroicResourceGain{2}{Start of your turn}
+\AddHeroicResourceGain{1}{Any minion dies unwillingly within your Summoner's Range}
+% SURGES
+\Surges{0}
+\SurgeDamageBonus{+2}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CLASS  FEATURES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\StaminaClassBonus{15}
+\RecoveriesClassBonus{8}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# ACTIONS #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\AddActionDBEntry{Main Action}
+	{Contact Spirits}
+	{}
+	{}
+	{Magic}
+	{Self}
+	{Self}
+	{%
+		\DisplayPowerRoll[ability]{+\intcalcMax{\IntuitionStatValue}{\PresenceStatValue}}
+			{You take corruption damage equal to 5 + your level.}
+			{The spirit of anyone you know of who has died speaks to you, provided they are on the same world as you. You learn how they died and can ask them one question, which they can answer truthfully or untruthfully. The spirit knows everything they knew in life, and is aware of events that took place in their immediate surroundings since their death.}
+			{As tier 2, but you can ask three questions.}
+		\ActionPanelTextBreak
+		\textbf{Effect:} If any sapient creatures have died nearby within the last 24 hours, you have a double bane on the power roll for this ability if any of those creatures were hostile to you, or a double edge if any of them were friendly to you. When you use this ability, you can't do so again until you earn 1 or more Victories.
+	}
+\AddActionDBEntry{Main Action}
+	{Summoner Strike}
+	{}
+	{A sudden burst of energy erupts from your implement and shocks your foes' nerves.}
+	{Magic, Melee, Ranged, Strike}
+	{Melee \MeleeDistanceValue, Ranged \RangedDistanceValue}
+	{One creature or object}
+	{%
+		\textbf{Effect:} \ReasonStatValue~damage. If the target has {\dsglyphs\textbf{r\numtoalph{\intcalcAdd{2}{\PotencyWeakValue}}}}, they are slowed (save ends).
+		\ActionPanelTextBreak
+		\textbf{Special:} This ability has the Charge keyword when it's used as a melee strike.
+		\ActionPanelTextBreak
+		\ActionPanelTextBreak
+		\textit{Replaces both your Melee and Ranged Free Strikes}
+	}
+\AddActionDBEntry{Heroic Ability}
+	{Call Forth}
+	{1+}
+	{My power is yours, and yours, mine. I summon thee.}
+	{Magic, Ranged}
+	{Summoner Range (7)}
+	{Self}
+	{%
+		\textbf{Effect:} You summon one or more minions from your portfolio into unoccupied spaces within distance. Choose one of the following options:.
+		\ActionPanelTextBreak
+		\textbf{Signature Minions:} You summon one signature minion for each essence you spend on this ability.
+		\ActionPanelTextBreak
+		\textbf{All other Minions:} You summon the set number of minions listed on the stat block for their essence cost.
+	}
+\AddActionDBEntry{Maneuver}
+	{Minion Bridge}
+	{}
+	{Your minions do everything in their power to form a safe path for you to cross.}
+	{Magic}
+	{Melee \MeleeDistanceValue}
+	{One of your minions}
+	{%
+		\textbf{Effect:} You shift into a square adjacent to the target, including vertically.
+		\ActionPanelTextBreak
+You can shift into squares that contain one of your minions, even if they occupy difficult terrain. Each time you shift into a square that contains one of your minions while using this maneuver, you can shift an additional square.
+		\ActionPanelTextBreak
+		\textbf{1 Essence:} An adjacent ally can shift alongside you during this movement. They must end their movement in an unoccupied square adjacent to the last minion you moved through.
+	}
+\AddActionDBEntry{Heroic Ability/Maneuver}
+	{Rallying Cry}
+	{5}
+	{"Show them what you're made of!"}
+	{Magic, Ranged}
+	{3 Burst}
+	{All Allies}
+	{%
+		\textbf{Effect:} Each target chooses between gaining 2 surges or dealing additional damage equal to your Reason on their next strike.
+	}
+\AddActionDBEntry{Free Triggered Action}
+	{Strike For Me}
+	{}
+	{Your minions fight in your stead.}
+	{Magic, Ranged}
+	{Summoner's Range (7)}
+	{Each of your minions}
+	{%
+		\textbf{Trigger:} You use a triggered action to make a free strike or use a signature ability.
+		\DisplayPowerRoll[ability]{+\ReasonStatValue}
+			{Up to three targets each make a free strike}
+			{Up to five targets each make a free strike}
+			{Up to seven targets each make a free strike}
+		\ActionPanelTextBreak
+		\textbf{Special:} On a natural 19 or 20, each target makes a free strike.
+		\ActionPanelTextBreak
+		\textbf{Effect:} Your minions act in place of you making a free strike or using a signature ability. If you were granted the triggered action against a specific target, your minions must strike the same target. If the triggered action granted you a signature ability, you have an edge on the power roll.
+	}
+\AddActionDBEntry{Triggered Action}
+	{Not Yet!}
+	{}
+	{I command you to not die.}
+	{}
+	{Summoner's Range (7)}
+	{One ally}
+	{%
+		\textbf{Trigger:} The target receives enough damage to die or be destroyed.
+		\ActionPanelTextBreak
+		\textbf{Special:} If the target is a minion, they must be the only minion remaining in their squad.
+		\ActionPanelTextBreak
+		\textbf{Effect:} The damage the target receives is reduced by an amount that leaves the target alive with 1 point of Stamina.
+	}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# EQUIPMENT  AND KITS #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  STAT CALCULATIONS  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\CalculateKitInformation
+\CalculateStats
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CONDITION  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\BleedingCondition{T}{}{}
+\DazedCondition{}{}{}
+\FrightenedCondition{}{}{}
+\GrabbedCondition{}{}{}
+\ProneCondition{}{}{}
+\RestrainedCondition{}{}{}
+\SlowedCondition{}{}{}
+\TauntedCondition{}{}{}
+\WeakenedCondition{}{}{}
+
+\AddExtraCondition{}{}{}
+\AddExtraCondition{}{}{}
+
+\ConditionSaveBonus{0}
+
+\Immunities{Cold \LevelValue, Corruption \LevelValue, Lightning \LevelValue, Poison \LevelValue}
+\Weaknesses{Fire 5}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# POTENCY #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\PotencyWeak{Reason}{-2}
+\PotencyAverage{Reason}{-1}
+\PotencyStrong{Reason}{0}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# SKILL PROFICIENCIES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% CRAFTING {Proficient = P}
+\AlchemyProficiency{}
+\ArchitectureProficiency{}
+\BlacksmithingProficiency{}
+\CarpentryProficiency{}
+\CookingProficiency{}
+\FletchingProficiency{}
+\ForgeryProficiency{}
+\JewelleryProficiency{}
+\MechanicsProficiency{}
+\TailoringProficiency{}
+
+% INTERPERSONAL
+\BragProficiency{}
+\EmpathizeProficiency{}
+\FlirtProficiency{}
+\GambleProficiency{}
+\HandleAnimalsProficiency{}
+\InterrogateProficiency{P}
+\IntimidateProficiency{}
+\LeadProficiency{}
+\LieProficiency{P}
+\MusicProficiency{}
+\PerformProficiency{P}
+\PersuadeProficiency{P}
+\ReadPersonProficiency{P}
+
+% EXPLORATION
+\ClimbProficiency{}
+\DriveProficiency{}
+\EnduranceProficiency{}
+\GymnasticsProficiency{}
+\HealProficiency{}
+\JumpProficiency{}
+\LiftProficiency{}
+\NavigateProficiency{P}
+\RideProficiency{}
+\SwimProficiency{}
+
+% INTRIGUE
+\AlertnessProficiency{}
+\ConcealObjectProficiency{}
+\DisguiseProficiency{}
+\EavesdropProficiency{}
+\EscapeArtistProficiency{}
+\HideProficiency{}
+\PickLockProficiency{}
+\PickPocketProficiency{}
+\SabotageProficiency{}
+\SearchProficiency{}
+\SneakProficiency{}
+\TrackProficiency{}
+
+% LORE
+\CriminalUndergroundProficiency{}
+\CultureProficiency{P}
+\HistoryProficiency{}
+\MagicProficiency{P}
+\MonstersProficiency{}
+\NatureProficiency{}
+\PsionicsProficiency{}
+\ReligionProficiency{}
+\RumorsProficiency{}
+\SocietyProficiency{P}
+\StrategyProficiency{P}
+\TimescapeProficiency{}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CULTURE #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\CultureName{Human}
+\CultureLanguage{Higaran}
+\Environment{Urban}{1 Interpersonal or Intrigue Skill (Read Person)}
+\Organization{Bureaucratic}{1 Interpersonal or Intrigue Skill (Persuade)}
+\Upbringing{Noble}{1 Interpersonal Skill (Perform)}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CLASS  FEATURES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\AddClassFeature{\textbf{Communication}\\You can communicate with creatures that have the Abyssal keyword even if you don't share a language}
+\AddClassFeature{\textbf{Death Snap}\\Whenever on of your demon minions would die unwillingly, they can deal damage to an adjacent creature equal to their Free Strike value before dying.}
+\AddClassFeature{\textbf{Soulsense}\\While you have line of effect to a creature with a soul, you can perceive a trail of where the creature has been in the last 10 minutes.\begin{itemize}
+	\item Summon Choice: Signature Minion
+	\item Summon Choice: 3 Essence Minion
+\end{itemize}}
+\AddClassFeature{\textbf{Minions}\\The creatures you control are called minions. You can summon and maintain up to a maximum of 8 minions. Your minions are considered allies at your level.}
+\AddClassFeature{\GetActionShortInfo{Strike For Me}}
+\AddClassFeature{\GetActionShortInfo{Call Forth}}
+\AddClassFeature{\GetActionShortInfo{Not Yet!}}
+\AddClassFeature{\GetActionShortInfo{Summoner Strike}}
+\AddClassFeature{\GetActionShortInfo{Minion Bridge}}
+%\AddClassFeatureBreak
+\AddClassFeature{\begin{itemize}[label=\textbf{\textbullet}]
+	\item \textbf{Heroic Resource: Essence}\\ Whenever you use a Heroic Ability or Call Forth a minion that costs essence, you can willingly sacrifice one or more of your minions within your Summoner's Range to reduce the cost by 1. You can't kill minions this way if they used a Main Action or Maneuver during the turn. You can sacrifice more minions than you would reduce the cost by
+	\item \textbf{5 Cost Class Ability:} Rallying Cry
+	\item \textbf{Stamina: +\StaminaClassBonusValue~Stamina}
+	\item \textbf{Recoveries: +\RecoveriesClassBonusValue~Recoveries}
+	\item \textbf{1 Formation:} Elite Formation\\Each of your minions have their Stamina increased by 3 and their Stability increased by 1.
+	\item \textbf{1 Tactic Call:} Not Yet!
+	\item \textbf{2 Skills:} Magic, Strategy
+	\item \textbf{2 Intrigue or Lore Skills:} Culture, Society
+\end{itemize}}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  ANCESTRY TRAITS AND PERKS  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\AddAncestryTraitsAndPerks{\textbf{Spot The Tell}\\Whenever you make a test to read a person and obtain a tier 3 outcome, you notice several tells that give away their true feelings. Any test you make to read that person in the future gains an edge.}
+\AddAncestryTraitsAndPerks{\textbf{Thought But Withered}\\When your Stamina reaches the negative of your winded value, you become inert instead of dying. You fall prone and can't stand. You continue to observe your surroundings, but you can't speak, take main actions, maneuvers, move actions, or triggered actions. While intert this way, if you take any fire damage, your body is destroyed and you die. Otherwise, after 12 hours, you regain \StaminaRecoveryValue~Stamina}
+\AddAncestryTraitsAndPerksBreak
+\AddAncestryTraitsAndPerks{\textbf{Damage Modifier}\begin{itemize}
+	\item Immunity: \ImmunitiesValue
+	\item Weakness: \WeaknessesValue
+\end{itemize}}
+\AddAncestryTraitsAndPerks{\textbf{Bloodless:} Immune to Bleeding}
+\AddAncestryTraitsAndPerks{\textbf{Former Life:} Human}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  TITLE  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+%\AddTitle{\textbf{Title}}
+%\AddTitleBreak
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CAREER / INCITING  INCIDENT #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\CareerName{Politician}
+\AddCareerBenefit{Renown +1}
+\AddCareerBenefit{Wealth +1}
+\AddCareerBenefit{1 Language (Anjali)}\AddLanguage{Anjali}
+\AddCareerBenefit{1 Interpersonal Perk (Spot The Tell)}
+\AddCareerBenefit{2 Interpersonal Skills (Lie, Interrogate)}
+\IncitingIncident[\scriptsize]{Self-Serving}{You used your skills to collect incriminating or scandalous information about your opponents to blackmail them. A rival got one step ahead of you and stole your book of dirty secrets, but instead of using it against you, they gave you an opportunity to leave the world of politics behind. Saved from public humiliation, you now use your skills for the greater good.}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CAREER / INCITING  INCIDENT #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\ComplicationName{Medium}
+\AddComplicationBenefit[]{Incorporeal undead within 10 squares of you can communicate telepathically with you. Additionally, you have the Contact Spirits ability:}
+\AddComplicationBenefit[]{\GetActionShortInfo{Contact Spirits}}
+\ComplicationDrawback{Incorporeal undead within 10 squares of you can communicate telepathically with you.}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# BACK  STORY #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\BackStory{}%
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# TRINKET #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+%\AddTrinket{Gold Bar}
+%\AddTrinketsColumnBreak
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# LEVELLED  TREASURES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+%\AddLevelledTreasure{Magic Book}
+%\AddTreasuresColumnBreak
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CONSUMABLES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+%\AddConsumable{Healing Potion}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# PROJECT #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+%\AddProject{Angle}{Steve}{Character}{0}{150}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# BEGIN  DOCUMENT #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\begin{document}
+	\newgeometry{left=-0.6cm,right=0cm,top=0cm,bottom=0cm}
+	\input{\PATH templates/template_character-sheet/character-sheet.tex}
+	\input{\PATH templates/template_character-sheet/background.tex}
+	\clearpage\DisplayActionPage
+	\input{\PATH templates/template_character-sheet/treasures.tex}
+	\newgeometry{%
+		hmargin		= .75in,	% Left and right margins
+		top			= .46in,	% Top of text area to top of page
+		bottom		= .8in,		% Bottom of text area to bottom of page
+		footskip	= .32in,	% Bottom of text area to bottom of footer text
+		columnsep	= .33in,	% Space between columns
+	}
+	
+	\begin{DsMinion}
+		\DsMinionInformation[
+			name			= {Archer Spittlich},
+			type			= {Abyssal, Demon},
+			specification	= {Minion Artillery},
+			cost			= {3 Essence for 2 Minions}
+		]
+		
+		\DsMinionBasics[
+			size		= {1S},
+			speed		= {5},
+			stamina		= {8},
+			stability	= {3},
+			free-strike	= {5},
+%			immunity	= {},
+			weakness	= {Holy 1},
+%			movement	= {},
+			damage-type	= {Poison}
+		]
+		
+		\DsMinionStats[
+			might		= 0,
+			agility		= +2,
+			reason		= -1,
+			intuition	= -1,
+			presence	= 0
+		]
+		
+		\begin{itemize}
+			\item[\dsglyphs *] \textbf{Splash Strike}\\The spittlich's ranged free strikes have a distance of 10 and deal 2 poison damage to an enemy adjacent to the target. Creatures that take poison damage from this spittlich can't shift until the start of the spittlich's next turn.
+			\item[\dsglyphs *] \textbf{Soulsight}\\Each creature adjacent to the spittlich can't be hidden from them.
+		\end{itemize}
+	\end{DsMinion}
+	
+	\begin{DsMinion}
+		\DsMinionInformation[
+			name			= {Twisted Bengrul},
+			type			= {Abyssal, Demon},
+			specification	= {Minion Hexer},
+			cost			= {3 Essence for 2 Minions}
+		]
+		
+		\DsMinionBasics[
+			size		= {1L},
+			speed		= {5},
+			stamina		= {8},
+			stability	= {2},
+			free-strike	= {4},
+%			immunity	= {},
+			weakness	= {Holy 1},
+%			movement	= {},
+			damage-type	= {Psychic}
+		]
+		
+		\DsMinionStats[
+			might		= +2,
+			agility		= +1,
+			reason		= -1,
+			intuition	= -1,
+			presence	= 0
+		]
+		
+		\begin{itemize}
+			\item[\dsglyphs >] \textbf{Mind Twist} \hfill\textbf{Signature Ability}\\
+				Magic, Ranged, Strike \hfill Main Action\\
+				{\dsglyphs D} Ranged 5 \hfill {\dsglyphs T} One creature or object per minion\\
+				\DisplayPowerRoll[ability]{+\ReasonStatValue}
+					{4 damage; {\dsglyphs pb} \textbf{twisted} (save ends)}
+					{6 damage; {\dsglyphs pc} \textbf{twisted} (save ends)}
+					{8 damage; {\dsglyphs pd} \textbf{twisted} (save ends)}
+				\textbf{Effect:} A twisted target can't take advantage of edges or search for hidden creatures until the condition ends.
+			\item[\dsglyphs *] \textbf{Soulsight}\\Each creature adjacent to the bengrul can't be hidden from them.
+		\end{itemize}
+	\end{DsMinion}
+	\vfill\eject
+	\begin{DsMinion}
+		\DsMinionInformation[
+			name			= {Ensnarer},
+			type			= {Abyssal, Demon},
+			specification	= {Signature Minion Brute},
+			cost			= {1 Essence per Minion summoned}
+		]
+		
+		\DsMinionBasics[
+			size		= {1M},
+			speed		= {5},
+			stamina		= {5},
+			stability	= {1},
+			free-strike	= {2},
+%			immunity	= {},
+			weakness	= {Holy 1},
+%			movement	= {},
+%			damage-type	= {Psychic}
+		]
+		
+		\DsMinionStats[
+			might		= +2,
+			agility		= 0,
+			reason		= -1,
+			intuition	= -1,
+			presence	= -1
+		]
+		
+		\begin{itemize}
+			\item[\dsglyphs *] \textbf{Extended Barbed Strike}\\The ensnarer's melee free strikes have a distance of 3 and inflict pull 1. The pull distance increases by 1 for each additional ensnarer striking the same target. Choose the ensnarer that the target is being pulled to before applying forced movement.
+			\item[\dsglyphs *] \textbf{Soulsight}\\Each creature adjacent to the ensnarer can't be hidden from them.
+		\end{itemize}
+	\end{DsMinion}
+	
+	\begin{DsMinion}
+		\DsMinionInformation[
+			name			= {Razor},
+			type			= {Abyssal, Demon},
+			specification	= {Signature Minion Harrier},
+			cost			= {1 Essence per Minion summoned}
+		]
+		
+		\DsMinionBasics[
+			size		= {1M},
+			speed		= {6},
+			stamina		= {5},
+			stability	= {1},
+			free-strike	= {1},
+%			immunity	= {},
+			weakness	= {Holy 1},
+%			movement	= {},
+%			damage-type	= {Psychic}
+		]
+		
+		\DsMinionStats[
+			might		= 0,
+			agility		= +2,
+			reason		= -1,
+			intuition	= -1,
+			presence	= -1
+		]
+		
+		\begin{itemize}
+			\item[\dsglyphs *] \textbf{Teeth!}\\Once per turn, whenever an adjacent enemy grabs the razor or uses a melee ability against them, that enemy takes 1 damage for each razor adjacent to them.
+			\item[\dsglyphs *] \textbf{Soulsight}\\Each creature adjacent to the razor can't be hidden from them.
+		\end{itemize}
+	\end{DsMinion}
+\end{document}
