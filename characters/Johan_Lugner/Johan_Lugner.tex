@@ -8,14 +8,7 @@
 \usepackage{\PATH templates/utilities/m4rz-fonts}
 \usepackage{\PATH templates/utilities/shadowfy}
 
-\usepackage{\PATH templates/template_databases/database_connector}
-
-\usepackage{\PATH templates/template_display/display_commands}
-\usepackage{\PATH templates/template_elements/action_panel_commands}
-
-\input{\PATH templates/template_character-sheet/character-sheet-commands.tex}
-
-\usepackage{intcalc}
+\usepackage{\PATH templates/template_character-sheet/character-sheet-stylesheet}
 
 % --------------------------------------------------------------------------------------------------------------- %
 % #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CHARACTER INFORMATION  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
@@ -29,7 +22,7 @@
 % --------------------------------------------------------------------------------------------------------------- %
 % #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CHARACTER PROGRESSION  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
-\Victories{3}
+\Victories{4}
 \Level{1}
 \BaseWealth{1}
 \WealthBonus{0} % +1 Politician, -1 Story
@@ -54,13 +47,14 @@
 \BaseMeleeDistance{1}
 \BaseRangedDistance{5}
 % STAMINA
-\BaseStamina{0}
+\BaseStamina{15}
+\StaminaLevelIncrease{6}
 \CurrentStamina{}
 \TemporaryStamina{0}
 % RECOVERIES
-\BaseRecoveries{0}
+\BaseRecoveries{8}
+\RecoveriesBonus{0}
 \UsedRecoveries{0}
-\StaminaRecovery{5}
 % HEROIC RESOURCE
 \HeroicResource{0}
 \HeroicResourceName{Essence}
@@ -69,11 +63,6 @@
 % SURGES
 \Surges{0}
 \SurgeDamageBonus{+2}
-% --------------------------------------------------------------------------------------------------------------- %
-% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CLASS  FEATURES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
-% --------------------------------------------------------------------------------------------------------------- %
-\StaminaClassBonus{15}
-\RecoveriesClassBonus{8}
 % --------------------------------------------------------------------------------------------------------------- %
 % #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# ACTIONS #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
@@ -112,7 +101,7 @@
 	{1+}
 	{My power is yours, and yours, mine. I summon thee.}
 	{Magic, Ranged}
-	{Summoner Range (7)}
+	{\summonersrangename~(\SummonersRangeValue)}
 	{Self}
 	{%
 		\textbf{Effect:} You summon one or more minions from your portfolio into unoccupied spaces within distance. Choose one of the following options:.
@@ -150,10 +139,11 @@ You can shift into squares that contain one of your minions, even if they occupy
 	{}
 	{Your minions fight in your stead.}
 	{Magic, Ranged}
-	{Summoner's Range (7)}
+	{\summonersrangename~(\SummonersRangeValue)}
 	{Each of your minions}
 	{%
 		\textbf{Trigger:} You use a triggered action to make a free strike or use a signature ability.
+		\ActionPanelTextBreak
 		\DisplayPowerRoll[ability]{+\ReasonStatValue}
 			{Up to three targets each make a free strike}
 			{Up to five targets each make a free strike}
@@ -168,7 +158,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 	{}
 	{I command you to not die.}
 	{}
-	{Summoner's Range (7)}
+	{\summonersrangename~(\SummonersRangeValue)}
 	{One ally}
 	{%
 		\textbf{Trigger:} The target receives enough damage to die or be destroyed.
@@ -178,9 +168,17 @@ You can shift into squares that contain one of your minions, even if they occupy
 		\textbf{Effect:} The damage the target receives is reduced by an amount that leaves the target alive with 1 point of Stamina.
 	}
 % --------------------------------------------------------------------------------------------------------------- %
-% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# EQUIPMENT  AND KITS #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CAPABILITIES   #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
+\CapabilitiesVersion{summonable-minions}
 
+\MaxActiveMinions{8}
+\SummonersRange{7}
+
+\AddSummonableMinion{Archer Spittlich}{Minion Artillery}{3 Essence for 2 Minions}
+\AddSummonableMinion{Twisted Bengrul}{Minion Hexer}{3 Essence for 2 Minions}
+\AddSummonableMinion{Ensnarer}{Signature Minion Brute}{1 Essence per Minion}
+\AddSummonableMinion{Razor}{Signature Minion Harrier}{1 Essence per Minion}
 % --------------------------------------------------------------------------------------------------------------- %
 % #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  STAT CALCULATIONS  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
@@ -308,8 +306,8 @@ You can shift into squares that contain one of your minions, even if they occupy
 \AddClassFeature{\begin{itemize}[label=\textbf{\textbullet}]
 	\item \textbf{Heroic Resource: Essence}\\ Whenever you use a Heroic Ability or Call Forth a minion that costs essence, you can willingly sacrifice one or more of your minions within your Summoner's Range to reduce the cost by 1. You can't kill minions this way if they used a Main Action or Maneuver during the turn. You can sacrifice more minions than you would reduce the cost by
 	\item \textbf{5 Cost Class Ability:} Rallying Cry
-	\item \textbf{Stamina: +\StaminaClassBonusValue~Stamina}
-	\item \textbf{Recoveries: +\RecoveriesClassBonusValue~Recoveries}
+	\item \textbf{Stamina: +\BaseStaminaValue~Stamina}
+	\item \textbf{Recoveries: +\BaseRecoveriesValue~Recoveries}
 	\item \textbf{1 Formation:} Elite Formation\\Each of your minions have their Stamina increased by 3 and their Stability increased by 1.
 	\item \textbf{1 Tactic Call:} Not Yet!
 	\item \textbf{2 Skills:} Magic, Strategy
@@ -330,8 +328,13 @@ You can shift into squares that contain one of your minions, even if they occupy
 % --------------------------------------------------------------------------------------------------------------- %
 % #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  TITLE  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
-%\AddTitle{\textbf{Title}}
-%\AddTitleBreak
+\AddTitle{\textbf{Protector of Bealreach}\begin{itemize}[label=\textbf{\textbullet}]
+	\item \textbf{Known Heroes}
+	\item \textbf{Presence of Heroes}
+	\item \textbf{A Good Night's Sleep}
+\end{itemize}}
+\AddTitleBreak
+\AddTitle{}
 % --------------------------------------------------------------------------------------------------------------- %
 % #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CAREER / INCITING  INCIDENT #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
@@ -343,7 +346,7 @@ You can shift into squares that contain one of your minions, even if they occupy
 \AddCareerBenefit{2 Interpersonal Skills (Lie, Interrogate)}
 \IncitingIncident[\scriptsize]{Self-Serving}{You used your skills to collect incriminating or scandalous information about your opponents to blackmail them. A rival got one step ahead of you and stole your book of dirty secrets, but instead of using it against you, they gave you an opportunity to leave the world of politics behind. Saved from public humiliation, you now use your skills for the greater good.}
 % --------------------------------------------------------------------------------------------------------------- %
-% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CAREER / INCITING  INCIDENT #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  COMPLICATIONS  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
 \ComplicationName{Medium}
 \AddComplicationBenefit[]{Incorporeal undead within 10 squares of you can communicate telepathically with you. Additionally, you have the Contact Spirits ability:}
@@ -376,10 +379,12 @@ You can shift into squares that contain one of your minions, even if they occupy
 % --------------------------------------------------------------------------------------------------------------- %
 \begin{document}
 	\newgeometry{left=-0.6cm,right=0cm,top=0cm,bottom=0cm}
-	\input{\PATH templates/template_character-sheet/character-sheet.tex}
-	\input{\PATH templates/template_character-sheet/background.tex}
-	\clearpage\DisplayActionPage
-	\input{\PATH templates/template_character-sheet/treasures.tex}
+	
+	\rendercharactersheet
+	\renderbackgroundsheet
+	\renderactionpanelsheet
+	\rendertreasuressheet	
+	
 	\newgeometry{%
 		hmargin		= .75in,	% Left and right margins
 		top			= .46in,	% Top of text area to top of page
@@ -388,6 +393,17 @@ You can shift into squares that contain one of your minions, even if they occupy
 		columnsep	= .33in,	% Space between columns
 	}
 	
+	\section*{Protectors of Baelreach}
+	\textit{"You have saved us from the goblin hordes and no-one was injured. You have our Thanks!"}
+	\subsection*{Renown Boost}
+	\textbf{Renown} +1 while in the lands of Baelreach.
+	\subsection*{Known Heroes}
+	\textbf{Edge} Interpersonal skill, Intrigue skill\\
+	\textbf{When} When influencing member and people of Baelreach
+	\subsection*{A Good Night's Sleep}
+	Each time you finish a respite while in Baelreach the party gains a Hero Token. This Hero Token disappears at the end of your next respite if it hasn't been used.
+	
+	\chapter*{Summonable Minions}	
 	\begin{DsMinion}
 		\DsMinionInformation[
 			name			= {Archer Spittlich},

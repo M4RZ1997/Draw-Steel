@@ -8,14 +8,7 @@
 \usepackage{\PATH templates/utilities/m4rz-fonts}
 \usepackage{\PATH templates/utilities/shadowfy}
 
-\usepackage{\PATH templates/template_databases/database_connector}
-
-\usepackage{\PATH templates/template_display/display_commands}
-\usepackage{\PATH templates/template_elements/action_panel_commands}
-
-\input{\PATH templates/template_character-sheet/character-sheet-commands.tex}
-
-\usepackage{intcalc}
+\usepackage{\PATH templates/template_character-sheet/character-sheet-stylesheet}
 
 % --------------------------------------------------------------------------------------------------------------- %
 % #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CHARACTER INFORMATION  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
@@ -54,13 +47,14 @@
 \BaseMeleeDistance{1}
 \BaseRangedDistance{5}
 % STAMINA
-\BaseStamina{0}
+\BaseStamina{21}
+\StaminaLevelIncrease{9}
 \CurrentStamina{24}
 \TemporaryStamina{0}
 % RECOVERIES
-\BaseRecoveries{0}
+\BaseRecoveries{10}
+\RecoveriesBonus{0}
 \UsedRecoveries{5}
-\StaminaRecovery{9}
 % HEROIC RESOURCE
 \HeroicResource{0}
 \HeroicResourceName{Focus}
@@ -70,11 +64,6 @@
 % SURGES
 \Surges{0}
 \SurgeDamageBonus{+2}
-% --------------------------------------------------------------------------------------------------------------- %
-% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CLASS  FEATURES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
-% --------------------------------------------------------------------------------------------------------------- %
-\StaminaClassBonus{21}
-\RecoveriesClassBonus{10}
 % --------------------------------------------------------------------------------------------------------------- %
 % #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# ACTIONS #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
@@ -248,8 +237,9 @@
 			{\intcalcAdd{6}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
 	}
 % --------------------------------------------------------------------------------------------------------------- %
-% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# EQUIPMENT  AND KITS #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CAPABILITIES   #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
+\CapabilitiesVersion{equipment-and-modifiers}
 \AddKitDBEntry{Panther}
 	{Heavy Weapon}
 	{}
@@ -392,8 +382,8 @@
 	\item \textbf{Kit: Field Arsenal}\\You have drilled with a broad array of arms and armor, and have developed techniques to optimize their use. You can use and gain the benefits of two kits, including both their Signature Abilities. Whenever you would choose or change one kit, you can choose or change your second kit as well.
 	\item \textbf{3 Cost Class Ability:} Inspiring Strike
 	\item \textbf{5 Cost Class Ability:} Mind Game
-	\item \textbf{Stamina: +\StaminaClassBonusValue~Stamina}
-	\item \textbf{Recoveries: +\RecoveriesClassBonusValue~Recoveries}
+	\item \textbf{Stamina: +\BaseStaminaValue~Stamina}
+	\item \textbf{Recoveries: +\BaseRecoveriesValue~Recoveries}
 	\item \textbf{1 Skill:} Lead
 	\item \textbf{2 Exploration Skills:} Fletching, Endurance
 	\item \textbf{1 Intrigue Skill:} Search
@@ -422,7 +412,7 @@
 % #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CAREER / INCITING  INCIDENT #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
 \CareerName{Warden}
-\AddCareerBenefit{\ProjectPoints{120}}
+\AddCareerBenefit{Project Points: +120 Project Points}\AddProjectPoints{120}
 \AddCareerBenefit{1 Language (Ylliric)}\AddLanguage{Ylliric}
 \AddCareerBenefit{1 Exploration Perk (Team Leader)}
 \AddCareerBenefit{1 Skill (Monsters)}
@@ -431,7 +421,7 @@
 %\IncitingIncident[\scriptsize]{Self-Serving}{You used your skills to collect incriminating or scandalous information about your opponents to blackmail them. A rival got one step ahead of you and stole your book of dirty secrets, but instead of using it against you, they gave you an opportunity to leave the world of politics behind. Saved from public humiliation, you now use your skills for the greater good.}
 \IncitingIncident{Exiled}{You made a mistake that could not be forgiven. The other wardens of the region decided your fate, exiling you from your lands with an order never to return.}
 % --------------------------------------------------------------------------------------------------------------- %
-% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CAREER / INCITING  INCIDENT #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  COMPLICATIONS  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
 \ComplicationName{Stripped of Rank}
 \AddComplicationBenefit[]{\GetActionShortInfo{Issue Order}}
@@ -463,10 +453,12 @@
 % --------------------------------------------------------------------------------------------------------------- %
 \begin{document}
 	\newgeometry{left=-0.6cm,right=0cm,top=0cm,bottom=0cm}
-	\input{\PATH templates/template_character-sheet/character-sheet.tex}
-	\input{\PATH templates/template_character-sheet/background.tex}
-	\clearpage\DisplayActionPage
-	\input{\PATH templates/template_character-sheet/treasures.tex}
+	
+	\rendercharactersheet
+	\renderbackgroundsheet
+	\renderactionpanelsheet
+	\rendertreasuressheet	
+	
 	\newgeometry{%
 		hmargin		= .75in,	% Left and right margins
 		top			= .46in,	% Top of text area to top of page
@@ -474,4 +466,14 @@
 		footskip	= .32in,	% Bottom of text area to bottom of footer text
 		columnsep	= .33in,	% Space between columns
 	}
+	
+	\section*{Protectors of Baelreach}
+	\textit{"You have saved us from the goblin hordes and no-one was injured. You have our Thanks!"}
+	\subsection*{Renown Boost}
+	\textbf{Renown} +1 while in the lands of Baelreach.
+	\subsection*{Known Heroes}
+	\textbf{Edge} Interpersonal skill, Intrigue skill\\
+	\textbf{When} When influencing member and people of Baelreach
+	\subsection*{A Good Night's Sleep}
+	Each time you finish a respite while in Baelreach the party gains a Hero Token. This Hero Token disappears at the end of your next respite if it hasn't been used.
 \end{document}

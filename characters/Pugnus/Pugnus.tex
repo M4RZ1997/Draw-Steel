@@ -8,14 +8,7 @@
 \usepackage{\PATH templates/utilities/m4rz-fonts}
 \usepackage{\PATH templates/utilities/shadowfy}
 
-\usepackage{\PATH templates/template_databases/database_connector}
-
-\usepackage{\PATH templates/template_display/display_commands}
-\usepackage{\PATH templates/template_elements/action_panel_commands}
-
-\input{\PATH templates/template_character-sheet/character-sheet-commands.tex}
-
-\usepackage{intcalc}
+\usepackage{\PATH templates/template_character-sheet/character-sheet-stylesheet}
 
 % --------------------------------------------------------------------------------------------------------------- %
 % #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CHARACTER INFORMATION  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
@@ -29,7 +22,7 @@
 % --------------------------------------------------------------------------------------------------------------- %
 % #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CHARACTER PROGRESSION  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
-\Victories{3}
+\Victories{4}
 \Level{1}
 \BaseWealth{1}
 \BaseRenown{0}
@@ -52,13 +45,14 @@
 \BaseMeleeDistance{1}
 \BaseRangedDistance{5}
 % STAMINA
-\BaseStamina{0}
+\BaseStamina{21}
+\StaminaLevelIncrease{9}
 \CurrentStamina{}
 \TemporaryStamina{0}
 % RECOVERIES
-\BaseRecoveries{0}
-\UsedRecoveries{0}
-\StaminaRecovery{9}
+\BaseRecoveries{10}
+\RecoveriesBonus{0}
+\UsedRecoveries{8}
 % HEROIC RESOURCE
 \HeroicResource{0}
 \HeroicResourceName{Ferocity}
@@ -68,11 +62,6 @@
 % SURGES
 \Surges{0}
 \SurgeDamageBonus{+2}
-% --------------------------------------------------------------------------------------------------------------- %
-% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CLASS  FEATURES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
-% --------------------------------------------------------------------------------------------------------------- %
-\StaminaClassBonus{21}
-\RecoveriesClassBonus{10}
 % --------------------------------------------------------------------------------------------------------------- %
 % #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# ACTIONS #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
@@ -103,6 +92,7 @@
 			{\intcalcAdd{3}{\MightStatValue} damage}
 			{\intcalcAdd{6}{\MightStatValue} damage}
 			{\intcalcAdd{9}{\MightStatValue} damage}
+		\ActionPanelTextBreak
 		\textbf{Special:} You gain 2 surges, and the target can make an opportunity attack against you as a free triggered action.
 	}
 \AddActionDBEntry{Heroic Ability}
@@ -117,10 +107,11 @@
 			{\intcalcAdd{3}{\MightStatValue} damage; \textbf{slide} 2}
 			{\intcalcAdd{5}{\MightStatValue} damage; \textbf{slide} 3}
 			{\intcalcAdd{8}{\MightStatValue} damage; \textbf{slide} 5}
+		\ActionPanelTextBreak
 		\textbf{Effect:} When you slide the target, you can move into any square they leave. If you take damage from an opportunity attack by moving this way, the target takes the same damage.
 	}
 \AddActionDBEntry{Heroic Ability/Free Maneuver}
-	{Make Peace With Your God!}
+	{\small Make Peace With Your God!}
 	{5}
 	{Anger is your energy.}
 	{}
@@ -180,8 +171,9 @@
 			{\intcalcAdd{6}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
 	}
 % --------------------------------------------------------------------------------------------------------------- %
-% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# EQUIPMENT  AND KITS #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CAPABILITIES   #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
+\CapabilitiesVersion{equipment-and-modifiers}
 \AddKitDBEntry{Pugilist}
 	{Unarmed Strike}
 	{}
@@ -313,8 +305,8 @@
 	\item \textbf{Signature Class Ability:} To the Death!
 	\item \textbf{3 Cost Class Ability:} Out of the Way!
 	\item \textbf{5 Cost Class Ability:} Make Peace with your God!
-	\item \textbf{Stamina: +\StaminaClassBonusValue~Stamina}
-	\item \textbf{Recoveries: +\RecoveriesClassBonusValue~Recoveries}
+	\item \textbf{Stamina: +\BaseStaminaValue~Stamina}
+	\item \textbf{Recoveries: +\BaseRecoveriesValue~Recoveries}
 	\item \textbf{Ferocity 2+: Growing Ferocity (Ferocity 2)}\\Whenever you use the Knockback maneuver, the forced movement distance gains a bonus equal to your Might score.
 	\item \textbf{Ferocity 4+: Growing Ferocity (Ferocity 4)}\\The first time you push a creature on a turn, you gain 1 surge
 	\item \textbf{Ferocity 6+: Growing Ferocity (Ferocity 6)}\\Edge on Might tests, Edge on the Knockback maneuver
@@ -327,6 +319,7 @@
 % --------------------------------------------------------------------------------------------------------------- %
 \AddAncestryTraitsAndPerks{\GetActionShortInfo{Friend Catapult}}
 \AddAncestryTraitsAndPerks{\textbf{Great Fortitude:} Immune to Weakened}
+\AddAncestryTraitsAndPerksBreak
 \AddAncestryTraitsAndPerks{\textbf{Forceful:}\begin{itemize}
 	\item Forced Movement: Push +1
 	\item Forced Movement: Pull +1
@@ -335,13 +328,18 @@
 % --------------------------------------------------------------------------------------------------------------- %
 % #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  TITLE  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
-%\AddTitle{\textbf{Title}}
-%\AddTitleBreak
+\AddTitle{\textbf{Protector of Bealreach}\begin{itemize}[label=\textbf{\textbullet}]
+	\item \textbf{Known Heroes}
+	\item \textbf{Presence of Heroes}
+	\item \textbf{A Good Night's Sleep}
+\end{itemize}}
+\AddTitleBreak
+\AddTitle{}
 % --------------------------------------------------------------------------------------------------------------- %
 % #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CAREER / INCITING  INCIDENT #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
 % --------------------------------------------------------------------------------------------------------------- %
 \CareerName{Laborer}
-\AddCareerBenefit{Project Points: +120 Project Points}
+\AddCareerBenefit{Project Points: +120 Project Points}\AddProjectPoints{120}
 \AddCareerBenefit{1 Language (Vaslorian)}\AddLanguage{Vaslorian}
 \AddCareerBenefit{1 Exploration Perk (Friend Catapult)}
 \AddCareerBenefit{1 Skill (Endurance)}
@@ -382,10 +380,12 @@
 % --------------------------------------------------------------------------------------------------------------- %
 \begin{document}
 	\newgeometry{left=-0.6cm,right=0cm,top=0cm,bottom=0cm}
-	\input{\PATH templates/template_character-sheet/character-sheet.tex}
-	\input{\PATH templates/template_character-sheet/background.tex}
-	\clearpage\DisplayActionPage
-	\input{\PATH templates/template_character-sheet/treasures.tex}
+	
+	\rendercharactersheet
+	\renderbackgroundsheet
+	\renderactionpanelsheet
+	\rendertreasuressheet	
+	
 	\newgeometry{%
 		hmargin		= .75in,	% Left and right margins
 		top			= .46in,	% Top of text area to top of page
@@ -393,4 +393,14 @@
 		footskip	= .32in,	% Bottom of text area to bottom of footer text
 		columnsep	= .33in,	% Space between columns
 	}
+	
+	\section*{Protectors of Baelreach}
+	\textit{"You have saved us from the goblin hordes and no-one was injured. You have our Thanks!"}
+	\subsection*{Renown Boost}
+	\textbf{Renown} +1 while in the lands of Baelreach.
+	\subsection*{Known Heroes}
+	\textbf{Edge} Interpersonal skill, Intrigue skill\\
+	\textbf{When} When influencing member and people of Baelreach
+	\subsection*{A Good Night's Sleep}
+	Each time you finish a respite while in Baelreach the party gains a Hero Token. This Hero Token disappears at the end of your next respite if it hasn't been used.
 \end{document}
