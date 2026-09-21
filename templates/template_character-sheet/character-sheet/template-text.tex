@@ -50,53 +50,57 @@
 \node[inner sep=0pt] at (2355, 830) {\tiny\scshape\textsc{\textcolor{gray}{1~\surgename~=~\damagename}}};
 \node[inner sep=0pt] at (2372.5, 865) {\tiny\scshape\textsc{\textcolor{gray}{2~\surgesname~=~\potencyname~+~1}}};
 
-% EQUIPMENTS AND MODIFIERS
-\node[inner sep=0pt] at (497.5, 977.5) {\normalsize\scshape\textbf{\textsc{\equipmentmodifiersname}}};
-%% MODIFIERS
-\node[anchor=north, inner sep=0pt] at (116.25, 1425) {\tiny\scshape\textsc{\speedstatname}};
-\node[anchor=north, inner sep=0pt] at (268.75, 1425) {\tiny\scshape\textsc{\disengagestatname}};
-\node[anchor=north, inner sep=0pt] at (421.25, 1425) {\tiny\scshape\textsc{\staminaname}};
-\node[anchor=north, inner sep=0pt] at (573.75, 1425) {\tiny\scshape\textsc{\stabilitystatname}};
-\node[anchor=north, inner sep=0pt] at (726.25, 1425) {\tiny\scshape\textsc{\meleedistancename}};
-\node[anchor=north, inner sep=0pt] at (878.75, 1425) {\tiny\scshape\textsc{\rangeddistancename}};
-%% DAMAGE BONUS
-%%% Melee
-\node[inner sep=0pt] at (266.25,1517.5) {\scriptsize\bfseries\scshape\meleename~\damagename~\bonusname};
-\node[inner sep=0pt] at (150.25,1650) {\PowerRollRangeBrick{low}{$\scalebox{0.75}{$\pmb{\leq}$}$11}};
-\node[inner sep=0pt] at (266.25,1650) {\PowerRollRangeBrick{mid}{12 - 16}};
-\node[inner sep=0pt] at (382.25,1650) {\PowerRollRangeBrick{high}{17+}};
-%%% Ranged
-\node[inner sep=0pt] at (728.75,1517.5) {\scriptsize\bfseries\scshape\rangedname~\damagename~\bonusname};
-\node[inner sep=0pt] at (612.75,1650) {\PowerRollRangeBrick{low}{$\scalebox{0.75}{$\pmb{\leq}$}$11}};
-\node[inner sep=0pt] at (728.75,1650) {\PowerRollRangeBrick{mid}{12 - 16}};
-\node[inner sep=0pt] at (844.75,1650) {\PowerRollRangeBrick{high}{17+}};
-%% EFFECTS
-\node[inner sep=0pt] at (497.5,1725) {\small\scshape\textbf{\textsc{\effectsname}}};
+% CAPABILITIES
+\ExplSyntaxOn
+\str_case_e:nnF {\CapabilitiesVersionValue}
+{
+	% EQUIPMENTS AND MODIFIERS
+	{equipment-and-modifiers}{%
+		\node[inner~sep=0pt] at (497.5, 977.5) {\normalsize\scshape\textbf{\textsc{\equipmentmodifiersname}}};
+		%% MODIFIERS
+		\node[anchor=north, inner~sep=0pt] at (116.25, 1425) {\tiny\scshape\textsc{\speedstatname}};
+		\node[anchor=north, inner~sep=0pt] at (268.75, 1425) {\tiny\scshape\textsc{\disengagestatname}};
+		\node[anchor=north, inner~sep=0pt] at (421.25, 1425) {\tiny\scshape\textsc{\staminaname}};
+		\node[anchor=north, inner~sep=0pt] at (573.75, 1425) {\tiny\scshape\textsc{\stabilitystatname}};
+		\node[anchor=north, inner~sep=0pt] at (726.25, 1425) {\tiny\scshape\textsc{\meleedistancename}};
+		\node[anchor=north, inner~sep=0pt] at (878.75, 1425) {\tiny\scshape\textsc{\rangeddistancename}};
+		%% DAMAGE BONUS
+		%%% Melee
+		\node[inner~sep=0pt] at (266.25,1517.5) {%
+			\scriptsize\bfseries\scshape\meleename\c_space_tl\damagename\c_space_tl\bonusname%
+		};
+		\node[inner~sep=0pt] at (150.25,1650) {\PowerRollRangeBrick{low}{$\scalebox{0.75}{$\pmb{\leq}$}$11}};
+		\node[inner~sep=0pt] at (266.25,1650) {\PowerRollRangeBrick{mid}{12 - 16}};
+		\node[inner~sep=0pt] at (382.25,1650) {\PowerRollRangeBrick{high}{17+}};
+		%%% Ranged
+		\node[inner~sep=0pt] at (728.75,1517.5) {%
+			\scriptsize\bfseries\scshape\rangedname\c_space_tl\damagename\c_space_tl\bonusname
+		};
+		\node[inner~sep=0pt] at (612.75,1650) {\PowerRollRangeBrick{low}{$\scalebox{0.75}{$\pmb{\leq}$}$11}};
+		\node[inner~sep=0pt] at (728.75,1650) {\PowerRollRangeBrick{mid}{12 - 16}};
+		\node[inner~sep=0pt] at (844.75,1650) {\PowerRollRangeBrick{high}{17+}};
+		%% EFFECTS
+		\node[inner~sep=0pt] at (497.5,1725) {\small\scshape\textbf{\textsc{\effectsname}}};
+	}
+	% SUMMONABLE MINIONS
+	{summonable-minions}{%
+		\node[inner~sep=0pt] at (497.5, 977.5) {\normalsize\scshape\textbf{\textsc{\retinuename}}};
+		\node[inner~sep=0pt] at (497.5, 1217.5) {\normalsize\scshape\textbf{\textsc{\summonableminionsname}}};
+	}%
+}
+{%
+	\PackageError{character-sheet-commands}%
+		{%
+			Unknown~Capabilities~version~type~'\CapabilitiesVersionValue'%
+		}%
+		{%
+			Valid~Capabilities~Version~are~equipment-modifiers~and~summonable-minions.%
+		}%
+}%
+\ExplSyntaxOff
 
 % CONDITIONS
 \node[inner sep=0pt] at (1492.5, 977.5) {\normalsize\scshape\textbf{\textsc{\conditionsname}}};
-%% Table
-\node[inner sep=0pt, anchor=north] at (1492.5, 1037.5) {\parbox{0.357\paperwidth}{
-	\begin{DSConditionsTable}[%
-		cells={font=\footnotesize},%
-		row{1}={font=\footnotesize\bfseries,%
-		fg=DSTableText},%
-		rowsep = 2.5pt%
-	]{ X[1.35,l]X[c]X[c] }%
-		\conditionname								& \turnendname		& \saveendsname*	\\
-		\BleedingStrikeThrough{\bleedingname}		& \ConditionDiamond[bleedingendofturn]			& \ConditionDiamond[bleedingsaveends]			\\
-		\DazedStrikeThrough{\dazedname}				& \ConditionDiamond[dazedendofturn]				& \ConditionDiamond[dazedsaveends]			\\
-		\FrightenedStrikeThrough{\frightenedname}	& \ConditionDiamond[frightenedendofturn]		& \ConditionDiamond[frightenedsaveends]		\\
-		\GrabbedStrikeThrough{\grabbedname}			& \ConditionDiamond[grabbedendofturn]			& \ConditionDiamond[grabbedsaveends]			\\
-		\ProneStrikeThrough{\pronename}				& \ConditionDiamond[proneendofturn]				& \ConditionDiamond[pronesaveends]			\\
-		\RestrainedStrikeThrough{\restrainedname}	& \ConditionDiamond[restrainedendofturn]		& \ConditionDiamond[restrainedsaveends]		\\
-		\SlowedStrikeThrough{\slowedname}			& \ConditionDiamond[slowedendofturn]			& \ConditionDiamond[slowedsaveends]			\\
-		\TauntedStrikeThrough{\tauntedname}			& \ConditionDiamond[tauntedendofturn]			& \ConditionDiamond[tauntedsaveends]			\\
-		\WeakenedStrikeThrough{\weakenedname}		& \ConditionDiamond[weakenedendofturn]			& \ConditionDiamond[weakenedsaveends]			\\
-		\entryfont\ConditionExtraAValue				& \ConditionDiamond[conditionextraAendofturn]	& \ConditionDiamond[conditionextraAsaveends]	\\
-		\entryfont\ConditionExtraBValue				& \ConditionDiamond[conditionextraBendofturn]	& \ConditionDiamond[conditionextraBsaveends]	\\
-	\end{DSConditionsTable}
-}};
 %% Information Text
 \node[inner sep=0pt, anchor=north] at (1492.5,1922.5) {\parbox{0.357\paperwidth}{\scriptsize * \saveendsexplanation}};
 %% Weaknesses and Immunities

@@ -1,0 +1,28 @@
+\ProvidesPackage{character-sheet-stylesheet}
+% ------------------------------------------------------------------------------------------------- %
+%						character_sheet_stylesheet.sty  Marcel Zauder 21/09/2026					%
+% Stylesheet by Marcel                                                                              %
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% -------------------------------------- PATH to Superfolder -------------------------------------- %
+\providecommand{\PATH}{} % Each tex file needs to provide the relative path to the superfolder
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% -------------------------- Loading Settings,  Usepackages and Commands -------------------------- %
+%\usepackage{intcalc}
+\usepackage[normalem]{ulem}
+
+\usepackage{\PATH templates/template_databases/database_connector}
+\usepackage{\PATH templates/template_display/display_commands}
+\usepackage{\PATH templates/template_elements/action_panel_commands}
+
+\input{\PATH templates/template_character-sheet/character-sheet-settings}
+\input{\PATH templates/template_character-sheet/character-sheet-commands}
+% ------------------------------------------------------------------------------------------------- %
+% ################################################################################################# %
+% --------------------------------- Commands for  Rendering Pages --------------------------------- %
+\newcommand{\rendercharactersheet}{\input{\PATH templates/template_character-sheet/character-sheet.tex}}
+\newcommand{\renderbackgroundsheet}{\input{\PATH templates/template_character-sheet/background-sheet.tex}}
+\newcommand{\rendertreasuressheet}{\input{\PATH templates/template_character-sheet/treasures-sheet.tex}}
+
+\newcommand{\renderactionpanelsheet}{\clearpage\DisplayActionPanels}

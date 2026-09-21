@@ -1,5 +1,3 @@
-\usepackage[normalem]{ulem}
-
 % INDICATION DIAMOND
 \newcommand{\ConditionDiamond}[1][white]{%
 	\tikz[
@@ -101,28 +99,32 @@
 \newcommand{\BaseRangedDistance}[1]{\renewcommand{\BaseRangedDistanceValue}{#1}}
 
 %% Stamina
-\newcommand{\MaxStaminaValue}{}
 \newcommand{\BaseStaminaValue}{}
+\newcommand{\StaminaLevelIncreaseValue}{}
+\newcommand{\MaxStaminaValue}{}
 \newcommand{\CurrentStaminaValue}{}
 \newcommand{\TemporaryStaminaValue}{}
 
-\newcommand{\MaxStamina}[1]{\renewcommand{\MaxStaminaValue}{#1}}
 \newcommand{\BaseStamina}[1]{\renewcommand{\BaseStaminaValue}{#1}}
+\newcommand{\MaxStamina}[1]{\renewcommand{\MaxStaminaValue}{#1}}
+\newcommand{\StaminaLevelIncrease}[1]{\renewcommand{\StaminaLevelIncreaseValue}{#1}}
 \newcommand{\CurrentStamina}[1]{\renewcommand{\CurrentStaminaValue}{#1}}
 \newcommand{\TemporaryStamina}[1]{\renewcommand{\TemporaryStaminaValue}{#1}}
 
 %% Recoveries
+\newcommand{\BaseRecoveriesValue}{}
 \newcommand{\MaxRecoveriesValue}{}
-\newcommand{\BaseRecoveriesValue}{0}
 \newcommand{\UsedRecoveriesValue}{}
 \newcommand{\StaminaRecoveryValue}{}
 \newcommand{\BaseStaminaRecoveryValue}{}
+\newcommand{\RecoveriesBonusValue}{}
 
 \newcommand{\MaxRecoveries}[1]{\renewcommand{\MaxRecoveriesValue}{#1}}
 \newcommand{\BaseRecoveries}[1]{\renewcommand{\BaseRecoveriesValue}{#1}}
 \newcommand{\UsedRecoveries}[1]{\renewcommand{\UsedRecoveriesValue}{#1}}
 \newcommand{\StaminaRecovery}[1]{\renewcommand{\StaminaRecoveryValue}{#1}}
 \newcommand{\BaseStaminaRecovery}[1]{\renewcommand{\BaseStaminaRecoveryValue}{#1}}
+\newcommand{\RecoveriesBonus}[1]{\renewcommand{\RecoveriesBonusValue}{#1}}
 
 %% Heroic Resource
 \newcommand{\HeroicResourceValue}{}
@@ -144,14 +146,11 @@
 \newcommand{\Surges}[1]{\renewcommand{\SurgesValue}{#1}}
 \newcommand{\SurgeDamageBonus}[1]{\renewcommand{\SurgeDamageBonusValue}{#1}}
 
-% CLASS FEATURES
-\newcommand{\StaminaClassBonusValue}{}
-\newcommand{\RecoveriesClassBonusValue}{}
+% CAPABILITIES
+\newcommand{\CapabilitiesVersionValue}{}
 
-\newcommand{\StaminaClassBonus}[1]{\renewcommand{\StaminaClassBonusValue}{#1}}
-\newcommand{\RecoveriesClassBonus}[1]{\renewcommand{\RecoveriesClassBonusValue}{#1}}
-
-% KITS
+\newcommand{\CapabilitiesVersion}[1]{\renewcommand{\CapabilitiesVersionValue}{#1}}
+%% EQUIPMENT AND MODIFIERS
 \newcommand{\KitsNameValue}{}
 \newcommand{\WeaponImplementValue}{}
 \newcommand{\ArmorWardValue}{}
@@ -383,6 +382,24 @@
 \ExplSyntaxOff
 \makeatother
 
+%% SUMMONABLE MINIONS
+\newcommand{\MaxActiveMinionsValue}{}
+\newcommand{\SummonersRangeValue}{}
+\newcommand\SummonableMinions{}
+
+\newcommand{\MaxActiveMinions}[1]{\renewcommand{\MaxActiveMinionsValue}{#1}}
+\newcommand{\SummonersRange}[1]{\renewcommand{\SummonersRangeValue}{#1}}
+\makeatletter%
+\newcommand\AddSummonableMinion[3]{%
+	\g@addto@macro\SummonableMinions{%
+		\begin{tikzpicture}%
+			\draw[black, line width=0.75] (0,0) ++(15,0) -- ++({\linewidth - 7.5},0) -- ++(15,15) -- ++(0,70) -- ++(-15,15) -- ++({-\linewidth + 7.5},0) -- ++(-15,-15) -- ++(0,-70) -- cycle;%
+			\node[inner sep=2pt, anchor=north] at (0.5\linewidth, 0) {\parbox{0.9\linewidth}{\entryfont \textbf{#1} \hfill {\small\textbf{#2}}{\vspace*{-1pt}\\\footnotesize #3}}};%
+		\end{tikzpicture}\hfill\\%
+	}%
+}%
+\makeatother%
+
 \newcommand{\CalculateStats}{%
 	% Progression Stats
 	\Wealth{\intcalcAdd{\BaseWealthValue}{\WealthBonusValue}}
@@ -403,10 +420,11 @@
 	\RangedDistance{\intcalcAdd{\BaseRangedDistanceValue}{\RangedDistanceKitBonusValue}}
 	
 	% Stamina
-	\MaxStamina{\intcalcAdd{\BaseStaminaValue}{\intcalcAdd{\StaminaClassBonusValue}{\StaminaKitBonusValue}}}
+	\MaxStamina{\intcalcAdd{\intcalcAdd{\BaseStaminaValue}{\StaminaKitBonusValue}}{\intcalcMul{\intcalcSub{\LevelValue}{1}}{\StaminaLevelIncreaseValue}}}
 	
 	% Recoveries
-	\MaxRecoveries{\intcalcAdd{\BaseRecoveriesValue}{\RecoveriesClassBonusValue}}
+	\MaxRecoveries{\intcalcAdd{\BaseRecoveriesValue}{\RecoveriesBonusValue}}
+	\StaminaRecovery{\intcalcDiv{\MaxStaminaValue}{3}}
 }%
 
 % CONDITIONS
@@ -807,7 +825,6 @@
 }%
 
 
-
 % CULTURE
 \newcommand{\CultureNameValue}{}
 \newcommand{\CultureLanguageValue}{}
@@ -866,17 +883,15 @@
 % CAREER
 \newcommand{\CareerNameValue}{}
 \newcommand\CareerBenefits{}
-\newcommand{\ProjectPointsValue}{}
 \newcommand{\IncitingIncidentNameValue}{}
 \newcommand{\IncitingIncidentDescriptionValue}{}
 
 \newcommand{\CareerName}[1]{\renewcommand{\CareerNameValue}{#1}}
 \makeatletter
 \newcommand\AddCareerBenefit[2][\textbullet]{%
-	\g@addto@macro\CareerBenefits{\item[#1]\ifthenelse{\equal{#1}{}}{\hspace*{-\leftmargin}}{}\entryfont #2}
+	\g@addto@macro\CareerBenefits{\entryfont #1 #2\hfill\\}%
 }
 \makeatother
-\newcommand{\ProjectPoints}[1]{\xdef\ProjectPointsValue{#1}Project~Points:~+#1~Project~Points}
 \newcommand{\IncitingIncident}[3][\small]{
 	\renewcommand{\IncitingIncidentNameValue}{#2}
 	\renewcommand{\IncitingIncidentDescriptionValue}{#1#3}
@@ -891,7 +906,7 @@
 \newcommand{\ComplicationDrawback}[1]{\renewcommand{\ComplicationDrawbackValue}{#1}}
 \makeatletter
 \newcommand\AddComplicationBenefit[2][\textbullet]{%
-	\g@addto@macro\ComplicationBenefits{\item[#1]\ifthenelse{\equal{#1}{}}{\hspace*{-\leftmargin}}{}\entryfont #2}
+	\g@addto@macro\ComplicationBenefits{\entryfont #1 #2\hfill\\}%
 }
 \makeatother
 
@@ -947,6 +962,14 @@
 \makeatother%
 
 % PROJECTS
+\newcommand{\ProjectPointsValue}{0}
+
+\makeatletter%
+\newcommand{\ProjectPoints}[1]{\protected@xdef\ProjectPointsValue{#1}}
+\makeatother%
+\newcommand{\AddProjectPoints}[1]{\ProjectPoints{\intcalcAdd{\ProjectPointsValue}{#1}}}
+\newcommand{\SubtractProjectPoints}[1]{\ProjectPoints{\intcalcSub{\ProjectPointsValue}{#1}}}
+
 \newcommand{\ProjectNameAValue}{}
 \newcommand{\AssignedHeroFollowerAValue}{}
 \newcommand{\RollCharacteristicAValue}{}

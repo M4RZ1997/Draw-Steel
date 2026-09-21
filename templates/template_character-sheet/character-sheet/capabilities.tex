@@ -1,0 +1,26 @@
+% OUTLINE
+\draw[black] (12.5,932.5) rectangle ++(970,1200);
+
+% DIVIDER
+\node[inner sep=0] at (497.5,1022.5) {\OrnamentalDivider[0.357\paperwidth]{}};
+
+\ExplSyntaxOn
+\str_case_e:nnF {\CapabilitiesVersionValue}
+{
+	{equipment-and-modifiers}{%
+		\input{\PATH templates/template_character-sheet/character-sheet/capabilities/equipment-kits.tex}%
+	}%
+	{summonable-minions}{%
+		\input{\PATH templates/template_character-sheet/character-sheet/capabilities/summonable-minions.tex}%
+	}%
+}
+{%
+	\PackageError{character-sheet-commands}%
+		{%
+			Unknown~Capabilities~version~type~'\CapabilitiesVersionValue'%
+		}%
+		{%
+			Valid~Capabilities~Version~are~equipment-modifiers~and~summonable-minions.%
+		}%
+}%
+\ExplSyntaxOff

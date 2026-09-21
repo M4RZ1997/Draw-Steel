@@ -1,0 +1,516 @@
+\documentclass[letterpaper,openany,twoside,twocolumn]{book}
+
+\newcommand{\PATH}{../../}
+
+\usepackage[justified]{\PATH templates/template_ds/ds}
+
+\usepackage{\PATH templates/utilities/m4rz-colors}
+\usepackage{\PATH templates/utilities/m4rz-fonts}
+\usepackage{\PATH templates/utilities/shadowfy}
+
+\usepackage{\PATH templates/template_character-sheet/character-sheet-stylesheet}
+
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CHARACTER INFORMATION  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\CharacterName{Blank}
+\Ancestry{Ancestry}
+\Class{Class}
+\Career{Career}
+\Subclass{Subclass}
+\AddLanguage{Caelian} % Common Language, needs to be added somewhere
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CHARACTER PROGRESSION  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\Victories{10}
+\Level{1}
+\BaseWealth{1} % Don't know if it can change, but for now just leave it be
+\WealthBonus{0} % Career or story-relevant changes
+\BaseRenown{0} % Don't know if it can change, but for now just leave it be
+\RenownBonus{1} % Career or story-relevant changes
+\XP{0}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  STATS  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% CHARACTERISTICS
+\BaseMightStat{-1}
+\BaseAgilityStat{-1}
+\BaseReasonStat{2}
+\BaseIntuitionStat{2}
+\BasePresenceStat{2}
+
+% Stats Increases - like the Stamina increase per level or the kit boni - are automatically added to the Base Stats
+%% Mobility Stats
+\Size{1M}
+\BaseSpeed{5}
+\BaseDisengage{1}
+\BaseStability{0}
+%% Attack Distance
+\BaseMeleeDistance{1}
+\BaseRangedDistance{5}
+% STAMINA
+\BaseStamina{15} % Initial Stamina that is given by the character Class
+\StaminaLevelIncrease{6}
+\CurrentStamina{}
+\TemporaryStamina{0}
+% RECOVERIES
+\BaseRecoveries{8} % Initial Recoveries number that is given by the character Class
+\RecoveriesBonus{0}
+\UsedRecoveries{0}
+% HEROIC RESOURCE
+\HeroicResource{0}
+\HeroicResourceName{Essence}
+\AddHeroicResourceGain{2}{Start of your turn}
+\AddHeroicResourceGain{1}{Any minion dies unwillingly within your Summoner's Range}
+% SURGES
+\Surges{0}
+\SurgeDamageBonus{+2}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# ACTIONS #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% Actions are added to an internal database and can be accessed via the Datatool package
+% A short information print out can be obtained via \GetActionShortInfo{"Action Name"} (must be the exact same name)
+% \AddActionDBEntry[]{}{}{}{}{}{}{}{}
+%%	Optional (#1)	= small, to make the display block small (shall be used twice after one another to avoid misalignments)
+%%	#2				= Action Type (Main Action, Heroic Action, Signature Action, Maneuever, (Free) Trigger Action, Free Strike)*
+%%	#3				= Action Name
+%%	#4				= Action Cost (optional)
+%%	#5				= Description Text (optional)
+%%	#6				= Action Categories
+%%	#7				= Range
+%%	#8				= Targets
+%%	#9				= Blocktext / Information **
+
+%%% * Heroic Action can be extended to include "/Maneuver", "/Free Triggered Action" and so on to display correct typeage and the correct outline
+
+%%% ** Action Information
+%%% Can be used as a Blocktext, but also provides a Power Roll environment:
+%%% \DisplayPowerRoll[]{}{}{}{}
+%%% Optional (#1)	= Displays kit boni below the Power Roll (anything can be written in there
+%%% #2				= Power Roll Bonus, i.e. "+\intcalcMax{\IntuitionStatValue}{\PresenceStatValue}"
+%%% #3				= Power Roll Effect <= 11
+%%% #4				= Power Roll Effect 12-16
+%%% #5				= Power Roll Effect 17+
+%%%
+%%% It is advized to use \ActionPanelTextBreak instead of any linebreak to have a nice distance between each paragraph
+\AddActionDBEntry{Signature Ability}
+	{Devastating Rush}
+	{}
+	{The faster you move, the harder you hit.}
+	{Melee, Strike, Weapon}
+	{Melee \MeleeDistanceValue}
+	{One creature or object}
+	{%
+		\DisplayPowerRoll[ability]{+\intcalcMax{\MightStatValue}{\AgilityStatValue}}
+			{\intcalcAdd{3}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+			{\intcalcAdd{6}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+			{\intcalcAdd{13}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+		\ActionPanelTextBreak
+		\textbf{Effect:} You can move up to 3 squares straight toward the target before this strike, which deals extra damage equal to the number of squares you move this way.
+	}
+\AddActionDBEntry[small]{Main Action}
+	{Issue Order}
+	{}
+	{"Move or die, folks."}
+	{Ranged}
+	{Ranged \RangedDistanceValue}
+	{One ally}
+	{%
+		\textbf{Effect:} The target can use a Triggered Action to take a Main Action, a Maneuver, or a Move Action.
+		\ActionPanelTextBreak
+		\textbf{Special:} If you have the Strike Now tactician ability, the target can use a Free Triggered Action instead of a Triggered Action to gain the benefit of this ability.
+	}
+\AddActionDBEntry[small]{Main Action}
+	{"Strike Now!"}
+	{}
+	{Your foe left an opening. You point this out to an ally!}
+	{Ranged}
+	{Ranged \RangedDistanceValue}
+	{One ally}
+	{%
+		\textbf{Effect:} The target can use a Signature Ability as a Free Triggered Action.
+		\ActionPanelTextBreak
+		\textbf{Spend 5 Focus:} You target two allies instead of one.
+	}
+\AddActionDBEntry{Heroic Ability/Free Triggered Action}
+	{Mark: Trigger}
+	{1}
+	{}
+	{}
+	{Special}
+	{Special}
+	{%
+		\textbf{Trigger:} You or any ally uses an ability to deal Rolled Damage to a creature marked by you.
+		\ActionPanelTextBreak
+		\textbf{Effect:} You gain one of the following benefits:
+		\ActionPanelTextBreak
+		\begin{itemize}
+			\item The ability deals extra damage equal to 4.
+			\item The creature dealing the damage can spend a Recovery.
+			\item The creature dealing the damage can shift up to a number of squares equal to 2.
+			\item If you damage a creature marked by you with a melee ability, the creature is taunted by you until the end of their next turn.
+		\end{itemize}
+		\ActionPanelTextBreak
+		You can't gain more than one benefit from the same trigger.
+	}
+\AddActionDBEntry[small]{Free Strike}
+	{Melee Free Strike}
+	{}
+	{}
+	{Charge, Melee, Strike, Weapon}
+	{Melee \MeleeDistanceValue}
+	{One creature or object}
+	{%
+		\DisplayPowerRoll[ability]{+\intcalcMax{\MightStatValue}{\AgilityStatValue}}
+			{\intcalcAdd{2}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+			{\intcalcAdd{5}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+			{\intcalcAdd{7}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+	}
+\AddActionDBEntry[small]{Free Strike}
+	{Ranged Free Strike}
+	{}
+	{}
+	{Ranged, Strike, Weapon}
+	{Ranged \RangedDistanceValue}
+	{One creature or object}
+	{%
+		\DisplayPowerRoll[ability]{+\intcalcMax{\MightStatValue}{\AgilityStatValue}}
+			{\intcalcAdd{2}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+			{\intcalcAdd{4}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+			{\intcalcAdd{6}{\intcalcMax{\MightStatValue}{\AgilityStatValue}} damage}
+	}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CAPABILITIES   #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% This block is a conditional block and can/will be extended
+% Currently it support the display for "Equipments and Modifiers (Kits)" or "Summonable Minions"
+% The \CapabilitiesVersion shall be set first:
+%% Currently supported { equipment-and-modifiers | summonable-minions }
+\CapabilitiesVersion{equipment-and-modifiers}
+
+% EQUIPMENT AND MODIFIERS (more than 2 kits might lead to display issues)
+% \CapabilitiesVersion{equipment-and-modifiers}
+
+% \AddKitDBEntry{}{}{}{}{}{}
+% #1	= Kit Name
+% #2	= Weapon / Implement
+% #3	= Armor / Ward
+% #4	= {Speed Bonus}{Disengage Bonus}{Stamina Bonus}{Stability Bonus}{Melee Dist. Bonus}{Ranged Dist. Bonus}
+% #5	= {Melee Damage Bonus}{Ranged Damage Bonus}
+% #6	= Text for the Effect (Is comma seperated and will display the Short Info for an Action if present in the database)
+
+\AddKitDBEntry{Panther}
+	{Heavy Weapon}
+	{}
+	{%
+		{+1}{}{+6}{+1}{}{}
+	}%
+	{
+		{0,0,+4}{}
+	}
+	{Devastating Rush}%
+
+% SUMMONABLE MINIONS (more than 8 minions will overflow the dedicated area)
+% \CapabilitiesVersion{summonable-minions}
+
+% \MaxActiveMinions{8}
+% \SummonersRange{7}
+
+% \AddSummonableMinion{}{}{}
+% #1	= Minion Name
+% #2	= Minion Category
+% #3	= Summoning Cost
+\AddSummonableMinion{Archer Spittlich}
+	{Minion Artillery}
+	{3 Essence for 2 Minions}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  STAT CALCULATIONS  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% Required to Calculate the correct Kit Boni and Character Stats
+\CalculateKitInformation
+\CalculateStats
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  CONDITION  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% Each Condition has 3 arguments { T | *empty* }:
+% #1	= Will strike through the associated condition
+% #2	= "End of Turn"
+% #3	= "Save Ends"
+\BleedingCondition{T}{}{}
+\DazedCondition{}{}{}
+\FrightenedCondition{}{}{}
+\GrabbedCondition{}{}{}
+\ProneCondition{}{}{}
+\RestrainedCondition{}{}{}
+\SlowedCondition{}{}{}
+\TauntedCondition{}{}{}
+\WeakenedCondition{}{}{}
+
+% A maximum of 2 Extra conditions are supported and any additional one provided are warned and omitted
+% \AddExtraCondition{}{}{}
+% #1	= Condition Name
+% #2	= "End of Turn"
+% #3	= "Save Ends"
+\AddExtraCondition{}{}{}
+\AddExtraCondition{}{}{}
+
+\ConditionSaveBonus{0} % Bonus towards the "Save Ends" difficulty
+
+\Immunities{Cold \LevelValue, Corruption \LevelValue, Lightning \LevelValue, Poison \LevelValue}
+\Weaknesses{Fire 5}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# POTENCY #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% Each Potency (Weak, Average, Strong) has 2 arguments
+%% #1	= Stat associated with Potency (Might, Agility, Reason, Intuition, Presence)
+%% #2	= Modifier, i.e. for a Level 1 character -2 for Weak
+\PotencyWeak{Reason}{-2}
+\PotencyAverage{Reason}{-1}
+\PotencyStrong{Reason}{0}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# SKILL PROFICIENCIES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% CRAFTING {Proficient = P}
+\AlchemyProficiency{}
+\ArchitectureProficiency{}
+\BlacksmithingProficiency{}
+\CarpentryProficiency{}
+\CookingProficiency{}
+\FletchingProficiency{}
+\ForgeryProficiency{}
+\JewelleryProficiency{}
+\MechanicsProficiency{}
+\TailoringProficiency{}
+
+% INTERPERSONAL
+\BragProficiency{}
+\EmpathizeProficiency{}
+\FlirtProficiency{}
+\GambleProficiency{}
+\HandleAnimalsProficiency{}
+\InterrogateProficiency{}
+\IntimidateProficiency{}
+\LeadProficiency{}
+\LieProficiency{}
+\MusicProficiency{}
+\PerformProficiency{}
+\PersuadeProficiency{}
+\ReadPersonProficiency{}
+
+% EXPLORATION
+\ClimbProficiency{}
+\DriveProficiency{}
+\EnduranceProficiency{}
+\GymnasticsProficiency{}
+\HealProficiency{}
+\JumpProficiency{}
+\LiftProficiency{}
+\NavigateProficiency{}
+\RideProficiency{}
+\SwimProficiency{}
+
+% INTRIGUE
+\AlertnessProficiency{}
+\ConcealObjectProficiency{}
+\DisguiseProficiency{}
+\EavesdropProficiency{}
+\EscapeArtistProficiency{}
+\HideProficiency{}
+\PickLockProficiency{}
+\PickPocketProficiency{}
+\SabotageProficiency{}
+\SearchProficiency{}
+\SneakProficiency{}
+\TrackProficiency{}
+
+% LORE
+\CriminalUndergroundProficiency{}
+\CultureProficiency{}
+\HistoryProficiency{}
+\MagicProficiency{}
+\MonstersProficiency{}
+\NatureProficiency{}
+\PsionicsProficiency{}
+\ReligionProficiency{}
+\RumorsProficiency{}
+\SocietyProficiency{}
+\StrategyProficiency{}
+\TimescapeProficiency{}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CULTURE #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\CultureName{Human}
+\CultureLanguage{Higaran} % Is automatically added to Languages
+
+% \Environment, \Organization, and \Upbringing have 2 arguments each:
+% #1	= Name
+% #2	= Description / Bonus
+\Environment{Urban}{1 Interpersonal or Intrigue Skill (Read Person)}
+\Organization{Bureaucratic}{1 Interpersonal or Intrigue Skill (Persuade)}
+\Upbringing{Noble}{1 Interpersonal Skill (Perform)}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CLASS  FEATURES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% Use \AddClassFeature{} to add class features (\GetActionShortInfo{} is very handy here)
+% Use \AddClassFeatureBreak to slightly control the automatic columnbreak in this display environment (not perfect)
+\AddClassFeature{\textbf{Communication}\\You can communicate with creatures that have the Abyssal keyword even if you don't share a language}
+\AddClassFeature{\GetActionShortInfo{Issue Order}}
+\AddClassFeature{\GetActionShortInfo{Mark: Trigger}}
+\AddClassFeatureBreak
+\AddClassFeature{\begin{itemize}[label=\textbf{\textbullet}]
+	\item \textbf{5 Cost Class Ability:} Rallying Cry
+	\item \textbf{Stamina: +\BaseStaminaValue~Stamina}
+	\item \textbf{Recoveries: +\BaseRecoveriesValue~Recoveries}
+	\item \textbf{1 Formation:} Elite Formation\\Each of your minions have their Stamina increased by 3 and their Stability increased by 1.
+\end{itemize}}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  ANCESTRY TRAITS AND PERKS  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% Use \AddAncestryTraitsAndPerks{} to add class features
+% Use \AddAncestryTraitsAndPerksBreak to slightly control the automatic columnbreak in this display environment (not perfect)
+\AddAncestryTraitsAndPerks{\textbf{Spot The Tell}\\Whenever you make a test to read a person and obtain a tier 3 outcome, you notice several tells that give away their true feelings. Any test you make to read that person in the future gains an edge.}
+\AddAncestryTraitsAndPerks{\textbf{Thought But Withered}\\When your Stamina reaches the negative of your winded value, you become inert instead of dying. You fall prone and can't stand. You continue to observe your surroundings, but you can't speak, take main actions, maneuvers, move actions, or triggered actions. While intert this way, if you take any fire damage, your body is destroyed and you die. Otherwise, after 12 hours, you regain \StaminaRecoveryValue~Stamina}
+\AddAncestryTraitsAndPerksBreak
+\AddAncestryTraitsAndPerks{\GetActionShortInfo{Ranged Free Strike}}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  TITLE  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% Use \AddTitle{} to add class features
+% Use \AddTitleBreak to slightly control the automatic columnbreak in this display environment (not perfect)
+\AddTitle{\textbf{Protector of Bealreach}\begin{itemize}[label=\textbf{\textbullet}]
+	\item \textbf{Known Heroes}
+	\item \textbf{Presence of Heroes}
+	\item \textbf{A Good Night's Sleep}
+\end{itemize}}
+\AddTitleBreak
+\AddTitle{}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CAREER / INCITING  INCIDENT #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\CareerName{Politician}
+
+% AddCareerBenefit[]{}
+%% Optional (#1)	= controls whether a \textbullet is added before the text or something else, keep blank to add nothing
+%% #2				= Benefit Name / description
+\AddCareerBenefit{Project Points: +120 Project Points}\AddProjectPoints{120}
+\AddCareerBenefit{Renown +1}
+\AddCareerBenefit{Wealth +1}
+\AddCareerBenefit{1 Language (Anjali)}\AddLanguage{Anjali}
+\AddCareerBenefit{1 Interpersonal Perk (Spot The Tell)}
+\AddCareerBenefit{2 Interpersonal Skills (Lie, Interrogate)}
+
+% \IncitingIncident[]{}{}
+%% Optional (#1)	= Font-Size (if description is exceptionally long)
+%% #2				= Inciting Incident Name
+%% #3				= Inciting Incident Description
+\IncitingIncident[\scriptsize]{Self-Serving}{You used your skills to collect incriminating or scandalous information about your opponents to blackmail them. A rival got one step ahead of you and stole your book of dirty secrets, but instead of using it against you, they gave you an opportunity to leave the world of politics behind. Saved from public humiliation, you now use your skills for the greater good.}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#  COMPLICATIONS  #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\ComplicationName{Complication}
+
+% AddComplicationBenefit[]{}
+%% Optional (#1)	= controls whether a \textbullet is added before the text or something else, keep blank to add nothing (can also be used to adjust the Font-Size)
+%% #2				= Benefit Name / description
+\AddComplicationBenefit[]{A complication benefit}
+\AddComplicationBenefit[]{\GetActionShortInfo{"Strike Now!"}}
+
+% \ComplicationDrawback[]{}
+%% Optional (#1)	= Font-Size (if description is exceptionally long)
+%% #2				= Drawback Description
+\ComplicationDrawback{Incorporeal undead within 10 squares of you can communicate telepathically with you.}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# BACK  STORY #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% Use \columnbreak within the \Backstory argument to slightly control the automatic columnbreak in this display environment (not perfect)
+\BackStory{This is a backstory}%
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# TRINKET #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% Use \AddTrinketsColumnBreak to slightly control the automatic columnbreak in this display environment (not perfect)
+\AddTrinket{Gold Bar}
+%\AddTrinketsColumnBreak
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# LEVELLED  TREASURES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% \AddLevelledTreasure[]{}
+%% Optional (#1)	= { safe | *empty* } Will add a cross to the "Carry Three Safely" display*
+%% #2				= {Levelled Treasure}
+
+% * There can only be a maximum of 3 safely carried items. Any additional added will be warned and omitted
+
+% Use \AddTreasuresColumnBreak to slightly control the automatic columnbreak in this display environment (not perfect)
+\AddLevelledTreasure{Magic Book}
+\AddLevelledTreasure[safe]{Sword of Blank}
+\AddTreasuresColumnBreak
+\AddLevelledTreasure{}
+\AddTreasuresColumnBreak
+\AddLevelledTreasure{}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# CONSUMABLES #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\AddConsumable{Health Potion}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# PROJECT #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+% \AddProject{}{}{}{}{}
+%% #1	= Project Name
+%% #2	= Assigned Hero / Follower
+%% #3	= Roll Characteristic
+%% #4	= Current Points
+%% #5	= Point Goal
+\AddProject{Fishing}{Steve}{M, R or P}{500}{1500}
+% --------------------------------------------------------------------------------------------------------------- %
+% #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# BEGIN  DOCUMENT #+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+#+# %
+% --------------------------------------------------------------------------------------------------------------- %
+\begin{document}
+	\newgeometry{left=-0.6cm,right=0cm,top=0cm,bottom=0cm}
+	
+	\rendercharactersheet
+	\renderbackgroundsheet
+	\renderactionpanelsheet
+	\rendertreasuressheet	
+	
+	\newgeometry{%
+		hmargin		= .75in,	% Left and right margins
+		top			= .46in,	% Top of text area to top of page
+		bottom		= .8in,		% Bottom of text area to bottom of page
+		footskip	= .32in,	% Bottom of text area to bottom of footer text
+		columnsep	= .33in,	% Space between columns
+	}
+	
+	% A crude implementation for displaying a Minion statblock (WIP)
+	\begin{DsMinion}
+		\DsMinionInformation[
+			name			= {Archer Spittlich},
+			type			= {Abyssal, Demon},
+			specification	= {Minion Artillery},
+			cost			= {3 Essence for 2 Minions}
+		]
+		
+		\DsMinionBasics[
+			size		= {1S},
+			speed		= {5},
+			stamina		= {8},
+			stability	= {3},
+			free-strike	= {5},
+%			immunity	= {},
+			weakness	= {Holy 1},
+%			movement	= {},
+			damage-type	= {Poison}
+		]
+		
+		\DsMinionStats[
+			might		= 0,
+			agility		= +2,
+			reason		= -1,
+			intuition	= -1,
+			presence	= 0
+		]
+		
+		\begin{itemize}
+			\item[\dsglyphs *] \textbf{Splash Strike}\\The spittlich's ranged free strikes have a distance of 10 and deal 2 poison damage to an enemy adjacent to the target. Creatures that take poison damage from this spittlich can't shift until the start of the spittlich's next turn.
+			\item[\dsglyphs *] \textbf{Soulsight}\\Each creature adjacent to the spittlich can't be hidden from them.
+		\end{itemize}
+	\end{DsMinion}
+\end{document}

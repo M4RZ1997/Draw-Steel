@@ -43,45 +43,90 @@
 \node[inner sep=0pt] at (2372.5, 700) {\entryfont\LARGE\SurgesValue};
 \node[inner sep=0pt] at (2492.5, 825) {\entryfont\scriptsize\SurgeDamageBonusValue};
 
-% EQUIPMENT AND MODIFIERS
-\node[inner sep=0pt] at (497.5, 1107.5) {\entryfont\large\KitsNameValue};
-\node[inner sep=0pt] at (266.25, 1247.5) {\parbox{0.12\paperwidth}
-	{\centering\entryfont\footnotesize\WeaponImplementValue}
-};
-\node[inner sep=0pt] at (728.75, 1247.5) {\parbox{0.12\paperwidth}
-	{\centering\entryfont\footnotesize\ArmorWardValue}
-};
-\node[inner sep=0pt] at (116.25, 1385) {\entryfont\normalsize\SpeedKitBonusValue};
-\node[inner sep=0pt] at (268.75, 1385) {\entryfont\normalsize\DisengageKitBonusValue};
-\node[inner sep=0pt] at (421.25, 1385) {\entryfont\normalsize\StaminaKitBonusValue};
-\node[inner sep=0pt] at (573.75, 1385) {\entryfont\normalsize\StabilityKitBonusValue};
-\node[inner sep=0pt] at (726.25, 1385) {\entryfont\normalsize\MeleeDistanceKitBonusValue};
-\node[inner sep=0pt] at (878.75, 1385) {\entryfont\normalsize\RangedDistanceKitBonusValue};
-%% Damage Boni
-\node[inner sep=0pt] at (150.25, 1585) {%
-	\parbox{0.01\paperwidth}{\entryfont\footnotesize\MeleeDamageKitBonusLowValue}
-};
-\node[inner sep=0pt] at (266.25, 1585) {%
-	\parbox{0.01\paperwidth}{\entryfont\footnotesize\MeleeDamageKitBonusAverageValue}
-};
-\node[inner sep=0pt] at (382.25, 1585) {%
-	\parbox{0.01\paperwidth}{\entryfont\footnotesize\MeleeDamageKitBonusHighValue}
-};
-\node[inner sep=0pt] at (612.75, 1585) {%
-	\parbox{0.01\paperwidth}{\entryfont\footnotesize\RangedDamageKitBonusLowValue}
-};
-\node[inner sep=0pt] at (728.75, 1585) {%
-	\parbox{0.01\paperwidth}{\entryfont\footnotesize\RangedDamageKitBonusAverageValue}
-};
-\node[inner sep=0pt] at (844.75, 1585) {%
-	\parbox{0.01\paperwidth}{\entryfont\footnotesize\RangedDamageKitBonusHighValue}
-};
-%% Effects
-\node[inner sep=0pt, anchor=north] at (497.5,1775) {%
-	\parbox{0.357\paperwidth}{\footnotesize\KitEffectsValue}
-};%
+% CAPABILITIES
+\ExplSyntaxOn
+\str_case_e:nnF {\CapabilitiesVersionValue}
+{
+	% EQUIPMENTS AND MODIFIERS
+	{equipment-and-modifiers}{%
+		\node[inner~sep=0pt] at (497.5, 1107.5) {\entryfont\large\KitsNameValue};
+		\node[inner~sep=0pt] at (266.25, 1247.5) {\parbox{0.12\paperwidth}
+			{\centering\entryfont\footnotesize\WeaponImplementValue}
+		};
+		\node[inner~sep=0pt] at (728.75, 1247.5) {\parbox{0.12\paperwidth}
+			{\centering\entryfont\footnotesize\ArmorWardValue}
+		};
+		\node[inner~sep=0pt] at (116.25, 1385) {\entryfont\normalsize\SpeedKitBonusValue};
+		\node[inner~sep=0pt] at (268.75, 1385) {\entryfont\normalsize\DisengageKitBonusValue};
+		\node[inner~sep=0pt] at (421.25, 1385) {\entryfont\normalsize\StaminaKitBonusValue};
+		\node[inner~sep=0pt] at (573.75, 1385) {\entryfont\normalsize\StabilityKitBonusValue};
+		\node[inner~sep=0pt] at (726.25, 1385) {\entryfont\normalsize\MeleeDistanceKitBonusValue};
+		\node[inner~sep=0pt] at (878.75, 1385) {\entryfont\normalsize\RangedDistanceKitBonusValue};
+		%% Damage Boni
+		\node[inner~sep=0pt] at (150.25, 1585) {%
+			\parbox{0.01\paperwidth}{\entryfont\footnotesize\MeleeDamageKitBonusLowValue}
+		};
+		\node[inner~sep=0pt] at (266.25, 1585) {%
+			\parbox{0.01\paperwidth}{\entryfont\footnotesize\MeleeDamageKitBonusAverageValue}
+		};
+		\node[inner~sep=0pt] at (382.25, 1585) {%
+			\parbox{0.01\paperwidth}{\entryfont\footnotesize\MeleeDamageKitBonusHighValue}
+		};
+		\node[inner~sep=0pt] at (612.75, 1585) {%
+			\parbox{0.01\paperwidth}{\entryfont\footnotesize\RangedDamageKitBonusLowValue}
+		};
+		\node[inner~sep=0pt] at (728.75, 1585) {%
+			\parbox{0.01\paperwidth}{\entryfont\footnotesize\RangedDamageKitBonusAverageValue}
+		};
+		\node[inner~sep=0pt] at (844.75, 1585) {%
+			\parbox{0.01\paperwidth}{\entryfont\footnotesize\RangedDamageKitBonusHighValue}
+		};
+		%% Effects
+		\node[inner~sep=0pt, anchor=north] at (497.5,1775) {%
+			\parbox{0.357\paperwidth}{\footnotesize\KitEffectsValue}
+		};%
+	}
+	% SUMMONABLE MINIONS
+	{summonable-minions}{%
+		\node[inner~sep=0pt] at (266.25,1112.5) {\Large\entryfont\MaxActiveMinionsValue};
+		\node[inner~sep=0pt] at (728.75,1112.5) {\Large\entryfont\SummonersRangeValue};
+		\node[inner~sep=0pt, anchor=north] at (497.5, 1250) {\parbox{0.357\paperwidth}{\centering\SummonableMinions}};
+	}%
+}
+{%
+	\PackageError{character-sheet-commands}%
+		{%
+			Unknown~Capabilities~version~type~'\CapabilitiesVersionValue'%
+		}%
+		{%
+			Valid~Capabilities~Version~are~equipment-modifiers~and~summonable-minions.%
+		}%
+}%
+\ExplSyntaxOff
 
 % CONDITIONS
+%% Table
+\node[inner sep=0pt, anchor=north] at (1492.5, 1037.5) {\parbox{0.357\paperwidth}{
+	\begin{DSConditionsTable}[%
+		cells={font=\footnotesize},%
+		row{1}={font=\footnotesize\bfseries,%
+		fg=DSTableText},%
+		rowsep = 2.5pt%
+	]{ X[1.35,l]X[c]X[c] }%
+		\conditionname								& \turnendname		& \saveendsname*	\\
+		\BleedingStrikeThrough{\bleedingname}		& \ConditionDiamond[bleedingendofturn]			& \ConditionDiamond[bleedingsaveends]			\\
+		\DazedStrikeThrough{\dazedname}				& \ConditionDiamond[dazedendofturn]				& \ConditionDiamond[dazedsaveends]			\\
+		\FrightenedStrikeThrough{\frightenedname}	& \ConditionDiamond[frightenedendofturn]		& \ConditionDiamond[frightenedsaveends]		\\
+		\GrabbedStrikeThrough{\grabbedname}			& \ConditionDiamond[grabbedendofturn]			& \ConditionDiamond[grabbedsaveends]			\\
+		\ProneStrikeThrough{\pronename}				& \ConditionDiamond[proneendofturn]				& \ConditionDiamond[pronesaveends]			\\
+		\RestrainedStrikeThrough{\restrainedname}	& \ConditionDiamond[restrainedendofturn]		& \ConditionDiamond[restrainedsaveends]		\\
+		\SlowedStrikeThrough{\slowedname}			& \ConditionDiamond[slowedendofturn]			& \ConditionDiamond[slowedsaveends]			\\
+		\TauntedStrikeThrough{\tauntedname}			& \ConditionDiamond[tauntedendofturn]			& \ConditionDiamond[tauntedsaveends]			\\
+		\WeakenedStrikeThrough{\weakenedname}		& \ConditionDiamond[weakenedendofturn]			& \ConditionDiamond[weakenedsaveends]			\\
+		\entryfont\ConditionExtraAValue				& \ConditionDiamond[conditionextraAendofturn]	& \ConditionDiamond[conditionextraAsaveends]	\\
+		\entryfont\ConditionExtraBValue				& \ConditionDiamond[conditionextraBendofturn]	& \ConditionDiamond[conditionextraBsaveends]	\\
+	\end{DSConditionsTable}
+}};
 \node[inner sep=0pt] at (1280, 1930) {\entryfont\scriptsize\ConditionSaveValue};
 
 \node[inner sep=0pt, anchor=north] at (1250, 2055) {%

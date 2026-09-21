@@ -35,11 +35,12 @@
 		\thisType			= Type,%
 		\thisName			= Name,%
 		\thisDescription	= Description,%
-		\thisCategory		= Category%
+		\thisCategory		= Category,%
+		\thisTargets		= Targets,%
 	}{%
 		\ifthenelse{\equal{#1}{\thisName}}{%
 			\booltrue{FoundEntry}%
-			\SetCategorySymbol{\thisType}{\thisCategory}%
+			\SetCategorySymbol{\thisType}{\thisCategory}{\thisTargets}%
 			\textbf{\CategorySymbolValue~\thisName}\hfill\GetActionType{\thisType}%
 			\ifthenelse{\equal{\thisDescription}{}}{}{\\\textit{\thisDescription}}%
 		}{}%
@@ -49,12 +50,13 @@
 % ------------------------------------------------------------------------------------------------- %
 % ################################################################################################# %
 % -------------------------------------- Set Category Symbol -------------------------------------- %
-\NewDocumentCommand{\SetCategorySymbol}{ m m }{%
-	\IfSubStr{#1}{Triggered}{%
-		\CategorySymbol{{\dsglyphs !}}%
+\NewDocumentCommand{\SetCategorySymbol}{ m m m }{%
+	\ifthenelse{\equal{#3}{Self}}{%
+		\CategorySymbol{{\dsglyphs S}}%
 	}{%
-		\IfSubStr{#2}{Magic}{%
-			\CategorySymbol{{\dsglyphs *}}%
+	
+		\IfSubStr{#1}{Triggered}{%
+			\CategorySymbol{{\dsglyphs !}}%
 		}{%
 			\IfSubStr{#2}{Melee}{%
 				\IfSubStr{#2}{Ranged}{%
@@ -63,8 +65,10 @@
 					\CategorySymbol{{\dsglyphs <}}
 				}%
 			}{%
-				\IfSubStr{#2}{Ranged}{\CategorySymbol{{\dsglyphs >}}}{}%
+				\IfSubStr{#2}{Ranged}{\CategorySymbol{{\dsglyphs >}}}{%
+					\IfSubStr{#2}{Magic}{\CategorySymbol{{\dsglyphs *}}}{}%
+				}%
 			}%
 		}%
 	}%
-}
+}%
